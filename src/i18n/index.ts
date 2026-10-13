@@ -2,6 +2,7 @@ import type { PageId } from "../types";
 import { normalizePath } from "../lib/paths";
 import { defaultLocale, localeMeta, locales, type Locale } from "./config";
 import { routes } from "./routes";
+import { de } from "./de";
 import { en } from "./en";
 import { es, type Dictionary } from "./es";
 
@@ -9,7 +10,7 @@ export { defaultLocale, isLocale, localeMeta, locales, resolveLocale, type Local
 export { routes } from "./routes";
 export type { Dictionary } from "./es";
 
-const dictionaries: Record<Locale, Dictionary> = { es, en };
+const dictionaries: Record<Locale, Dictionary> = { es, en, de };
 
 export function getDictionary(locale: Locale): Dictionary {
   return dictionaries[locale];

@@ -18,7 +18,7 @@ export default defineConfig({
   // Spanish is unprefixed (original URLs); other locales live under /<locale>/ with translated slugs.
   i18n: {
     defaultLocale: "es",
-    locales: ["es", "en"],
+    locales: ["es", "en", "de"],
     routing: { prefixDefaultLocale: false },
   },
   integrations: [

@@ -1,4 +1,4 @@
-export const locales = ["es", "en"] as const;
+export const locales = ["es", "en", "de"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -20,6 +20,7 @@ export interface LocaleMeta {
 export const localeMeta: Record<Locale, LocaleMeta> = {
   es: { htmlLang: "es", ogLocale: "es_ES", hreflang: "es", label: "Español", dateLocale: "es-ES" },
   en: { htmlLang: "en", ogLocale: "en_GB", hreflang: "en", label: "English", dateLocale: "en-GB" },
+  de: { htmlLang: "de", ogLocale: "de_DE", hreflang: "de", label: "Deutsch", dateLocale: "de-DE" },
 };
 
 export function isLocale(value: unknown): value is Locale {

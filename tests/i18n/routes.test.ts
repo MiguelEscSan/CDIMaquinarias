@@ -53,13 +53,14 @@ describe("locale config", () => {
   it("recognises supported locales only", () => {
     expect(isLocale("es")).toBe(true);
     expect(isLocale("en")).toBe(true);
+    expect(isLocale("de")).toBe(true);
     expect(isLocale("fr")).toBe(false);
     expect(isLocale(undefined)).toBe(false);
   });
 
   it("falls back to the default locale", () => {
     expect(resolveLocale("en")).toBe("en");
-    expect(resolveLocale("de")).toBe(defaultLocale);
+    expect(resolveLocale("fr")).toBe(defaultLocale);
     expect(resolveLocale(undefined)).toBe(defaultLocale);
   });
 });
@@ -77,6 +78,10 @@ describe("getLocaleFromUrl", () => {
     expect(getLocaleFromUrl("/quienes-somos/")).toBe("es");
     expect(getLocaleFromUrl("/english/")).toBe("es");
   });
+
+  it("reads the German prefix", () => {
+    expect(getLocaleFromUrl("/de/ueber-uns/")).toBe("de");
+  });
 });
 
 describe("localizedPath", () => {
@@ -92,6 +97,7 @@ describe("alternatesFor", () => {
     expect(alternatesFor("renting")).toEqual([
       { locale: "es", hreflang: "es", path: "/renting/" },
       { locale: "en", hreflang: "en", path: "/en/rental/" },
+      { locale: "de", hreflang: "de", path: "/de/vermietung/" },
     ]);
   });
 
@@ -99,6 +105,7 @@ describe("alternatesFor", () => {
     expect(hreflangAlternates("contact")).toEqual([
       { hreflang: "es", path: "/contacto/" },
       { hreflang: "en", path: "/en/contact/" },
+      { hreflang: "de", path: "/de/kontakt/" },
       { hreflang: "x-default", path: "/contacto/" },
     ]);
   });

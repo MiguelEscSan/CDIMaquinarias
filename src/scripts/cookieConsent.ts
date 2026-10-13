@@ -8,6 +8,7 @@ import {
 } from "vanilla-cookieconsent";
 import { CONSENT_CATEGORIES, cookieConsentBaseConfig } from "../data/cookieConsent";
 import { defaultLocale } from "../i18n/config";
+import { cookies as deCookies } from "../i18n/de/cookies";
 import { cookies as enCookies } from "../i18n/en/cookies";
 import { cookies as esCookies } from "../i18n/es/cookies";
 
@@ -17,7 +18,7 @@ const cookieConsentConfig = {
   language: {
     default: defaultLocale,
     autoDetect: "document" as const,
-    translations: { es: esCookies.translation, en: enCookies.translation },
+    translations: { es: esCookies.translation, en: enCookies.translation, de: deCookies.translation },
   },
 };
 

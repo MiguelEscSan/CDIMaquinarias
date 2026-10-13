@@ -78,11 +78,15 @@ describe("dictionaries", () => {
     expect(en.legal.courtesyNotice).toBe(
       "This is a courtesy translation. In case of discrepancy, the Spanish version prevails.",
     );
+    expect(getDictionary("de").legal.courtesyNotice).toContain("spanische Fassung maßgeblich");
   });
 
   it("link the cookie banner to the locale's cookie policy", () => {
     expect(es.cookies.translation.consentModal.description).toContain('href="/politica-de-cookies-1/"');
     expect(en.cookies.translation.consentModal.description).toContain('href="/en/cookie-policy/"');
+    expect(getDictionary("de").cookies.translation.consentModal.description).toContain(
+      'href="/de/cookie-richtlinie/"',
+    );
   });
 });
 

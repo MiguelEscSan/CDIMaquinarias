@@ -8,6 +8,7 @@ describe("sitemapLinks", () => {
     expect(sitemapLinks(`${SITE}/quienes-somos/`, SITE)).toEqual([
       { lang: "es", url: `${SITE}/quienes-somos/` },
       { lang: "en", url: `${SITE}/en/about-us/` },
+      { lang: "de", url: `${SITE}/de/ueber-uns/` },
       { lang: "x-default", url: `${SITE}/quienes-somos/` },
     ]);
   });
@@ -17,7 +18,12 @@ describe("sitemapLinks", () => {
   });
 
   it("handles the home pages", () => {
-    expect(sitemapLinks(`${SITE}/en/`, SITE).map((l) => l.url)).toEqual([`${SITE}/`, `${SITE}/en/`, `${SITE}/`]);
+    expect(sitemapLinks(`${SITE}/en/`, SITE).map((l) => l.url)).toEqual([
+      `${SITE}/`,
+      `${SITE}/en/`,
+      `${SITE}/de/`,
+      `${SITE}/`,
+    ]);
   });
 
   it("returns no alternates for unknown URLs", () => {
