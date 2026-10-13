@@ -33,7 +33,7 @@ Rationale: user asked to mirror the original multi-page structure, add Quiénes 
 - [x] T7 — Multi-page routing with original slugs (`/quienes-somos/`, `/servicios/`, `/productos/`, `/renting/`, `/contacto/`), PageHero + breadcrumbs (BreadcrumbList JSON-LD), per-path `aria-current`, location merged into Contacto. Route: delegated writer.
 - [x] T8 — Contact form: Vercel adapter, `contact` Astro Action (zod), hexagonal core (`MailSender` port, Nodemailer adapter, use case), honeypot, progressive enhancement, Vitest unit tests (test-first). Route: delegated writer.
 - [x] T9 — Consent-gated (click-to-load) Google Map in Contacto; legal pages `/aviso-legal/`, `/politica-de-datos/`, `/politica-de-cookies-1/` ported and adapted. Route: delegated writer.
-- [ ] T10 — Verification: check, build, vitest, one h1 per page, unique titles/descriptions, sitemap lists all pages. Route: delegated writer.
+- [x] T10 — Verification: check, build, vitest, one h1 per page, unique titles/descriptions, sitemap lists all pages. Route: delegated writer.
 
 Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the PR chain strategy is deferred until a remote exists.
 
@@ -42,7 +42,8 @@ Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the 
 - Built `dist/index.html`: exactly one `<h1>`, valid JSON-LD, `tel:` links, title/description length limits respected.
 
 ## Checks
-- Test-first exception: greenfield static marketing site with no runnable deterministic test runner; verification is structural (astro check, build, dist inspection).
+- Phase 1 test-first exception: no runnable deterministic test runner; verification was structural (astro check, build, dist inspection).
+- Phase 2: Vitest (`npm test`) covers the contact use case and pure helpers (test-first); pages verified structurally from `.vercel/output/static`.
 
 ## Progress / Evidence
 - T1 scaffold: astro 7.3.8, tailwindcss 4.3.3 + @tailwindcss/vite 4.3.3, @astrojs/sitemap 3.7.4, @astrojs/check 0.9.10, typescript 6.0.3 (TS 7.0.2 is latest but @astrojs/check peer range is ^5 || ^6). Added devDependency @emnapi/runtime 1.11.3: @astrojs/astro2tsx 0.1.2 imports it at runtime but only lists it as a devDependency, so `astro check` failed to load @astrojs/check without it.
@@ -95,7 +96,18 @@ Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the 
   - Tests (test-first): `tests/lib/inlineLinks.test.ts` RED "Cannot find module '../../src/lib/inlineLinks'", then GREEN; `tests/lib/paths.test.ts` added. `npm test`: 3 files, 12 passed.
   - `npm run check`: 0 errors, 0 warnings, 0 hints. `npm run build`: Complete; 8 prerendered pages + on-demand `/contacto/`; no `<iframe` in any built HTML.
   - Browser (dev, 375px emulation): scrollWidth = clientWidth on all 9 pages; `aria-current` correct per page; clicking "Cargar mapa" inserts exactly one iframe with lazy loading, title and strict-origin-when-cross-origin.
-  - Commit: see T10 entry.
+  - Commit: `1d90931` feat(legal): add legal pages and consent-gated map.
+- T10 verification (no code changes; folded into a docs commit). Route: delegated writer.
+  - `npm run check`: 0 errors, 0 warnings, 0 hints.
+  - `npm test`: 3 files, 12 tests passed.
+  - `npm run build`: Complete with adapter `@astrojs/vercel`; output `.vercel/output/static` + `functions/_render.func`.
+  - Node inspection of `.vercel/output/static` (8 prerendered pages): each exactly one `<h1`; titles 29–56 chars, unique; descriptions 129–142 chars, unique; every JSON-LD block parses; sitemap lists 9 URLs (incl. on-demand `/contacto/`), all with trailing slash. Contacto (dev render): h1=1, title 56, desc 139, LocalBusiness + BreadcrumbList.
+  - `rg "928|625|cdi@|Simón|35214|B76075506" src/components src/layouts src/pages`: 0 matches (exit 1).
+  - `astro preview`: not usable with `@astrojs/vercel` (adapter has no preview entrypoint; a pre-existing preview server on 4321 also blocked a second instance). `astro dev --port 4333` + `curl /contacto/`: 200, one `<form method="POST">`; server stopped afterwards.
+  - Not run: real SMTP delivery, Lighthouse, screenshots (pane screenshot timed out).
+
+## Deployment notes (Vercel)
+Set in Vercel project env (server-side): `SMTP_HOST` (IONOS: `smtp.ionos.es`), `SMTP_PORT` (465), `SMTP_SECURE` (true), `SMTP_USER` (full mailbox), `SMTP_PASS`, optional `CONTACT_TO` (default `cdi@cdimaquinarias.com`). Without SMTP vars the form shows the generic failure and logs "[contact] SMTP is not configured".
 
 ## Next step
-Native review / delivery decision by the user (push and PR are human decisions). Provide `public/og-image.jpg`, real photos and logo.
+Native review of Phase 2 (`399b802`..HEAD) / delivery decision by the user (push and PR are human decisions). Legal texts need review by the business/legal advisor. Configure SMTP env vars in Vercel and test a real submission. Provide `public/og-image.jpg`, real photos and logo. `.claude/launch.json` still runs `npm run preview`, which cannot serve on-demand routes with the Vercel adapter; switch it to `npm run dev`.
