@@ -1,8 +1,11 @@
 /**
- * Best-effort client IP: the adapter-provided address, else the first
- * `x-forwarded-for` entry, else "unknown" (all unknown clients share one bucket).
+ * Best-effort client IP: Cloudflare's `cf-connecting-ip`, else the
+ * adapter-provided address, else the first `x-forwarded-for` entry, else
+ * "unknown" (all unknown clients share one bucket).
  */
 export function resolveClientIp(getClientAddress: () => string | undefined, headers: Headers): string {
+  const cloudflareIp = headers.get("cf-connecting-ip")?.trim();
+  if (cloudflareIp) return cloudflareIp;
   try {
     const address = getClientAddress()?.trim();
     if (address) return address;
