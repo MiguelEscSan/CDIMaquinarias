@@ -135,3 +135,11 @@ Native review of Phase 2 (`399b802`..HEAD) / delivery decision by the user (push
 - Phase 3 verification: `npm run check` 0 errors/0 warnings/0 hints; `npm test` 8 files, 41 passed; `npm run build` Complete; `rg "928|625|cdi@" src/actions src/core src/infrastructure src/pages src/components` 0 matches.
 - Follow-ups resolved: F1 (T11), F2 (T12; platform time limit to be set on Cloudflare), F6 (T11, honeypot before limiter and SMTP config).
 - Commits: T11 `a8dd1e7` feat(contact): rate limit contact submissions; T12 = HEAD feat(contact): bound smtp send time.
+
+Phase 3 native review: range `fa080b0`..`8fb0173` assessed medium (slice_budget_reached, 811 lines); user declined review for this candidate (2026-10-13).
+
+### Phase 4 — Cloudflare migration (user request 2026-10-13)
+Rationale: user moves hosting from Vercel to Cloudflare (free plan allows commercial use; Vercel Hobby does not). Target: Cloudflare Workers with static assets (Cloudflare's recommendation for new projects), `@astrojs/cloudflare` 14.x.
+- [ ] T13 — Swap adapter to `@astrojs/cloudflare` + `wrangler.jsonc` (`nodejs_compat`), secrets via `.dev.vars`/Wrangler secrets, local preview via `wrangler dev`; prove Nodemailer SMTP runs on workerd. Route: delegated writer.
+- [ ] T14 — `KvRateLimiter` adapter (Workers KV binding), fail-open to in-memory, client IP from Cloudflare. Test-first. Route: delegated writer.
+- [ ] T15 — Replace Vercel references (privacy §5 processor, README, deployment notes). Route: delegated writer.
