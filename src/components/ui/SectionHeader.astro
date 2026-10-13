@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+  subtitle?: string;
+  as?: "h1" | "h2" | "h3";
+  id?: string;
+  align?: "left" | "center";
+  tone?: "light" | "dark";
+  class?: string;
+}
+
+const {
+  title,
+  eyebrow,
+  subtitle,
+  as: Heading = "h2",
+  id,
+  align = "left",
+  tone = "light",
+  class: className = "",
+} = Astro.props;
+
+const isDark = tone === "dark";
+const alignment = align === "center" ? "mx-auto text-center items-center" : "items-start";
+---
+
+<header class={`flex max-w-3xl flex-col gap-3 ${alignment} ${className}`}>
+  {
+    eyebrow && (
+      <p
+        class={`flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.2em] ${isDark ? "text-brand-accent" : "text-brand-hover"}`}
+      >
+        <span class="h-0.5 w-6 bg-current" aria-hidden="true" />
+        {eyebrow}
+      </p>
+    )
+  }
+  <Heading
+    id={id}
+    class={`text-3xl font-extrabold tracking-tight sm:text-4xl ${isDark ? "text-white" : "text-slate-900"}`}
+  >
+    {title}
+  </Heading>
+  {
+    subtitle && (
+      <p class={`text-base sm:text-lg ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+        {subtitle}
+      </p>
+    )
+  }
+</header>

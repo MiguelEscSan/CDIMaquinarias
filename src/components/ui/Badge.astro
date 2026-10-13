@@ -1,0 +1,27 @@
+---
+interface Props {
+  tone?: "brand" | "navy" | "light" | "outline";
+  size?: "sm" | "md";
+  class?: string;
+}
+
+const { tone = "brand", size = "sm", class: className = "" } = Astro.props;
+
+const tones = {
+  brand: "bg-orange-100 text-orange-800 ring-orange-200",
+  navy: "bg-navy text-white ring-slate-700",
+  light: "bg-white/10 text-white ring-white/20",
+  outline: "bg-white text-slate-700 ring-slate-300",
+};
+
+const sizes = {
+  sm: "px-2 py-0.5 text-[0.6875rem]",
+  md: "px-3 py-1 text-xs",
+};
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 rounded-full font-mono font-semibold uppercase tracking-wider ring-1 ring-inset ${tones[tone]} ${sizes[size]} ${className}`}
+>
+  <slot />
+</span>

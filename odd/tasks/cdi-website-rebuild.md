@@ -23,7 +23,7 @@ Current site looks like an old template; business data is not structured; local 
 ## Tasks
 - [x] T1 — Scaffold Astro + Tailwind + TS strict; `npm run build` passes. Route: delegated writer (2+ non-trivial files).
 - [x] T2 — Types + data layer (`types/index.ts`, `data/siteInfo.ts`, `data/services.ts`, `data/navigation.ts`). Route: delegated writer.
-- [ ] T3 — UI atoms (Button, Card, Badge, SectionHeader, FloatingContact) + layout (Navbar, Footer). Route: delegated writer.
+- [x] T3 — UI atoms (Button, Card, Badge, SectionHeader, FloatingContact) + layout (Navbar, Footer). Route: delegated writer.
 - [ ] T4 — BaseLayout with SEO meta, OG/Twitter, JSON-LD. Route: delegated writer.
 - [ ] T5 — Sections (Hero, ServicesSection, BrandTrust, ContactSection, MapSection) + `pages/index.astro`. Route: delegated writer.
 
@@ -42,7 +42,10 @@ Current site looks like an old template; business data is not structured; local 
 - T2 data layer: `src/types/index.ts`, `src/data/siteInfo.ts`, `src/data/services.ts`, `src/data/navigation.ts`, plus `src/data/homeContent.ts` (section copy so components hold no copy). Trust chip uses "Distribuidor STILL" (not "oficial": not stated in the SSOT).
   - `npx tsc --noEmit -p .`: no output (0 errors).
   - `npm run check`: 0 errors, 0 warnings, 0 hints.
-  - Commit: recorded in T3 entry.
+  - Commit: `eab9d7b` feat(data): add typed business data layer.
+- T3 UI atoms + layout: `src/components/ui/{Button,Card,Badge,SectionHeader,Icon,FloatingContact}.astro`, `src/components/layout/{Navbar,Footer}.astro`. Atoms are props-driven; Navbar/Footer act as containers that read `src/data`. Mobile menu is `<details>`/`<summary>`; a 3-line inline script only closes the menu after tapping a link (progressive enhancement, menu works without JS).
+  - `npm run check`: 16 files, 0 errors, 0 warnings, 0 hints.
+  - Commit: recorded in T4 entry.
 
 ## Next step
-T3.
+T4.

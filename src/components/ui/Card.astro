@@ -1,0 +1,32 @@
+---
+interface Props {
+  as?: "article" | "div" | "li";
+  interactive?: boolean;
+  tone?: "light" | "muted" | "dark";
+  class?: string;
+}
+
+const { as: Tag = "article", interactive = false, tone = "light", class: className = "" } =
+  Astro.props;
+
+const tones = {
+  light: "bg-white border-slate-200",
+  muted: "bg-slate-50 border-slate-200",
+  dark: "bg-navy border-slate-800 text-slate-300",
+};
+
+const classes = [
+  "relative flex flex-col rounded-2xl border p-6 shadow-sm",
+  tones[tone],
+  interactive
+    ? "transition-all duration-300 hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl hover:shadow-slate-900/10 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+    : "",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>
