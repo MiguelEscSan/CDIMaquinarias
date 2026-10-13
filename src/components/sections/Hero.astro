@@ -3,15 +3,14 @@ import Badge from "../ui/Badge.astro";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import { heroContent } from "../../data/homeContent";
-import { callCta, quoteCta, sectionIds } from "../../data/navigation";
+import { callCta, quoteCta } from "../../data/navigation";
 
-const headingId = `${sectionIds.home}-titulo`;
+const headingId = "inicio-titulo";
 ---
 
 <section
-  id={sectionIds.home}
   aria-labelledby={headingId}
-  class="relative scroll-mt-24 overflow-hidden bg-navy text-slate-300"
+  class="relative overflow-hidden bg-navy text-slate-300"
 >
   <div class="bg-grid absolute inset-0 opacity-60" aria-hidden="true"></div>
   <div

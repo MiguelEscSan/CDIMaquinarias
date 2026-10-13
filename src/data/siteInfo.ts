@@ -94,9 +94,6 @@ const mapsQuery = encodeURIComponent(`${siteMeta.name}, ${formatAddress()}`);
 export const mapEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
 export const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
 
-export const quoteMailto = `mailto:${contactInfo.email}?subject=${encodeURIComponent(
-  "Solicitud de presupuesto",
-)}`;
 export const emailHref = `mailto:${contactInfo.email}`;
 
 export function absoluteUrl(path: string): string {

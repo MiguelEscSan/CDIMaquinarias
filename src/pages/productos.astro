@@ -1,0 +1,11 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import ProductsSection from "../components/sections/ProductsSection.astro";
+import CtaBand from "../components/sections/CtaBand.astro";
+import { pages } from "../data/pages";
+---
+
+<PageLayout page={pages.products}>
+  <ProductsSection />
+  <CtaBand />
+</PageLayout>

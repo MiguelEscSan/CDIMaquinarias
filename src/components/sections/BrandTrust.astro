@@ -3,16 +3,14 @@ import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import { brandContent } from "../../data/homeContent";
-import { quoteCta, sectionIds } from "../../data/navigation";
 import { stillBrand } from "../../data/siteInfo";
 
-const headingId = `${sectionIds.brand}-titulo`;
+const headingId = "still-titulo";
 ---
 
 <section
-  id={sectionIds.brand}
   aria-labelledby={headingId}
-  class="relative scroll-mt-24 overflow-hidden bg-navy py-16 text-slate-300 sm:py-24"
+  class="relative overflow-hidden bg-navy py-16 text-slate-300 sm:py-24"
 >
   <div class="bg-grid absolute inset-0 opacity-50" aria-hidden="true"></div>
   <div class="relative mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
@@ -26,9 +24,9 @@ const headingId = `${sectionIds.brand}-titulo`;
       />
       <p class="max-w-2xl leading-relaxed">{brandContent.body}</p>
       <div>
-        <Button href={quoteCta.href} ariaLabel={quoteCta.ariaLabel}>
-          <Icon name="mail" size={20} slot="icon" />
-          {quoteCta.label}
+        <Button href={brandContent.productsCta.href}>
+          {brandContent.productsCta.label}
+          <Icon name="arrow" size={20} />
         </Button>
       </div>
     </div>

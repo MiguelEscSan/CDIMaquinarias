@@ -1,15 +1,6 @@
 import type { CtaLink, NavLink, PageId } from "../types";
 import { pages } from "./pages";
-import { contactInfo, emailHref, primaryPhone } from "./siteInfo";
-
-/** @deprecated Anchor ids of the former single-page layout; removed once pages are split. */
-export const sectionIds = {
-  home: "inicio",
-  services: "servicios",
-  brand: "still",
-  contact: "contacto",
-  location: "ubicacion",
-} as const;
+import { contactInfo, emailHref, primaryPhone, stillBrand } from "./siteInfo";
 
 const toLink = (id: PageId): NavLink => ({ label: pages[id].label, href: pages[id].path });
 
@@ -34,6 +25,16 @@ export const quoteCta: CtaLink = {
 };
 
 export const primaryCta = callCta;
+
+export const brandBadge = `Distribuidor oficial ${stillBrand.name}`;
+
+export const menuLabels = {
+  main: "Principal",
+  mobile: "Menú móvil",
+  toggle: "Abrir o cerrar menú",
+  footer: "Pie de página",
+  legal: "Legal",
+};
 
 export const floatingContact = {
   phoneHref: primaryPhone.href,

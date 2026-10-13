@@ -3,14 +3,13 @@ import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import { locationContent } from "../../data/contactContent";
-import { sectionIds } from "../../data/navigation";
 import { directionsUrl, formatAddress, mapEmbedUrl } from "../../data/siteInfo";
 
-const headingId = `${sectionIds.location}-titulo`;
+const headingId = "ubicacion-titulo";
 ---
 
 <section
-  id={sectionIds.location}
+  id="ubicacion"
   aria-labelledby={headingId}
   class="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-24"
 >

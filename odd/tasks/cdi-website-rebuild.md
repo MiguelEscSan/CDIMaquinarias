@@ -27,6 +27,16 @@ Current site looks like an old template; business data is not structured; local 
 - [x] T4 — BaseLayout with SEO meta, OG/Twitter, JSON-LD. Route: delegated writer.
 - [x] T5 — Sections (Hero, ServicesSection, BrandTrust, ContactSection, MapSection) + `pages/index.astro`. Route: delegated writer.
 
+### Phase 2 — multi-page parity with original site (user request 2026-10-13)
+Rationale: user asked to mirror the original multi-page structure, add Quiénes somos, and move location into Contacto. Hosting decided: Vercel; contact form via Astro Actions + Nodemailer SMTP (user rejected third-party form services in favor of a TS solution).
+- [x] T6 — Extend data layer: per-page SEO meta, about, products/STILL, renting categories, legal company data; multi-page navigation; "Distribuidor oficial STILL" (the claim appears on the original site). Route: delegated writer.
+- [x] T7 — Multi-page routing with original slugs (`/quienes-somos/`, `/servicios/`, `/productos/`, `/renting/`, `/contacto/`), PageHero + breadcrumbs (BreadcrumbList JSON-LD), per-path `aria-current`, location merged into Contacto. Route: delegated writer.
+- [ ] T8 — Contact form: Vercel adapter, `contact` Astro Action (zod), hexagonal core (`MailSender` port, Nodemailer adapter, use case), honeypot, progressive enhancement, Vitest unit tests (test-first). Route: delegated writer.
+- [ ] T9 — Consent-gated (click-to-load) Google Map in Contacto; legal pages `/aviso-legal/`, `/politica-de-datos/`, `/politica-de-cookies-1/` ported and adapted. Route: delegated writer.
+- [ ] T10 — Verification: check, build, vitest, one h1 per page, unique titles/descriptions, sitemap lists all pages. Route: delegated writer.
+
+Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the PR chain strategy is deferred until a remote exists.
+
 ## Acceptance criteria
 - `npm run build` and `npx astro check` pass with 0 errors.
 - Built `dist/index.html`: exactly one `<h1>`, valid JSON-LD, `tel:` links, title/description length limits respected.
@@ -60,6 +70,14 @@ Current site looks like an old template; business data is not structured; local 
   - Commit: `45e42eb` feat(home): compose home page sections.
 - Native review (base `fd4b2b8`..`45e42eb`, risk medium, consent granted): approved, lens review-reliability, authority acknowledged/burned (lineage review-a98acb168a80b042). Advisory, non-blocking: R3-001 missing `/og-image.jpg`; R3-002 `toOpeningHoursString` assumes contiguous days; R3-003 no unit tests for `formatHours`/schema builder.
 - Fix (browser check at 375px): header overflowed 22px because Button base `inline-flex` overrode the passed `hidden`; Navbar now passes `max-sm:hidden`. After fix scrollWidth = clientWidth = 375; build and check pass. Commit: HEAD (fix(nav): hide header call button on small screens).
+- T6 data layer (Phase 2): types , , , , , , , ;  gained  + optional . New ;  in  (CIF, domicilio social from the original aviso legal; privacy email/controller from the original política de datos). Service titles now the original ones (Reparación y mantenimiento, Ventas, Alquiler, Asesoramiento) + Climatización. Trust chip/badge: "Distribuidor oficial STILL".  now points to .
+  - : 0 errors, 0 warnings (17 deprecation hints for the transitional , removed in T7). : Complete.
+  - Deviation: the commit also carries the T8 dependency install (package.json/lockfile).
+  - Commit:  feat(data): add multi-page content and legal data.
+- T7 pages: ;  (Navbar + PageHero + Footer + FloatingContact);  (single h1, ,  on last crumb); sections ,  (anchors per service slug),  (external STILL catalog, noopener noreferrer, _blank),  (7 cards → ), ; BaseLayout emits BreadcrumbList JSON-LD ( in ) on inner pages; Navbar  via  (desktop + mobile); legal links in footer; ; / removed; MapSection moved from home to Contacto; Navbar badge uses  (Badge base  would override ).
+  - : 42 files, 0 errors, 0 warnings, 0 hints. : 6 pages built.
+  - dist inspection: every page h1=1, titles 47–56 chars and unique, descriptions 129–141 chars, JSON-LD parses (LocalBusiness + BreadcrumbList on inner pages); sitemap lists 6 URLs with trailing slashes.
+  - Commit: see T8 entry (recorded in the next commit).
 
 ## Next step
 Native review / delivery decision by the user (push and PR are human decisions). Provide `public/og-image.jpg`, real photos and logo.

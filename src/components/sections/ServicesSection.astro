@@ -1,22 +1,20 @@
 ---
+import Button from "../ui/Button.astro";
 import Card from "../ui/Card.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import { servicesContent } from "../../data/homeContent";
-import { sectionIds } from "../../data/navigation";
+import { pages } from "../../data/pages";
 import { services } from "../../data/services";
 
-const headingId = `${sectionIds.services}-titulo`;
+const headingId = "servicios-titulo";
+const { eyebrow, title, subtitle, moreLabel, allServices } = servicesContent;
 ---
 
-<section
-  id={sectionIds.services}
-  aria-labelledby={headingId}
-  class="relative scroll-mt-24 bg-slate-50 py-16 sm:py-24"
->
+<section aria-labelledby={headingId} class="relative bg-slate-50 py-16 sm:py-24">
   <div class="bg-diagonal absolute inset-0" aria-hidden="true"></div>
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <SectionHeader id={headingId} {...servicesContent} />
+    <SectionHeader id={headingId} eyebrow={eyebrow} title={title} subtitle={subtitle} />
 
     <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
@@ -34,8 +32,23 @@ const headingId = `${sectionIds.services}-titulo`;
               </li>
             ))}
           </ul>
+          <a
+            href={`${pages.services.path}#${service.slug}`}
+            class="mt-auto inline-flex min-h-11 items-center gap-2 self-start rounded-md pt-5 font-bold text-brand-hover underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+            aria-label={`${moreLabel}: ${service.title}`}
+          >
+            {moreLabel}
+            <Icon name="arrow" size={18} />
+          </a>
         </Card>
       ))}
     </ul>
+
+    <div class="mt-10">
+      <Button href={allServices.href} variant="secondary">
+        {allServices.label}
+        <Icon name="arrow" size={20} />
+      </Button>
+    </div>
   </div>
 </section>

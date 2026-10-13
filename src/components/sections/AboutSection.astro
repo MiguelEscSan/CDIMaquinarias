@@ -1,0 +1,33 @@
+---
+import Icon from "../ui/Icon.astro";
+import { aboutContent } from "../../data/about";
+
+const [experience, airConditioning] = aboutContent.sections;
+const sectionId = (index: number) => `nosotros-${index}-titulo`;
+---
+
+<div class="bg-white py-16 sm:py-20">
+  <div class="mx-auto flex max-w-5xl flex-col gap-14 px-4 sm:px-6 lg:px-8">
+    {experience && (
+      <section aria-labelledby={sectionId(0)} class="flex flex-col gap-5">
+        <h2 id={sectionId(0)} class="text-3xl font-extrabold tracking-tight sm:text-4xl">{experience.title}</h2>
+        {experience.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
+      </section>
+    )}
+
+    <p class="relative rounded-2xl border border-orange-200 bg-orange-50 p-6 pl-16 text-lg font-semibold leading-relaxed text-slate-900 sm:p-8 sm:pl-20">
+      <Icon name="clipboard" size={28} class="absolute top-6 left-6 text-brand-hover sm:top-8 sm:left-8" />
+      {aboutContent.highlight}
+    </p>
+
+    {airConditioning && (
+      <section aria-labelledby={sectionId(1)} class="flex flex-col gap-5">
+        <h2 id={sectionId(1)} class="flex items-center gap-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <Icon name="snowflake" size={32} class="text-brand-hover" />
+          {airConditioning.title}
+        </h2>
+        {airConditioning.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
+      </section>
+    )}
+  </div>
+</div>

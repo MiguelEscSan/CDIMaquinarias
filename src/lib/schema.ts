@@ -1,4 +1,11 @@
-import type { Brand, ContactInfo, OpeningHours, Service, SiteMeta } from "../types";
+import type {
+  Brand,
+  BreadcrumbItem,
+  ContactInfo,
+  OpeningHours,
+  Service,
+  SiteMeta,
+} from "../types";
 
 interface SchemaInput {
   meta: SiteMeta;
@@ -74,5 +81,19 @@ export function buildLocalBusinessSchema({ meta, contact, services, brand }: Sch
         },
       })),
     },
+  };
+}
+
+/** BreadcrumbList for an inner page; `items` hold site-relative hrefs. */
+export function buildBreadcrumbSchema(items: BreadcrumbItem[], siteUrl: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label,
+      item: new URL(item.href, siteUrl).toString(),
+    })),
   };
 }

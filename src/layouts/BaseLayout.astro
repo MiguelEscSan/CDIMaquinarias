@@ -1,8 +1,9 @@
 ---
 import "../styles/global.css";
-import { buildLocalBusinessSchema } from "../lib/schema";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "../lib/schema";
 import { services } from "../data/services";
 import { absoluteUrl, contactInfo, siteMeta, stillBrand } from "../data/siteInfo";
+import type { BreadcrumbItem } from "../types";
 
 interface Props {
   title?: string;
@@ -10,6 +11,7 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   noindex?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const {
@@ -18,16 +20,20 @@ const {
   canonical = absoluteUrl(Astro.url.pathname),
   ogImage = siteMeta.ogImage,
   noindex = false,
+  breadcrumbs = [],
 } = Astro.props;
 
 const ogImageUrl = absoluteUrl(ogImage);
 const robots = noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large";
-const schema = buildLocalBusinessSchema({
-  meta: siteMeta,
-  contact: contactInfo,
-  services,
-  brand: stillBrand,
-});
+const schemas: object[] = [
+  buildLocalBusinessSchema({
+    meta: siteMeta,
+    contact: contactInfo,
+    services,
+    brand: stillBrand,
+  }),
+];
+if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, siteMeta.url));
 ---
 
 <!doctype html>
@@ -60,9 +66,9 @@ const schema = buildLocalBusinessSchema({
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    {schemas.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
   </head>
-  <body class="min-h-screen bg-white">
+  <body class="min-h-screen overflow-x-clip bg-white">
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-navy focus:px-4 focus:py-3 focus:font-semibold focus:text-white focus:ring-2 focus:ring-orange-500"
