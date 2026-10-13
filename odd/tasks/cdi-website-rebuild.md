@@ -89,10 +89,10 @@ Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the 
     - A1 Aviso legal §2: the empty "Inscripción al registro mercantil" line was omitted (no data on the original); "medios especificados en la política de privacidad" now links to `/politica-de-datos/`.
     - A2 Aviso legal §5: the broken placeholder "Juzgados y Tribunales más cercanos a la sede de (España)" became "más cercanos a su sede (España)".
     - A3 Privacidad §2: added the finality "Atender las consultas y solicitudes de presupuesto que nos envíe a través del formulario de contacto" (the new form exists).
-    - A4 Privacidad §5: "No comparto los datos con terceros" replaced by: no cessions save legal obligation; processors = hosting provider (Vercel Inc.) and the company's email/SMTP provider that relays the form data by email.
+    - A4 Privacidad §5: "No comparto los datos con terceros" replaced by: no cessions save legal obligation; processors = hosting provider and the company's email/SMTP provider that relays the form data by email. Hosting processor originally Vercel Inc.; since T15 "Cloudflare, Inc." (hosting/infrastructure), with a generic sentence on transfers outside the EEA covered by GDPR safeguards such as the Commission's standard contractual clauses.
     - A5 Privacidad §6: the six "haga clic aquí" links (forms of the previous provider, not available) replaced by "escríbanos a administracion2@cdimaquinarias.com indicando el derecho que desea ejercer".
     - A6 Cookies: removed the statements about advertising, segmentation, analytics/measurement and tracking cookies (the new site has no IONOS SiteAnalytics and no cookies by default); new section "Cookies que utiliza este sitio web": no own/advertising/analytics cookies; Google Maps loads only after "Cargar mapa", then Google may set cookies (link to Google's privacy policy); the change-notice sentence now refers to updating this policy. Browser how-to guides kept as in the original (they are outdated: IE, old Chrome menus).
-    - Needs review by the business / legal advisor before go-live (processors, possible international transfer to Vercel, retention period, Registro Mercantil data).
+    - Needs review by the business / legal advisor before go-live (processors, international transfer to Cloudflare and its legal basis, retention period, Registro Mercantil data).
   - Tests (test-first): `tests/lib/inlineLinks.test.ts` RED "Cannot find module '../../src/lib/inlineLinks'", then GREEN; `tests/lib/paths.test.ts` added. `npm test`: 3 files, 12 passed.
   - `npm run check`: 0 errors, 0 warnings, 0 hints. `npm run build`: Complete; 8 prerendered pages + on-demand `/contacto/`; no `<iframe` in any built HTML.
   - Browser (dev, 375px emulation): scrollWidth = clientWidth on all 9 pages; `aria-current` correct per page; clicking "Cargar mapa" inserts exactly one iframe with lazy loading, title and strict-origin-when-cross-origin.
@@ -106,11 +106,16 @@ Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the 
   - `astro preview`: not usable with `@astrojs/vercel` (adapter has no preview entrypoint; a pre-existing preview server on 4321 also blocked a second instance). `astro dev --port 4333` + `curl /contacto/`: 200, one `<form method="POST">`; server stopped afterwards.
   - Not run: real SMTP delivery, Lighthouse, screenshots (pane screenshot timed out).
 
-## Deployment notes (Vercel)
-Set in Vercel project env (server-side): `SMTP_HOST` (IONOS: `smtp.ionos.es`), `SMTP_PORT` (465), `SMTP_SECURE` (true), `SMTP_USER` (full mailbox), `SMTP_PASS`, optional `CONTACT_TO` (default `cdi@cdimaquinarias.com`). Without SMTP vars the form shows the generic failure and logs "[contact] SMTP is not configured".
+## Deployment notes (Cloudflare Workers)
+- One-time (user, needs a Cloudflare account): `npx wrangler login`; `npx wrangler kv namespace create CONTACT_RATE_LIMIT` and paste the id into `wrangler.jsonc` (replaces the all-zero placeholder; without the binding the in-memory limiter is used).
+- Secrets via `npx wrangler secret put <NAME>`: `SMTP_HOST` (IONOS: `smtp.ionos.es`), `SMTP_PORT` (465), `SMTP_SECURE` (true), `SMTP_USER` (full mailbox), `SMTP_PASS`, optional `CONTACT_TO` (default `cdi@cdimaquinarias.com`). Locally: `.dev.vars` (template `.dev.vars.example`). Without SMTP values the form shows the generic failure and logs "[contact] SMTP is not configured".
+- Deploy: `npm run deploy` (`astro build && wrangler deploy`, uses the generated `dist/server/wrangler.json`).
+- Domain: move `cdimaquinarias.com` DNS from IONOS to Cloudflare (keep IONOS MX/mail records), then attach `www.cdimaquinarias.com` as a Worker custom domain and redirect the apex to `www`.
+- Free plan: 10 ms CPU per request (network wait excluded), no hard wall-time limit for HTTP requests (8 s send deadline fits), 1,000 KV writes/day (≤ 2 per accepted submission). Observability logs enabled in `wrangler.jsonc`.
+- After deploy: send one real submission (implicit TLS on 465 was not exercised locally).
 
 ## Next step
-Native review of Phase 2 (`399b802`..HEAD) / delivery decision by the user (push and PR are human decisions). Legal texts need review by the business/legal advisor. Configure SMTP env vars in Vercel and test a real submission. Provide `public/og-image.jpg`, real photos and logo. `.claude/launch.json` still runs `npm run preview`, which cannot serve on-demand routes with the Vercel adapter; switch it to `npm run dev`.
+Delivery decision by the user for Phase 4 (push and PR are human decisions). Cloudflare setup above (account, KV id, secrets, deploy, DNS). Legal texts need review by the business/legal advisor. Provide `public/og-image.jpg`, real photos and logo. `.claude/launch.json` should run `npm run preview` (build + `wrangler dev`, serves on port 8787) or `npm run dev`.
 
 ## Phase 2 native review
 - Range `45e42eb`..`a801fa2` (includes `399b802`), risk high, consent granted, 4 lenses: approved, acknowledged/burned (lineage review-4b8339ac6978cbe5).
@@ -152,4 +157,7 @@ Rationale: user moves hosting from Vercel to Cloudflare (free plan allows commer
   - `resolveClientIp`: `cf-connecting-ip` → `clientAddress` → first `x-forwarded-for` → `unknown`.
   - RED: `npm test` 3 files failed — "Cannot find module '../../src/infrastructure/rateLimit/FailOpenRateLimiter'", same for `KvRateLimiter`, and clientKey "expected '203.0.113.7' to be '192.0.2.10'". GREEN: 10 files, 52 passed.
   - `wrangler dev` (local simulated KV): 3 valid POSTs → 200 (delivered to fake SMTP), 4th → 429 with the Spanish alert; log "[contact] rate limited (retry after 487s)" (window-aligned, i.e. KV path); local KV holds `contact:<sha256>:<windowStart>` and `contact:global:<windowStart>`.
-- [ ] T15 — Replace Vercel references (privacy §5 processor, README, deployment notes). Route: delegated writer.
+- [x] T15 — Replace Vercel references (privacy §5 processor, README, deployment notes). Route: delegated writer.
+  - `src/data/legal.ts` privacy §5: hosting/infrastructure processor "Cloudflare, Inc." + generic EEA-transfer safeguards sentence (A4 updated; legal review flag kept). README: stack, scripts (`preview`, `deploy`, `test`), local dev with `.dev.vars`, Cloudflare deployment steps, architecture tree (core/infrastructure/actions). Deployment notes above rewritten for Cloudflare.
+- Phase 4 verification: `npm run check` 0 errors/0 warnings/0 hints; `npm test` 10 files, 52 passed; `npm run build` Complete (`@astrojs/cloudflare`); Node scan of `dist/client` (8 prerendered pages): h1=1 each, titles 29–56 chars and unique, descriptions 129–142 chars and unique, all JSON-LD parses, sitemap 9 URLs all with trailing slash. `npm run preview` (wrangler dev :8787, local KV + fake SMTP): GET `/`, `/servicios/`, `/contacto/`, `/contacto/?equipo=recogepedidos` → 200; privacy page shows "Cloudflare, Inc."; 4 valid POSTs → 200, 200, 200 (3 messages received by the fake SMTP), 429 (KV path, window-aligned retry 275 s). `npm run dev` (astro dev :4321) serves `/` and `/contacto/` → 200. `rg -i vercel src README.md astro.config.mjs package.json` → 0 matches.
+- Phase 4 commits: T13 `0fbde9e` build: deploy to cloudflare workers; T14 `3b11ba6` feat(contact): add workers kv rate limiter; T15 = HEAD docs: replace vercel references with cloudflare.

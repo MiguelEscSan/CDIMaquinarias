@@ -216,7 +216,7 @@ const privacy: LegalDocument = {
         {
           type: "ul",
           items: [
-            "El proveedor de alojamiento del sitio web (Vercel Inc.), que procesa técnicamente las solicitudes que realiza al visitar la web y al enviar el formulario.",
+            "El proveedor de alojamiento e infraestructura del sitio web (Cloudflare, Inc.), que procesa técnicamente las solicitudes que realiza al visitar la web y al enviar el formulario. Este proveedor puede tratar datos fuera del Espacio Económico Europeo; en ese caso, la transferencia se ampara en las garantías previstas en el RGPD, como las cláusulas contractuales tipo aprobadas por la Comisión Europea.",
             "El proveedor de correo electrónico de la empresa, a través de cuyo servidor SMTP se nos remiten por correo electrónico los datos que introduce en el formulario de contacto.",
           ],
         },
