@@ -6,6 +6,12 @@ import type { RateLimitPolicy } from "../core/contact/RateLimiter";
  */
 export const SEND_DEADLINE_MS = 8000;
 
+/**
+ * Upper bound for each Workers KV read/write of the rate limiter. A slower call
+ * rejects, so the limiter falls back to in-memory counters instead of waiting.
+ */
+export const KV_TIMEOUT_MS = 1500;
+
 /** Contact form anti-abuse limits; a submission must pass both. */
 export const CONTACT_RATE_LIMITS = {
   /** Per client (hashed IP). */

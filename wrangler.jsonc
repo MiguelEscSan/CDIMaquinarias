@@ -6,20 +6,18 @@
   "compatibility_date": "2026-09-29",
   // Required by Nodemailer (node:net, node:tls, node:crypto, ...).
   "compatibility_flags": ["nodejs_compat"],
+  // Static output only; the server bundle lives in dist/server and must never be public.
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist/client"
   },
-  "kv_namespaces": [
-    {
-      // Contact form rate limiter. Create the namespace once with
-      //   npx wrangler kv namespace create CONTACT_RATE_LIMIT
-      // and paste the returned id here. Without the binding the site falls back
-      // to the per-instance in-memory limiter.
-      "binding": "CONTACT_RATE_LIMIT",
-      "id": "00000000000000000000000000000000"
-    }
-  ],
+  // Optional: shared contact-form rate limiter in Workers KV. Without it the site
+  // uses a per-instance in-memory limiter and deploys fine. To enable it:
+  //   1. npx wrangler kv namespace create CONTACT_RATE_LIMIT
+  //   2. paste the returned id below and uncomment the block.
+  // "kv_namespaces": [
+  //   { "binding": "CONTACT_RATE_LIMIT", "id": "<namespace id>" }
+  // ],
   "observability": {
     "enabled": true,
     "logs": { "enabled": true }

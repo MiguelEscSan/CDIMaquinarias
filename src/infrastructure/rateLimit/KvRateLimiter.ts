@@ -3,6 +3,8 @@ import type {
   RateLimiter,
   RateLimitPolicy,
 } from "../../core/contact/RateLimiter";
+import { withDeadline } from "../../core/shared/withDeadline";
+import { KV_TIMEOUT_MS } from "../../config/contactLimits";
 
 /** The subset of a Workers KV namespace this adapter needs (fakeable in tests). */
 export interface KvNamespaceLike {
@@ -13,6 +15,8 @@ export interface KvNamespaceLike {
 export interface KvRateLimiterOptions {
   /** Clock in epoch milliseconds (injectable for tests). */
   now?: () => number;
+  /** Each KV call rejects with DeadlineExceededError after this many ms. */
+  timeoutMs?: number;
 }
 
 /** Workers KV rejects `expirationTtl` values below 60 seconds. */
@@ -30,15 +34,21 @@ export class KvRateLimiter implements RateLimiter {
   private readonly windowMs: number;
   private readonly ttlSeconds: number;
   private readonly now: () => number;
+  private readonly timeoutMs: number;
 
   constructor(
     private readonly kv: KvNamespaceLike,
     private readonly policy: RateLimitPolicy,
-    { now = Date.now }: KvRateLimiterOptions = {},
+    { now = Date.now, timeoutMs = KV_TIMEOUT_MS }: KvRateLimiterOptions = {},
   ) {
     this.windowMs = policy.windowSeconds * 1000;
     this.ttlSeconds = Math.max(KV_MIN_TTL_SECONDS, policy.windowSeconds);
     this.now = now;
+    this.timeoutMs = timeoutMs;
+  }
+
+  private bounded<T>(call: () => Promise<T>): Promise<T> {
+    return withDeadline(call, this.timeoutMs);
   }
 
   async consume(key: string): Promise<RateLimitDecision> {
@@ -46,13 +56,16 @@ export class KvRateLimiter implements RateLimiter {
     const windowStart = Math.floor(now / this.windowMs) * this.windowMs;
     const storageKey = `${key}:${windowStart}`;
 
-    const count = Number.parseInt((await this.kv.get(storageKey)) ?? "0", 10) || 0;
+    const stored = await this.bounded(() => this.kv.get(storageKey));
+    const count = Number.parseInt(stored ?? "0", 10) || 0;
     if (count >= this.policy.limit) {
       const retryAfterSeconds = Math.max(1, Math.ceil((windowStart + this.windowMs - now) / 1000));
       return { allowed: false, retryAfterSeconds };
     }
 
-    await this.kv.put(storageKey, String(count + 1), { expirationTtl: this.ttlSeconds });
+    await this.bounded(() =>
+      this.kv.put(storageKey, String(count + 1), { expirationTtl: this.ttlSeconds }),
+    );
     return { allowed: true, retryAfterSeconds: 0 };
   }
 }

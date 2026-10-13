@@ -9,7 +9,7 @@ Sitio corporativo de CDI Maquinarias (distribuidores de STILL en Las Palmas de G
 - TypeScript en modo estricto
 - `@astrojs/sitemap` para `sitemap-index.xml`
 - `@astrojs/cloudflare` + Wrangler: despliegue en Cloudflare Workers (recursos estáticos + Worker para `/contacto/`)
-- Nodemailer (SMTP) para el formulario de contacto; límite de envíos en Workers KV
+- Nodemailer (SMTP) para el formulario de contacto; límite de envíos en memoria o, opcionalmente, en Workers KV
 
 Requisitos: Node.js >= 22.12.
 
@@ -27,19 +27,17 @@ Requisitos: Node.js >= 22.12.
 
 ## Desarrollo local
 
-Copie `.dev.vars.example` a `.dev.vars` (no se versiona) y complete los valores SMTP; `npm run dev` y `npm run preview` los leen desde ahí. Sin `SMTP_HOST`, `SMTP_USER` y `SMTP_PASS` el formulario muestra un error genérico y el servidor registra "[contact] SMTP is not configured". En local, Wrangler simula el espacio KV del limitador.
+Copie `.dev.vars.example` a `.dev.vars` (no se versiona) y complete los valores SMTP; `npm run dev` y `npm run preview` los leen desde ahí. Sin `SMTP_HOST`, `SMTP_USER` y `SMTP_PASS` el formulario muestra un error genérico y el servidor registra "[contact] SMTP is not configured". Mientras el enlace KV esté comentado en `wrangler.jsonc`, el limitador usa memoria; si lo activa, Wrangler simula el espacio KV en local.
 
 ## Despliegue en Cloudflare
 
 Requiere una cuenta de Cloudflare (el plan gratuito basta) e iniciar sesión una vez con `npx wrangler login`.
 
-1. Cree el espacio KV del limitador y copie el `id` devuelto en `wrangler.jsonc` (`kv_namespaces` → `CONTACT_RATE_LIMIT`):
+1. Opcional (recomendado): límite de envíos compartido en Workers KV. El despliegue funciona sin este paso; sin el enlace se usa un límite en memoria por instancia. Para activarlo, cree el espacio KV, pegue el `id` devuelto en el bloque comentado `kv_namespaces` de `wrangler.jsonc` y descoméntelo:
 
    ```sh
    npx wrangler kv namespace create CONTACT_RATE_LIMIT
    ```
-
-   Sin este enlace el sitio funciona igual, con un límite en memoria por instancia.
 
 2. Defina los secretos (cada comando pide el valor):
 

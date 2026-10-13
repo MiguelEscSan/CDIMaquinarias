@@ -1,4 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { KV_TIMEOUT_MS } from "../../src/config/contactLimits";
+import { DeadlineExceededError } from "../../src/core/shared/withDeadline";
 import {
   KvRateLimiter,
   type KvNamespaceLike,
@@ -119,5 +121,55 @@ describe("KvRateLimiter", () => {
     const limiter = new KvRateLimiter(kv, policy);
 
     await expect(limiter.consume("a")).rejects.toThrow("KV unavailable");
+  });
+
+  describe("bounded KV calls", () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+    });
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    const never = () => new Promise<never>(() => {});
+
+    it("rejects when a KV read does not answer within the timeout", async () => {
+      const kv: KvNamespaceLike = { get: never, put: async () => {} };
+      const limiter = new KvRateLimiter(kv, policy, { timeoutMs: 1500 });
+
+      const result = limiter.consume("a");
+      const assertion = expect(result).rejects.toBeInstanceOf(DeadlineExceededError);
+      await vi.advanceTimersByTimeAsync(1500);
+
+      await assertion;
+    });
+
+    it("rejects when a KV write does not answer within the timeout", async () => {
+      const kv: KvNamespaceLike = { get: async () => null, put: never };
+      const limiter = new KvRateLimiter(kv, policy, { timeoutMs: 1500 });
+
+      const result = limiter.consume("a");
+      const assertion = expect(result).rejects.toBeInstanceOf(DeadlineExceededError);
+      await vi.advanceTimersByTimeAsync(1500);
+
+      await assertion;
+    });
+
+    it("defaults to the configured KV timeout", async () => {
+      const kv: KvNamespaceLike = { get: never, put: async () => {} };
+      const limiter = new KvRateLimiter(kv, policy);
+      let settled = false;
+      const result = limiter.consume("a").catch((error: unknown) => {
+        settled = true;
+        throw error;
+      });
+      const assertion = expect(result).rejects.toBeInstanceOf(DeadlineExceededError);
+
+      await vi.advanceTimersByTimeAsync(KV_TIMEOUT_MS - 1);
+      expect(settled).toBe(false);
+      await vi.advanceTimersByTimeAsync(1);
+
+      await assertion;
+    });
   });
 });

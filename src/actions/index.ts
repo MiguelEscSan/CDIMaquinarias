@@ -11,16 +11,13 @@ import {
 } from "astro:env/server";
 import { handleContactSubmission } from "../core/contact/handleContactSubmission";
 import type { MailSender } from "../core/contact/MailSender";
-import type { RateLimiter, RateLimitPolicy } from "../core/contact/RateLimiter";
 import {
   ContactDeliveryTimeoutError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
 } from "../core/contact/errors";
 import { NodemailerMailSender } from "../infrastructure/mail/NodemailerMailSender";
-import { FailOpenRateLimiter } from "../infrastructure/rateLimit/FailOpenRateLimiter";
-import { InMemoryRateLimiter } from "../infrastructure/rateLimit/InMemoryRateLimiter";
-import { KvRateLimiter, type KvNamespaceLike } from "../infrastructure/rateLimit/KvRateLimiter";
+import { createRateLimiter } from "../infrastructure/rateLimit/createRateLimiter";
 import { CONTACT_RATE_LIMITS, SEND_DEADLINE_MS } from "../config/contactLimits";
 import { clientRateLimitKey, resolveClientIp } from "../lib/clientKey";
 import { contactFailureFor } from "../lib/contactFeedback";
@@ -50,19 +47,9 @@ const contactInput = z.object({
   equipo: z.string().max(100).optional(),
 });
 
-/** Workers KV when bound (shared across instances), else per-instance memory. KV errors fail open. */
-function createRateLimiter(policy: RateLimitPolicy, kv: KvNamespaceLike | undefined): RateLimiter {
-  const memory = new InMemoryRateLimiter(policy);
-  if (!kv) return memory;
-  return new FailOpenRateLimiter(new KvRateLimiter(kv, policy), memory, (error) => {
-    console.error("[contact] KV rate limiter failed; using in-memory limits:", error);
-  });
-}
-
 // Module scope so in-memory counters survive across requests served by the same instance.
-const rateLimitKv = env.CONTACT_RATE_LIMIT;
-const clientLimiter = createRateLimiter(CONTACT_RATE_LIMITS.perClient, rateLimitKv);
-const globalLimiter = createRateLimiter(CONTACT_RATE_LIMITS.global, rateLimitKv);
+const clientLimiter = createRateLimiter(env, { policy: CONTACT_RATE_LIMITS.perClient });
+const globalLimiter = createRateLimiter(env, { policy: CONTACT_RATE_LIMITS.global });
 
 function createMailSender(): MailSender | undefined {
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return undefined;
