@@ -111,3 +111,7 @@ Set in Vercel project env (server-side): `SMTP_HOST` (IONOS: `smtp.ionos.es`), `
 
 ## Next step
 Native review of Phase 2 (`399b802`..HEAD) / delivery decision by the user (push and PR are human decisions). Legal texts need review by the business/legal advisor. Configure SMTP env vars in Vercel and test a real submission. Provide `public/og-image.jpg`, real photos and logo. `.claude/launch.json` still runs `npm run preview`, which cannot serve on-demand routes with the Vercel adapter; switch it to `npm run dev`.
+
+## Phase 2 native review
+- Range `45e42eb`..`a801fa2` (includes `399b802`), risk high, consent granted, 4 lenses: approved, acknowledged/burned (lineage review-4b8339ac6978cbe5).
+- Advisory follow-ups (non-blocking): F1 rate limit / anti-abuse on contact action (R1-001, R4-002); F2 overall SMTP send deadline below Vercel maxDuration (R4-001); F3 single source for form validation limits (R2-001); F4 legal template punctuation depends on legal name ending in "." (R2-002); F5 action boundary + contacto page-state tests (R3-001, R3-002); F6 honeypot check before SMTP config check (R3-003).
