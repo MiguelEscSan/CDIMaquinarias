@@ -1,13 +1,6 @@
 import type { ContactMessage } from "./ContactMessage";
 import type { MailSender, OutgoingEmail } from "./MailSender";
-
-/** Delivery failed; the original transport error is kept in `cause` and never shown to visitors. */
-export class ContactDeliveryError extends Error {
-  constructor(cause: unknown) {
-    super("Contact message could not be delivered", { cause });
-    this.name = "ContactDeliveryError";
-  }
-}
+import { ContactDeliveryError } from "./errors";
 
 export type SendContactResult = { status: "sent" } | { status: "discarded" };
 
@@ -16,6 +9,10 @@ export interface SendContactDeps {
   /** Inbox that receives the inquiries. */
   to: string;
 }
+
+/** Bots fill the hidden field; humans leave it empty. */
+export const isHoneypotFilled = (input: ContactMessage) =>
+  Boolean(input.honeypot && input.honeypot.trim() !== "");
 
 const singleLine = (value: string) => value.replace(/[\r\n]+/g, " ").trim();
 
@@ -40,7 +37,7 @@ export async function sendContactMessage(
   { sender, to }: SendContactDeps,
 ): Promise<SendContactResult> {
   // Bots fill the hidden field; pretend success so they get no signal.
-  if (input.honeypot && input.honeypot.trim() !== "") return { status: "discarded" };
+  if (isHoneypotFilled(input)) return { status: "discarded" };
 
   try {
     await sender.send(buildContactEmail(input, to));

@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 import type { MailSender, OutgoingEmail } from "../../src/core/contact/MailSender";
 import type { ContactMessage } from "../../src/core/contact/ContactMessage";
-import {
-  ContactDeliveryError,
-  sendContactMessage,
-} from "../../src/core/contact/sendContactMessage";
+import { ContactDeliveryError } from "../../src/core/contact/errors";
+import { sendContactMessage } from "../../src/core/contact/sendContactMessage";
 
 class FakeMailSender implements MailSender {
   sent: OutgoingEmail[] = [];

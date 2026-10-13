@@ -200,6 +200,10 @@ const privacy: LegalDocument = {
       blocks: [
         { type: "p", text: "La base legal para el tratamiento de sus datos es:" },
         { type: "ul", items: ["Consentimiento inequívoco."] },
+        {
+          type: "p",
+          text: "Además, sobre la base de nuestro interés legítimo en evitar el uso abusivo del formulario de contacto, tratamos de forma temporal un identificador de conexión anonimizado, obtenido a partir de su dirección IP, que se elimina automáticamente en un plazo máximo de 1 hora.",
+        },
       ],
     },
     {

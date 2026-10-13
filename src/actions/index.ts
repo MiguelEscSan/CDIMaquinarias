@@ -8,9 +8,14 @@ import {
   SMTP_SECURE,
   SMTP_USER,
 } from "astro:env/server";
-import { sendContactMessage } from "../core/contact/sendContactMessage";
+import { handleContactSubmission } from "../core/contact/handleContactSubmission";
 import type { MailSender } from "../core/contact/MailSender";
+import { ContactMailNotConfiguredError, ContactRateLimitedError } from "../core/contact/errors";
 import { NodemailerMailSender } from "../infrastructure/mail/NodemailerMailSender";
+import { InMemoryRateLimiter } from "../infrastructure/rateLimit/InMemoryRateLimiter";
+import { CONTACT_RATE_LIMITS } from "../config/contactLimits";
+import { clientRateLimitKey, resolveClientIp } from "../lib/clientKey";
+import { contactFailureFor } from "../lib/contactFeedback";
 import { contactFormCopy } from "../data/contactContent";
 import { findRentingCategory } from "../data/renting";
 
@@ -37,6 +42,10 @@ const contactInput = z.object({
   equipo: z.string().max(100).optional(),
 });
 
+// Module scope so counters survive across requests served by the same instance.
+const clientLimiter = new InMemoryRateLimiter(CONTACT_RATE_LIMITS.perClient);
+const globalLimiter = new InMemoryRateLimiter(CONTACT_RATE_LIMITS.global);
+
 function createMailSender(): MailSender | undefined {
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return undefined;
   return new NodemailerMailSender({
@@ -48,22 +57,26 @@ function createMailSender(): MailSender | undefined {
   });
 }
 
-const deliveryFailed = () =>
-  new ActionError({ code: "INTERNAL_SERVER_ERROR", message: contactFormCopy.failure });
+function logFailure(error: unknown): void {
+  // Server-side only; visitors get a generic message.
+  if (error instanceof ContactRateLimitedError) {
+    console.warn(`[contact] rate limited (retry after ${error.retryAfterSeconds}s).`);
+  } else if (error instanceof ContactMailNotConfiguredError) {
+    console.error("[contact] SMTP is not configured (SMTP_HOST, SMTP_USER, SMTP_PASS).");
+  } else {
+    console.error("[contact] submission failed:", error instanceof Error ? error.cause ?? error : error);
+  }
+}
 
 export const server = {
   contact: defineAction({
     accept: "form",
     input: contactInput,
-    handler: async (input) => {
-      const sender = createMailSender();
-      if (!sender) {
-        console.error("[contact] SMTP is not configured (SMTP_HOST, SMTP_USER, SMTP_PASS).");
-        throw deliveryFailed();
-      }
+    handler: async (input, context) => {
+      const ip = resolveClientIp(() => context.clientAddress, context.request.headers);
 
       try {
-        await sendContactMessage(
+        await handleContactSubmission(
           {
             name: input.name,
             email: input.email,
@@ -71,12 +84,17 @@ export const server = {
             equipment: findRentingCategory(input.equipo)?.name,
             honeypot: input.website,
           },
-          { sender, to: CONTACT_TO },
+          {
+            clientKey: await clientRateLimitKey(ip),
+            clientLimiter,
+            globalLimiter,
+            createSender: createMailSender,
+            to: CONTACT_TO,
+          },
         );
       } catch (error) {
-        // Log server-side only; visitors get a generic message.
-        console.error("[contact] delivery failed:", error instanceof Error ? error.cause ?? error : error);
-        throw deliveryFailed();
+        logFailure(error);
+        throw new ActionError(contactFailureFor(error));
       }
 
       return { sent: true as const };

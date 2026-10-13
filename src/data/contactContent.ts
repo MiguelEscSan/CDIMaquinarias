@@ -1,6 +1,6 @@
 import type { CtaLink, SectionCopy } from "../types";
 import { pages } from "./pages";
-import { siteMeta } from "./siteInfo";
+import { primaryPhone, siteMeta } from "./siteInfo";
 
 export const contactDetailsContent: SectionCopy & {
   labels: { phone: string; email: string; address: string; hours: string };
@@ -58,6 +58,7 @@ export const contactFormCopy = {
   submitLabel: "Enviar",
   success: "¡Gracias! Nos pondremos en contacto con usted lo antes posible.",
   failure: "Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo o llámenos.",
+  rateLimited: `Ha enviado varios mensajes en poco tiempo. Inténtelo de nuevo en unos minutos o llámenos al ${primaryPhone.display}.`,
   equipmentPrefill: (name: string) => `Me interesa recibir más información sobre: ${name}.`,
   errors: {
     nameRequired: "Indique su nombre.",

@@ -5,6 +5,7 @@ import ContactSection from "../components/sections/ContactSection.astro";
 import ContactForm, { type ContactFormState } from "../components/sections/ContactForm.astro";
 import MapSection from "../components/sections/MapSection.astro";
 import { contactFormCopy } from "../data/contactContent";
+import { contactErrorFeedback } from "../lib/contactFeedback";
 import { pages } from "../data/pages";
 import { findRentingCategory } from "../data/renting";
 
@@ -13,10 +14,11 @@ export const prerender = false;
 
 const result = Astro.getActionResult(actions.contact);
 const inputError = isInputError(result?.error) ? result.error : undefined;
+const failure = result?.error && !inputError ? contactErrorFeedback(result.error.code) : undefined;
 
 const state: ContactFormState = {
   success: result?.data?.sent === true,
-  formError: result?.error && !inputError ? contactFormCopy.failure : undefined,
+  formError: failure?.message,
   fieldErrors: inputError?.fields ?? {},
   values: { name: "", email: "", message: "", privacy: false },
 };
@@ -47,7 +49,8 @@ if (equipment) {
   if (!state.values.message) state.values.message = contactFormCopy.equipmentPrefill(equipment.name);
 }
 
-if (result?.error) Astro.response.status = inputError ? 400 : 500;
+if (inputError) Astro.response.status = 400;
+else if (failure) Astro.response.status = failure.status;
 ---
 
 <PageLayout page={pages.contact}>
