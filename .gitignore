@@ -3,6 +3,8 @@ node_modules/
 
 # build output
 dist/
+.wrangler/
+# leftover output of the former Vercel adapter
 .vercel/
 .astro/
 
@@ -13,6 +15,9 @@ npm-debug.log*
 .env
 .env.*
 !.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
 
 # OS / editor
 .DS_Store

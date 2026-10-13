@@ -7,14 +7,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler deploy",
     "check": "astro check",
     "astro": "astro",
     "test": "vitest run"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.4",
     "@astrojs/sitemap": "^3.7.4",
-    "@astrojs/vercel": "^11.0.14",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.8",
     "nodemailer": "^10.0.11",
@@ -24,6 +25,10 @@
     "@astrojs/check": "^0.9.10",
     "@emnapi/runtime": "^1.11.3",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.4"
+    "vitest": "^5.0.4",
+    "wrangler": "^4.145.0"
+  },
+  "overrides": {
+    "@cloudflare/vite-plugin": "1.62.3"
   }
 }

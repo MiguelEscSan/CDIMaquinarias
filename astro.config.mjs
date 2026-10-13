@@ -1,13 +1,16 @@
 // @ts-check
 import { defineConfig, envField } from "astro/config";
 import sitemap from "@astrojs/sitemap";
-import vercel from "@astrojs/vercel";
+import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://www.cdimaquinarias.com",
   output: "static",
-  adapter: vercel(),
+  // No astro:assets images yet; avoids the Cloudflare Images (IMAGES) binding.
+  adapter: cloudflare({ imageService: "passthrough" }),
+  // No Astro sessions are used; skips the adapter's default SESSION KV binding.
+  session: false,
   trailingSlash: "always",
   integrations: [sitemap()],
   env: {

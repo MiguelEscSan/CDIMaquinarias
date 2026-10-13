@@ -1,0 +1,9 @@
+# Copy to .dev.vars (gitignored) for `npm run dev` / `npm run preview`.
+# In production set each value with `npx wrangler secret put <NAME>`.
+SMTP_HOST=smtp.ionos.es
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=buzon@cdimaquinarias.com
+SMTP_PASS=change-me
+# Optional; defaults to cdi@cdimaquinarias.com
+# CONTACT_TO=cdi@cdimaquinarias.com
