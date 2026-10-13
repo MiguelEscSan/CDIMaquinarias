@@ -57,7 +57,9 @@ Current site looks like an old template; business data is not structured; local 
   - dist inspection: h1=1; title 49 chars; description 129 chars; ld+json parses (`LocalBusiness`, 5 offers); `href="tel:` = 9; heading sequence 1,2,3…; section ids inicio/servicios/still/contacto/ubicacion; 1 non-JSON-LD script (inline menu closer).
   - `rg "928|625|cdi@|Simón|35214" src/components src/layouts`: 0 matches.
   - Not run: visual/browser check, Lighthouse.
-  - Commit: HEAD (feat(home): compose home page sections).
+  - Commit: `45e42eb` feat(home): compose home page sections.
+- Native review (base `fd4b2b8`..`45e42eb`, risk medium, consent granted): approved, lens review-reliability, authority acknowledged/burned (lineage review-a98acb168a80b042). Advisory, non-blocking: R3-001 missing `/og-image.jpg`; R3-002 `toOpeningHoursString` assumes contiguous days; R3-003 no unit tests for `formatHours`/schema builder.
+- Fix (browser check at 375px): header overflowed 22px because Button base `inline-flex` overrode the passed `hidden`; Navbar now passes `max-sm:hidden`. After fix scrollWidth = clientWidth = 375; build and check pass. Commit: HEAD (fix(nav): hide header call button on small screens).
 
 ## Next step
 Native review / delivery decision by the user (push and PR are human decisions). Provide `public/og-image.jpg`, real photos and logo.
