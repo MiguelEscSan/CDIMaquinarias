@@ -15,12 +15,14 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | Aviso de cookies | ✅ Listo · ⚠️ 1 fallo menor abierto (F7) |
 | Despliegue en Cloudflare | ✅ Configurado · ⏳ falta la cuenta, los secretos y el DNS |
 | Textos legales | ⚠️ Adaptados; **pendientes de revisión por la asesora** |
-| Imágenes, logo y foto para redes | ❌ No existen todavía |
+| Imágenes, logo y foto para redes | ❌ No existen todavía (ver [Próximas mejoras](#próximas-mejoras)) |
+| Cambio de idioma | ❌ No implementado: la web solo está en español |
+| Revisión SEO completa | ⏳ Hay base técnica; falta auditarla con herramientas reales |
 
 ## Qué hay que hacer para publicar
 
 1. **Revisión legal.** La asesora revisa las adaptaciones A1 a A8 de los textos legales (ver [Textos legales](#textos-legales-pendientes-de-revisión)).
-2. **Imágenes.** Hay que aportar el logo, las fotos y `public/og-image.jpg` (1200×630), que es la imagen que se muestra al compartir la web en redes y buscadores.
+2. **Imágenes.** Hay que aportar el logo, las fotos y `public/og-image.jpg` (1200×630), que es la imagen que se muestra al compartir la web en redes y buscadores. El plan está en [Próximas mejoras](#próximas-mejoras).
 3. **Cuenta de Cloudflare.** Hay que iniciar sesión con `npx wrangler login`. Crear el namespace de KV es opcional, pero recomendable.
 4. **Secretos.** Con `npx wrangler secret put <NOMBRE>` se cargan `SMTP_HOST` (`smtp.ionos.es`), `SMTP_PORT` (`465`), `SMTP_SECURE` (`true`), `SMTP_USER`, `SMTP_PASS` y, si hace falta, `CONTACT_TO`.
 5. **Desplegar.** Ejecutar `npm run deploy`.
@@ -89,6 +91,47 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | D3 | `astro check` necesita instalar `@emnapi/runtime` aparte (fallo de empaquetado de `@astrojs/astro2tsx`) | Ya está como dependencia de desarrollo |
 | D4 | `overrides` fija `@cloudflare/vite-plugin` en 1.62.3 para no usar versiones publicadas el mismo día | Revisarlo en la próxima actualización |
 | D5 | No hay `.gitattributes`, así que Git avisa de la conversión LF/CRLF en cada commit | Solo es molesto; conviene añadir `* text=auto eol=lf` |
+
+## Próximas mejoras
+
+### 1. Imágenes del negocio
+
+La web actual tiene unas 17 imágenes: 1 en Inicio, 2 en Quiénes somos, 4 en Servicios, 3 en Productos y 7 en Renting. La nueva todavía no tiene ninguna.
+
+| Paso | Detalle |
+|------|---------|
+| Conseguir los originales | Pedir al negocio las fotos en máxima calidad (las de la web actual vienen recortadas y comprimidas) y el logo en SVG o PNG con fondo transparente |
+| Derechos de uso | Las fotos de producto y los logotipos de STILL pueden tener restricciones de marca: confirmar con STILL qué material puede usar un distribuidor |
+| Optimizar | Usar `<Image>`/`<Picture>` de `astro:assets` con AVIF/WebP, `width`/`height` fijos y `loading="lazy"` fuera de la primera pantalla. Hay que cambiar `imageService: "passthrough"` a `"compile"` en `astro.config.mjs`, para optimizar en build sin el binding de Cloudflare Images |
+| Imagen para redes | Crear `public/og-image.jpg` (1200×630). Ya la usan Open Graph, Twitter y el JSON-LD |
+| Accesibilidad | Un texto `alt` descriptivo por imagen, guardado en `src/data/` junto al contenido |
+| Peso | Objetivo orientativo: menos de 200 KB por imagen grande |
+
+### 2. Cambio de idioma
+
+**Decisiones pendientes:** qué idiomas (por ejemplo inglés o alemán, por el turismo y la empresa extranjera en Gran Canaria) y quién traduce.
+
+| Paso | Detalle |
+|------|---------|
+| Rutas | i18n nativo de Astro: el español sin prefijo (las URL actuales no cambian) y los demás idiomas con prefijo (`/en/servicios/`) |
+| Contenido | `src/data/` pasa a organizarse por idioma (`es`, `en`…), sin texto fijo en los componentes |
+| Selector | Selector de idioma en el menú, que lleve a la misma página en el otro idioma, no a la portada |
+| SEO multilingüe | `hreflang` en cada página (más `x-default`), `<html lang>` según el idioma, sitemap con alternativas por idioma y JSON-LD traducido |
+| Cookies y formulario | Traducir los textos del aviso de cookies (la librería admite varios idiomas) y los mensajes de error del formulario |
+| Textos legales | Una traducción de los textos legales también debe pasar por la asesora; si no se traducen, hay que enlazar la versión en español e indicarlo |
+
+### 3. Revisión SEO
+
+| Área | Qué revisar |
+|------|-------------|
+| Rendimiento | Lighthouse / PageSpeed Insights en móvil y escritorio, Core Web Vitals (LCP, CLS, INP), sobre todo después de añadir las imágenes |
+| Indexación | Google Search Console: verificar el dominio, enviar `sitemap-index.xml` y revisar la cobertura después del cambio de hosting |
+| Migración | Las URL coinciden con la web actual, pero hay que comprobar las variantes sin barra final, sin `www` y `http`, que deben redirigir con 301 a la URL canónica. También buscar URL antiguas indexadas que no existan en la nueva web |
+| Datos estructurados | Validar `LocalBusiness` y `BreadcrumbList` con la prueba de resultados enriquecidos de Google |
+| SEO local | Que el nombre, la dirección, el teléfono y el horario coincidan con Google Business Profile y con los directorios; enlazar la ficha de Google |
+| Contenido | Revisar palabras clave por página (carretillas, alquiler, reparación, Las Palmas, Gran Canaria), títulos, descripciones y enlaces internos |
+| Imágenes | Nombres de archivo y `alt` descriptivos, `og-image` presente |
+| Seguimiento | Si se añade analítica, Cloudflare Web Analytics no usa cookies y no obliga a ampliar el aviso de cookies |
 
 ## Textos legales pendientes de revisión
 
