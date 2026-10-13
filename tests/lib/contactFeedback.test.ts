@@ -85,3 +85,27 @@ describe("localizeFieldErrors", () => {
     expect(localizeFieldErrors({ name: ["constructor"] }, "es")).toEqual({ name: ["constructor"] });
   });
 });
+
+describe("contact feedback in English", () => {
+  const en = getDictionary("en").contact.form;
+
+  it("maps failures to the English copy", () => {
+    expect(contactFailureFor(new ContactRateLimitedError(60), "en")).toEqual({
+      code: "TOO_MANY_REQUESTS",
+      message: en.rateLimited,
+    });
+    expect(contactErrorFeedback("GATEWAY_TIMEOUT", "en")).toEqual({
+      status: 504,
+      message: en.deliveryUnconfirmed,
+    });
+    expect(contactErrorFeedback(undefined, "en")).toEqual({ status: 500, message: en.failure });
+    expect(en.rateLimited).not.toBe(es.rateLimited);
+  });
+
+  it("renders validation codes in English", () => {
+    expect(localizeFieldErrors({ email: ["emailInvalid"] }, "en")).toEqual({
+      email: [en.errors.emailInvalid],
+    });
+    expect(en.errors.emailInvalid).not.toBe(es.errors.emailInvalid);
+  });
+});

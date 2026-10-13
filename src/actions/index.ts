@@ -22,7 +22,7 @@ import { CONTACT_RATE_LIMITS, SEND_DEADLINE_MS } from "../config/contactLimits";
 import { clientRateLimitKey, resolveClientIp } from "../lib/clientKey";
 import { contactFailureFor, type ContactErrorKey } from "../lib/contactFeedback";
 import { findRentingCategory } from "../data/renting";
-import { defaultLocale, getLocaleFromUrl } from "../i18n";
+import { defaultLocale, getLocaleFromUrl, localeMeta } from "../i18n";
 
 // Messages are validation codes; the page renders them in the visitor's language.
 const errors: Record<ContactErrorKey, ContactErrorKey> = {
@@ -101,6 +101,7 @@ export const server = {
             // The inbox is Spanish-speaking: equipment names are always sent in Spanish.
             equipment: findRentingCategory(input.equipo, defaultLocale)?.name,
             honeypot: input.website,
+            visitorLanguage: localeMeta[locale].label,
           },
           {
             clientKey: await clientRateLimitKey(ip),

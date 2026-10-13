@@ -5,6 +5,8 @@ export interface ContactMessage {
   message: string;
   /** Equipment the visitor asked about (resolved display name). */
   equipment?: string;
+  /** Language the visitor used on the site (display name), for the internal inbox. */
+  visitorLanguage?: string;
   /** Anti-spam field that humans leave empty. */
   honeypot?: string;
 }

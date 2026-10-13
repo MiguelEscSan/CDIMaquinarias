@@ -1,14 +1,16 @@
 ---
 import "../styles/global.css";
 import CookieConsent from "../components/layout/CookieConsent.astro";
-import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "../lib/schema";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildWebPageSchema } from "../lib/schema";
 import { getServices } from "../data/services";
 import { absoluteUrl, contactInfo, siteMeta, stillBrand } from "../data/siteInfo";
-import { getDictionary, localeMeta, type Locale } from "../i18n";
-import type { BreadcrumbItem } from "../types";
+import { getDictionary, hreflangAlternates, localeMeta, locales, type Locale } from "../i18n";
+import type { BreadcrumbItem, PageId } from "../types";
 
 interface Props {
   locale: Locale;
+  /** Enables hreflang alternates for pages in the route map. */
+  pageId?: PageId;
   title?: string;
   description?: string;
   canonical?: string;
@@ -17,7 +19,7 @@ interface Props {
   breadcrumbs?: BreadcrumbItem[];
 }
 
-const { locale } = Astro.props;
+const { locale, pageId } = Astro.props;
 const t = getDictionary(locale);
 const meta = localeMeta[locale];
 const {
@@ -42,7 +44,12 @@ const schemas: object[] = [
     brand: stillBrand,
   }),
 ];
+schemas.push(
+  buildWebPageSchema({ url: canonical, name: title, description, inLanguage: meta.htmlLang, siteUrl: siteMeta.url }),
+);
 if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, siteMeta.url));
+const alternates = pageId ? hreflangAlternates(pageId) : [];
+const ogAlternateLocales = locales.filter((l) => l !== locale).map((l) => localeMeta[l].ogLocale);
 ---
 
 <!doctype html>
@@ -53,6 +60,7 @@ if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, site
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={absoluteUrl(alt.path)} />)}
     <meta name="robots" content={robots} />
     <meta name="theme-color" content="#0f172a" />
     <meta name="format-detection" content="telephone=no" />
@@ -61,6 +69,7 @@ if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, site
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={meta.ogLocale} />
+    {ogAlternateLocales.map((ogLocale) => <meta property="og:locale:alternate" content={ogLocale} />)}
     <meta property="og:site_name" content={siteMeta.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

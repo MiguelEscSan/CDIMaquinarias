@@ -2,14 +2,14 @@ import type { PageId } from "../types";
 import { normalizePath } from "../lib/paths";
 import { defaultLocale, localeMeta, locales, type Locale } from "./config";
 import { routes } from "./routes";
+import { en } from "./en";
 import { es, type Dictionary } from "./es";
 
 export { defaultLocale, isLocale, localeMeta, locales, resolveLocale, type Locale } from "./config";
 export { routes } from "./routes";
 export type { Dictionary } from "./es";
 
-// English is added in T19; until then it falls back to Spanish (no /en/ pages exist yet).
-const dictionaries: Record<Locale, Dictionary> = { es, en: es };
+const dictionaries: Record<Locale, Dictionary> = { es, en };
 
 export function getDictionary(locale: Locale): Dictionary {
   return dictionaries[locale];

@@ -117,3 +117,17 @@ describe("pageIdFromPath", () => {
     expect(pageIdFromPath("/no-existe/")).toBeUndefined();
   });
 });
+
+describe("page files", () => {
+  it("exist for every localized route", async () => {
+    const { existsSync } = await import("node:fs");
+    for (const id of pageIds) {
+      for (const locale of locales) {
+        const path = routes[id][locale];
+        const file = path === "/" ? "src/pages/index.astro" : `src/pages${path.replace(/\/$/, "")}.astro`;
+        const indexFile = `src/pages${path}index.astro`;
+        expect(existsSync(file) || existsSync(indexFile), `${id}/${locale}: ${file}`).toBe(true);
+      }
+    }
+  });
+});

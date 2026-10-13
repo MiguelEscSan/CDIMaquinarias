@@ -27,6 +27,7 @@ export function buildContactEmail(input: ContactMessage, to: string): OutgoingEm
     `Nombre: ${name}`,
     `Correo electrónico: ${input.email}`,
     ...(equipment ? [`Equipo: ${equipment}`] : []),
+    ...(input.visitorLanguage ? [`Idioma del visitante: ${singleLine(input.visitorLanguage)}`] : []),
     "",
     "Mensaje:",
     input.message,

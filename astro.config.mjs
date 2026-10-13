@@ -3,9 +3,12 @@ import { defineConfig, envField } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
+import { sitemapLinks } from "./src/i18n/sitemap.ts";
+
+const site = "https://www.cdimaquinarias.com";
 
 export default defineConfig({
-  site: "https://www.cdimaquinarias.com",
+  site,
   output: "static",
   // No astro:assets images yet; avoids the Cloudflare Images (IMAGES) binding.
   adapter: cloudflare({ imageService: "passthrough" }),
@@ -18,7 +21,15 @@ export default defineConfig({
     locales: ["es", "en"],
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [sitemap()],
+  integrations: [
+    // Translated slugs differ per locale, so alternates come from the route map (not sitemap's own i18n option).
+    sitemap({
+      serialize(item) {
+        const links = sitemapLinks(item.url, site);
+        return links.length > 0 ? { ...item, links } : item;
+      },
+    }),
+  ],
   env: {
     schema: {
       SMTP_HOST: envField.string({ context: "server", access: "secret", optional: true }),

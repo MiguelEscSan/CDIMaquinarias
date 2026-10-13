@@ -1,0 +1,57 @@
+---
+// Links to the same page in every other language (no JS). The current language is marked, not linked.
+import { alternatesFor, getDictionary, localeMeta, type Locale } from "../../i18n";
+import type { PageId } from "../../types";
+
+interface Props {
+  locale: Locale;
+  pageId: PageId;
+  /** "compact" shows language codes (header); "full" shows language names (mobile menu). */
+  variant?: "compact" | "full";
+  /** Render as a navigation landmark (false when nested in another nav). */
+  landmark?: boolean;
+  class?: string;
+}
+
+const { locale, pageId, variant = "compact", landmark = true, class: className = "" } = Astro.props;
+const t = getDictionary(locale).common.language;
+const Tag = landmark ? "nav" : "div";
+const items = alternatesFor(pageId).map((alt) => ({
+  ...alt,
+  code: alt.locale.toUpperCase(),
+  name: localeMeta[alt.locale].label,
+  lang: localeMeta[alt.locale].htmlLang,
+  current: alt.locale === locale,
+}));
+
+const compact = variant === "compact";
+const itemClass = compact
+  ? "inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-2 font-mono text-xs font-semibold tracking-wider"
+  : "flex min-h-12 items-center rounded-lg px-3 text-base font-semibold";
+const linkClass = `${itemClass} text-slate-700 transition-colors duration-300 hover:bg-slate-50 hover:text-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2`;
+const currentClass = `${itemClass} text-brand-hover underline decoration-2 underline-offset-4`;
+---
+
+<Tag aria-label={t.switcherLabel} role={landmark ? undefined : "group"} class={className}>
+  <ul class={compact ? "flex items-center gap-0.5" : "flex flex-wrap gap-2"}>
+    {
+      items.map((item) => (
+        <li>
+          {item.current ? (
+            <span class={currentClass} aria-current="true">
+              <span aria-hidden="true">{compact ? item.code : item.name}</span>
+              <span class="sr-only">
+                <span lang={item.lang}>{item.name}</span> ({t.current})
+              </span>
+            </span>
+          ) : (
+            <a href={item.path} hreflang={item.hreflang} lang={item.lang} class={linkClass}>
+              <span aria-hidden="true">{compact ? item.code : item.name}</span>
+              <span class="sr-only">{item.name}</span>
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</Tag>

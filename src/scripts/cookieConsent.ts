@@ -8,6 +8,7 @@ import {
 } from "vanilla-cookieconsent";
 import { CONSENT_CATEGORIES, cookieConsentBaseConfig } from "../data/cookieConsent";
 import { defaultLocale } from "../i18n/config";
+import { cookies as enCookies } from "../i18n/en/cookies";
 import { cookies as esCookies } from "../i18n/es/cookies";
 
 // Banner language follows <html lang>; the consent cookie is shared by every language.
@@ -16,7 +17,7 @@ const cookieConsentConfig = {
   language: {
     default: defaultLocale,
     autoDetect: "document" as const,
-    translations: { es: esCookies.translation },
+    translations: { es: esCookies.translation, en: enCookies.translation },
   },
 };
 

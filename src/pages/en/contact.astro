@@ -1,0 +1,12 @@
+---
+import ContactPage from "../../views/ContactPage.astro";
+import { resolveContactPageState } from "../../lib/contactPageState";
+
+// On-demand so the form works without JavaScript via Astro Actions.
+export const prerender = false;
+
+const { state, status } = await resolveContactPageState(Astro, "en");
+if (status) Astro.response.status = status;
+---
+
+<ContactPage locale="en" state={state} />

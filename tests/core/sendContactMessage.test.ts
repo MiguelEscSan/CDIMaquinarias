@@ -5,7 +5,7 @@ import {
   ContactDeliveryError,
   ContactDeliveryTimeoutError,
 } from "../../src/core/contact/errors";
-import { sendContactMessage } from "../../src/core/contact/sendContactMessage";
+import { buildContactEmail, sendContactMessage } from "../../src/core/contact/sendContactMessage";
 
 class FakeMailSender implements MailSender {
   sent: OutgoingEmail[] = [];
@@ -23,6 +23,18 @@ const baseMessage: ContactMessage = {
   email: "ana@example.com",
   message: "Necesito una carretilla para mi almacén.",
 };
+
+describe("buildContactEmail", () => {
+  it("states the visitor's language in the body when known", () => {
+    const email = buildContactEmail({ ...baseMessage, visitorLanguage: "English" }, TO);
+    expect(email.text).toContain("Idioma del visitante: English");
+    expect(email.subject).toBe("Nueva consulta web: Ana Pérez");
+  });
+
+  it("omits the language line when unknown", () => {
+    expect(buildContactEmail(baseMessage, TO).text).not.toContain("Idioma del visitante");
+  });
+});
 
 describe("sendContactMessage", () => {
   it("sends one email to the configured inbox with the visitor as reply-to", async () => {

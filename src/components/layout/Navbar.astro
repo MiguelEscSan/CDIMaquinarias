@@ -2,6 +2,7 @@
 import Badge from "../ui/Badge.astro";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { mainNavIds, navLinks } from "../../data/navigation";
 import { primaryPhone, siteMeta } from "../../data/siteInfo";
 import { getDictionary, localizedPath, type Locale } from "../../i18n";
@@ -14,7 +15,7 @@ interface Props {
   pageId: PageId;
 }
 
-const { locale } = Astro.props;
+const { locale, pageId } = Astro.props;
 const t = getDictionary(locale).common;
 const mainNav = navLinks(mainNavIds, locale);
 const homePath = localizedPath("home", locale);
@@ -55,6 +56,7 @@ const mobileLinkClass =
     </nav>
 
     <div class="flex items-center gap-2">
+      <LanguageSwitcher locale={locale} pageId={pageId} class="max-lg:hidden" />
       <Button href={callCta.href} ariaLabel={callCta.ariaLabel} size="sm" class="max-sm:hidden">
         <Icon name="phone" size={18} slot="icon" />
         {callCta.label}
@@ -82,6 +84,13 @@ const mobileLinkClass =
               </li>
             ))}
           </ul>
+          <LanguageSwitcher
+            locale={locale}
+            pageId={pageId}
+            variant="full"
+            landmark={false}
+            class="mt-3 border-t border-slate-200 pt-3"
+          />
           <div class="mt-3 border-t border-slate-200 pt-3">
             <Button href={callCta.href} ariaLabel={callCta.ariaLabel} fullWidth>
               <Icon name="phone" size={18} slot="icon" />

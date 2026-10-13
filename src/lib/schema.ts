@@ -97,6 +97,26 @@ export function buildLocalBusinessSchema({
   };
 }
 
+/** The current page; carries the language (not defined on LocalBusiness or BreadcrumbList). */
+export function buildWebPageSchema(input: {
+  url: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+  siteUrl: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${input.url}#webpage`,
+    url: input.url,
+    name: input.name,
+    description: input.description,
+    inLanguage: input.inLanguage,
+    about: { "@id": `${new URL("/", input.siteUrl).toString()}#business` },
+  };
+}
+
 /** BreadcrumbList for an inner page; `items` hold site-relative hrefs. */
 export function buildBreadcrumbSchema(items: BreadcrumbItem[], siteUrl: string) {
   return {
