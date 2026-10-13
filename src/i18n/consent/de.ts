@@ -1,7 +1,6 @@
 import type { Translation } from "vanilla-cookieconsent";
 import { CONSENT_CATEGORIES, CONSENT_COOKIE } from "../../data/cookieConsent";
 import { googlePolicyUrl, siteHost, siteMeta } from "../../data/siteInfo";
-import type { Dictionary } from "../es";
 import { routes } from "../routes";
 
 // Kept free of other dictionary imports: this module is bundled into the client script.
@@ -85,4 +84,4 @@ const translation: Translation = {
   },
 };
 
-export const cookies: Dictionary["cookies"] = { labels, translation };
+export const cookies = { labels, translation };

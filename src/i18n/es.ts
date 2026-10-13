@@ -1,8 +1,275 @@
-import type { LegalPageId, LegalSection } from "../../types";
-import { CONSENT_COOKIE } from "../../data/cookieConsent";
-import { googlePolicyUrl, legalInfo, siteHost } from "../../data/siteInfo";
-import { routes } from "../routes";
-import { cookies as cookieCopy } from "./cookies";
+// Spanish (default locale): the reference shape every other locale must match.
+
+import { CONSENT_COOKIE } from "../data/cookieConsent";
+import { address, contactInfo, googlePolicyUrl, legalInfo, primaryPhone, siteHost, siteMeta, stillBrand } from "../data/siteInfo";
+import { cookies as cookieCopy } from "./consent/es";
+import { routes } from "./routes";
+import type { RentingSlug } from "../data/renting";
+import type { AboutContent, LegalPageId, LegalSection, PageCopy, PageId, ProductsContent, ServiceCopy, ServiceId } from "../types";
+
+const common = {
+  skipToContent: "Saltar al contenido",
+  business: {
+    positioning: `Distribuidores de ${stillBrand.name} en Las Palmas de Gran Canaria.`,
+    valueProposition:
+      "Soluciones integrales para empresas que incluyen venta, alquiler y reparación de carretillas elevadoras, retráctiles, apiladores, transpaletas y maquinaria pesada. Además, especialistas en instalación y mantenimiento de sistemas de aire acondicionado y climatización industrial/comercial.",
+    areaServed: "Gran Canaria, Islas Canarias",
+    /** Name of the service catalogue in the LocalBusiness JSON-LD. */
+    catalogName: "Servicios",
+  },
+  /** Machine categories covered by the STILL range. */
+  stillCategories: [
+    "Carretillas elevadoras",
+    "Retráctiles",
+    "Apiladores",
+    "Transpaletas",
+    "Maquinaria pesada",
+  ],
+  countryName: address.country,
+  phoneLabels: { landline: "Teléfono fijo", mobile: "Teléfono móvil" },
+  hours: { weekdays: "Lunes a Viernes", weekend: "Sábado y Domingo", closed: "Cerrado" },
+  nav: {
+    main: "Principal",
+    mobile: "Menú móvil",
+    toggle: "Abrir o cerrar menú",
+    footer: "Pie de página",
+    legal: "Legal",
+    breadcrumb: "Breadcrumb",
+    quickContact: "Contacto rápido",
+  },
+  language: {
+    switcherLabel: "Cambiar idioma",
+    current: "Idioma actual",
+  },
+  brandBadge: `Distribuidor oficial ${stillBrand.name}`,
+  cta: {
+    call: { label: "Llamar ahora", ariaLabel: `Llamar ahora al ${primaryPhone.display}` },
+    quote: {
+      label: "Solicitar presupuesto",
+      ariaLabel: "Solicitar presupuesto mediante el formulario de contacto",
+    },
+  },
+  floatingContact: {
+    phoneLabel: `Llamar al ${primaryPhone.display}`,
+    emailLabel: `Enviar un correo a ${contactInfo.email}`,
+  },
+  footer: {
+    contactHeading: "Contacto",
+    hoursHeading: "Horario",
+    navHeading: "Navegación",
+    copyright: (year: number, legalName: string) =>
+      `© ${year} ${legalName}. Todos los derechos reservados.`,
+  },
+};
+
+const home = {
+  hero: {
+    tagline: "Profesionales en el sector",
+    trustChips: [`Distribuidor oficial ${stillBrand.name}`, "Servicio multimarca", "Gran Canaria"],
+    keyPointsLabel: "Puntos clave",
+  },
+  services: {
+    eyebrow: "Nuestros servicios",
+    title: "La excelencia en servicios de maquinaria",
+    subtitle:
+      "Nuestro compromiso es brindarle productos de calidad, atención personalizada y un excelente servicio de postventa.",
+    moreLabel: "Saber más",
+    allServicesLabel: "Ver todos los servicios",
+  },
+  brand: {
+    eyebrow: `Distribuidor oficial ${stillBrand.name}`,
+    title: `Distribuidores de ${stillBrand.name} en Las Palmas de Gran Canaria`,
+    subtitle: "Asesoramiento comercial y servicio técnico para la gama STILL y maquinaria industrial.",
+    body: "Como distribuidores de STILL en Las Palmas de Gran Canaria, le ayudamos a elegir la maquinaria adecuada a las necesidades de su negocio y le acompañamos con venta, alquiler, reparación y mantenimiento.",
+    categoriesTitle: "Maquinaria con la que trabajamos",
+    productsCtaLabel: "Ver productos STILL",
+  },
+  contactBand: {
+    eyebrow: "Contacto",
+    title: "Hable con nuestro equipo",
+    subtitle: "Llámenos o escríbanos y le atenderemos para preparar su presupuesto.",
+  },
+};
+
+const about: AboutContent = {
+  sections: [
+    {
+      title: "Más de una década de experiencia",
+      paragraphs: [
+        "Somos CDI Maquinarias y nos enorgullece ofrecer una amplia gama de servicios especializados para satisfacer todas sus necesidades relacionadas con maquinaria industrial. Con más de una década de experiencia en el mercado, hemos consolidado nuestra posición como líderes en la reparación, alquiler y venta de máquinas, brindando soluciones confiables y eficientes a nuestros clientes.",
+        "Nuestro equipo de expertos está altamente capacitado en la reparación de una amplia variedad de máquinas, incluidos equipos de marcas reconocidas como STILL. Si necesita una reparación rápida y precisa o busca alquilar o adquirir una nueva máquina, estamos aquí para ayudarle.",
+      ],
+    },
+    {
+      title: "Expertos en aire acondicionado",
+      paragraphs: [
+        "Además de nuestra sólida experiencia en reparaciones de maquinaria industrial, en CDI Maquinarias nos destacamos por ser expertos en el mantenimiento, reparación y venta de sistemas de aire acondicionado. Sabemos lo importante que es un entorno de trabajo cómodo para maximizar la productividad, por lo que nos aseguramos de que sus sistemas de climatización funcionen de manera óptima en todo momento.",
+        "Confíe en CDI Maquinarias para todas sus necesidades de maquinaria industrial. Nuestro equipo de profesionales está aquí para servirle con dedicación, profesionalidad y excelencia en cada paso del proceso. ¡Estamos listos para ser su aliado de confianza en el mantenimiento de su maquinaria y sistemas de aire acondicionado!",
+      ],
+    },
+  ],
+  highlight:
+    "En CDI Maquinarias entendemos la importancia de ofrecer un servicio integral a nuestros clientes. Por eso también proporcionamos presupuestos detallados y transparentes, para que pueda tomar decisiones informadas y planificar su proyecto con confianza.",
+};
+
+const services: { items: Record<ServiceId, ServiceCopy> } = {
+  items: {
+    "reparacion-mantenimiento": {
+      title: "Reparación y mantenimiento",
+      description:
+        "Equipo técnico altamente especializado en resolución de averías multimarca, mantenimiento preventivo y correctivo en taller o in situ.",
+      detail:
+        "Nuestro servicio de reparación y mantenimiento de máquinas es fundamental para garantizar la durabilidad y el rendimiento de los equipos. Con técnicos altamente capacitados y utilizando las últimas tecnologías, nos comprometemos a mantener la maquinaria de nuestros clientes en condiciones óptimas de funcionamiento, desde inspecciones preventivas hasta reparaciones especializadas. Nuestro equipo está dedicado a mantener la productividad y la seguridad en cada operación.",
+      features: [
+        "Resolución de averías multimarca",
+        "Mantenimiento preventivo y correctivo",
+        "Servicio en taller o in situ",
+      ],
+    },
+    "venta-maquinaria": {
+      title: "Ventas",
+      description:
+        "Especialistas en asesoramiento comercial para suministrar la maquinaria adecuada a las necesidades del cliente (gama STILL y maquinaria industrial).",
+      detail:
+        "La división de ventas de nuestra empresa se especializa en ofrecer una amplia gama de máquinas de alta calidad de marcas reconocidas como STILL. Nuestro compromiso radica en proporcionar soluciones eficientes y personalizadas para las necesidades de nuestros clientes. Desde equipos de manipulación de materiales hasta maquinaria de construcción, trabajamos para garantizar la satisfacción y el éxito de quienes confían en nosotros para sus proyectos y operaciones.",
+      features: [
+        "Asesoramiento comercial especializado",
+        "Gama STILL y maquinaria industrial",
+        "Maquinaria adecuada a cada necesidad",
+      ],
+      link: { label: "Saber más", ariaLabel: "Saber más sobre los productos STILL" },
+    },
+    "alquiler-flota": {
+      title: "Alquiler",
+      description:
+        "Flota versátil y flexible para proyectos a corto, medio o largo plazo y puntas de trabajo.",
+      detail:
+        "Nuestra opción de alquiler y renting ofrece una solución flexible y rentable para quienes buscan acceso a equipos de primera clase sin comprometerse con una compra a largo plazo. Con una variedad de modelos de STILL disponibles, adaptamos nuestros planes a las necesidades específicas de cada cliente. Ya sea a corto o largo plazo, nuestro servicio de alquiler garantiza una operación sin complicaciones.",
+      features: [
+        "Proyectos a corto, medio o largo plazo",
+        "Cobertura de puntas de trabajo",
+        "Flota versátil y flexible",
+      ],
+      link: { label: "Saber más", ariaLabel: "Saber más sobre el alquiler y renting de equipos" },
+    },
+    "asesoramiento-especializado": {
+      title: "Asesoramiento",
+      description:
+        "Consultoría técnica continua para dimensionar almacenes y optimizar la intralogística.",
+      detail:
+        "Nuestro servicio de asesoramiento está diseñado para brindar orientación experta a nuestros clientes en la selección, adquisición y optimización de sus equipos. Nuestros asesores, altamente capacitados, trabajan estrechamente con cada cliente para comprender sus necesidades específicas y ofrecer soluciones personalizadas que impulsen la eficiencia y la rentabilidad. Desde la evaluación inicial hasta la implementación, nos comprometemos a orientar y aconsejar a nuestros clientes para que logren el éxito en sus proyectos y operaciones.",
+      features: [
+        "Consultoría técnica continua",
+        "Dimensionamiento de almacenes",
+        "Optimización de la intralogística",
+      ],
+    },
+    climatizacion: {
+      title: "Climatización y aire acondicionado",
+      description:
+        "Montaje, reparación y mantenimiento de equipos de climatización para oficinas, naves y locales comerciales.",
+      detail:
+        "Montaje, reparación y mantenimiento de equipos de climatización para oficinas, naves y locales comerciales. Sabemos lo importante que es un entorno de trabajo cómodo para maximizar la productividad, por lo que nos aseguramos de que sus sistemas de climatización funcionen de manera óptima en todo momento.",
+      features: ["Montaje, reparación y mantenimiento", "Oficinas, naves y locales comerciales"],
+    },
+  },
+};
+
+const products: ProductsContent = {
+  company: {
+    title: "Gran empresa en maquinaria",
+    paragraphs: [
+      "STILL es una empresa alemana reconocida a nivel mundial, especializada en la fabricación y comercialización de equipos de manejo de materiales, como carretillas elevadoras, transpaletas, apiladores y otros equipos de almacenamiento y logística. STILL ofrece soluciones innovadoras para el manejo eficiente de mercancías en almacenes y centros de distribución, con un enfoque en la sostenibilidad, la tecnología avanzada y la eficiencia energética.",
+    ],
+  },
+  distributor: {
+    title: "Catálogos de maquinaria STILL",
+    paragraphs: [
+      "En STILL podrá encontrar una gran variedad de carretillas, transpaletas, trenes de remolque, apiladores, recogepedidos e incluso tractores. Entre en el catálogo y descubra lo mejor en maquinaria.",
+    ],
+  },
+  catalog: {
+    label: "Ver catálogo STILL",
+    ariaLabel: "Ver el catálogo de maquinaria STILL (se abre en una pestaña nueva)",
+  },
+  catalogNote: "El catálogo se abre en la web oficial de STILL.",
+};
+
+const rental: {
+  categories: Record<RentingSlug, string>;
+  moreInfoLabel: string;
+  moreInfoAriaLabel: (name: string) => string;
+} = {
+  categories: {
+    "carretillas-retractiles": "Carretillas retráctiles",
+    "carretillas-contrapesadas-electricas": "Carretillas contrapesadas eléctricas",
+    "carretillas-contrapesadas-diesel-gas": "Carretillas contrapesadas diésel y de gas",
+    recogepedidos: "Recogepedidos",
+    "tractores-con-plataforma": "Tractores con plataforma",
+    "apiladoras-electricas": "Apiladoras eléctricas",
+    "transpaleta-electrica": "Transpaleta eléctrica",
+  },
+  moreInfoLabel: "Más información",
+  moreInfoAriaLabel: (name) => `Solicitar más información sobre ${name}`,
+};
+
+const contact = {
+  details: {
+    eyebrow: "Contáctanos",
+    title: "Hable con nuestro equipo",
+    subtitle: "Llámenos, escríbanos o rellene el formulario y le atenderemos para preparar su presupuesto.",
+    labels: {
+      phone: "Teléfono",
+      email: "Correo electrónico",
+      address: "Dirección",
+      hours: "Horario",
+    },
+  },
+  location: {
+    eyebrow: "Ubicación",
+    title: "Dónde encontrarnos",
+    subtitle: `Atendemos a empresas de ${common.business.areaServed}.`,
+    directionsLabel: "Abrir en Google Maps",
+    directionsAriaLabel: "Abrir la ubicación en Google Maps (se abre en una pestaña nueva)",
+    mapTitle: `Mapa de la ubicación de ${siteMeta.name}`,
+    consent: {
+      title: "Mapa de Google",
+      body: "El mapa se carga desde Google Maps, un servicio de terceros que puede instalar cookies y recopilar datos sobre su actividad. Al pulsar «Cargar mapa» acepta este servicio; puede cambiar su elección en cualquier momento con «Configurar cookies», en el pie de página.",
+      loadLabel: "Cargar mapa",
+      cookiesLinkLabel: "Más información en la política de cookies",
+    },
+  },
+  form: {
+    title: "Envíenos un mensaje",
+    intro: "Le responderemos lo antes posible.",
+    requiredNote: "Los campos marcados con * son obligatorios.",
+    fields: {
+      name: "Nombre",
+      email: "Correo electrónico",
+      message: "Mensaje",
+    },
+    privacy: {
+      before: "He leído y acepto la",
+      linkLabel: "política de privacidad",
+    },
+    honeypotLabel: "Deje este campo vacío",
+    submitLabel: "Enviar",
+    success: "¡Gracias! Nos pondremos en contacto con usted lo antes posible.",
+    failure: "Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo o llámenos.",
+    deliveryUnconfirmed: `No hemos podido confirmar el envío. Es posible que su mensaje haya llegado; si no recibe respuesta en 24 horas, llámenos al ${primaryPhone.display}.`,
+    rateLimited: `Ha enviado varios mensajes en poco tiempo. Inténtelo de nuevo en unos minutos o llámenos al ${primaryPhone.display}.`,
+    equipmentPrefill: (name: string) => `Me interesa recibir más información sobre: ${name}.`,
+    /** Field validation messages, keyed by the codes the action schema emits. */
+    errors: {
+      nameRequired: "Indique su nombre.",
+      nameLength: "El nombre debe tener entre 2 y 100 caracteres.",
+      emailInvalid: "La dirección de correo electrónico no es válida.",
+      messageRequired: "Escriba su mensaje.",
+      messageLength: "El mensaje debe tener entre 10 y 5000 caracteres.",
+      privacyRequired: "Debe aceptar la política de privacidad.",
+    },
+  },
+};
 
 // Ported from the original site's legal pages. Inline links use "[label](href)".
 // Adaptations to the new site are listed in odd/tasks/cdi-website-rebuild.md (T9).
@@ -483,7 +750,7 @@ const cookies: LegalSection[] = [
   },
 ];
 
-export const legal: {
+const legal: {
   updatedLabel: string;
   /** Shown above translated legal texts; null for the authoritative (Spanish) version. */
   courtesyNotice: string | null;
@@ -493,3 +760,79 @@ export const legal: {
   courtesyNotice: null,
   documents: { legalNotice, privacy, cookies },
 };
+
+const seo: { pages: Record<PageId, PageCopy> } = {
+  pages: {
+    home: {
+      title: "CDI Maquinarias | Carretillas STILL en Las Palmas",
+      description:
+        "Venta, alquiler y reparación de carretillas STILL y maquinaria industrial en Las Palmas de Gran Canaria. Solicite su presupuesto.",
+      label: "Inicio",
+      heading: "Venta, Alquiler y Reparación de Maquinaria Industrial en Las Palmas",
+    },
+    about: {
+      title: "Quiénes somos | CDI Maquinarias en Gran Canaria",
+      description:
+        "Más de una década de experiencia en reparación, alquiler y venta de maquinaria industrial y aire acondicionado en Las Palmas de Gran Canaria.",
+      label: "Quiénes somos",
+      heading: "Quiénes somos",
+    },
+    services: {
+      title: "Servicios de maquinaria industrial en Las Palmas | CDI",
+      description:
+        "Reparación y mantenimiento, venta, alquiler, renting y asesoramiento en carretillas y maquinaria industrial, y climatización en Gran Canaria.",
+      label: "Servicios",
+      heading: "Servicios",
+    },
+    products: {
+      title: "Productos STILL | Distribuidor oficial en Las Palmas",
+      description:
+        "Distribuidores oficiales de STILL en Las Palmas: carretillas, transpaletas, apiladores, recogepedidos y tractores. Consulte el catálogo.",
+      label: "Productos",
+      heading: "Distribuidores oficiales de STILL",
+    },
+    renting: {
+      title: "Renting de carretillas en Gran Canaria | CDI Maquinarias",
+      description:
+        "Renting y alquiler de carretillas retráctiles, contrapesadas, recogepedidos, apiladoras y transpaletas eléctricas en Gran Canaria.",
+      label: "Renting",
+      heading: "Renting",
+      intro: "Elija el tipo de equipo que necesita y le informaremos sobre disponibilidad y condiciones.",
+    },
+    contact: {
+      title: "Contacto | CDI Maquinarias en Las Palmas de Gran Canaria",
+      description:
+        "Contacte con CDI Maquinarias en Playa del Hombre, Las Palmas: teléfono, correo, horario, ubicación y formulario para solicitar presupuesto.",
+      label: "Contacto",
+      heading: "Contacto",
+    },
+    legalNotice: {
+      title: "Aviso legal | CDI Maquinarias",
+      description:
+        "Aviso legal del sitio web de CDI Maquinarias S.L.: titularidad, condiciones de acceso y uso, propiedad intelectual y responsabilidad.",
+      label: "Aviso legal",
+      heading: "Aviso legal",
+    },
+    privacy: {
+      title: "Política de privacidad | CDI Maquinarias",
+      description:
+        "Información sobre protección de datos de CDI Maquinarias S.L.: responsable, finalidades, conservación, legitimación, destinatarios y derechos.",
+      label: "Política de privacidad",
+      heading: "Política de privacidad",
+      intro: "Información sobre protección de datos.",
+    },
+    cookies: {
+      title: "Política de cookies | CDI Maquinarias",
+      description:
+        "Política de cookies del sitio web de CDI Maquinarias: qué almacenamiento local se utiliza, el mapa de Google y cómo gestionar las cookies.",
+      label: "Política de cookies",
+      heading: "Política de cookies",
+    },
+  },
+};
+
+export const es = {
+  common, home, about, services, products, rental, contact, legal, cookies: cookieCopy, seo,
+};
+
+export type Dictionary = typeof es;

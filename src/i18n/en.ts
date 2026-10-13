@@ -1,11 +1,260 @@
-import type { LegalSection } from "../../types";
-import { CONSENT_COOKIE } from "../../data/cookieConsent";
-import { googlePolicyUrl, legalInfo, siteHost } from "../../data/siteInfo";
-import type { Dictionary } from "../es";
-import { routes } from "../routes";
-import { cookies as cookieCopy } from "./cookies";
+// English (en-GB). Typed against the Spanish dictionary so missing or extra keys fail `astro check`.
 
-// Courtesy translation of src/i18n/es/legal.ts (the Spanish text prevails).
+import { CONSENT_COOKIE } from "../data/cookieConsent";
+import { contactInfo, googlePolicyUrl, legalInfo, primaryPhone, siteHost, siteMeta, stillBrand } from "../data/siteInfo";
+import { cookies as cookieCopy } from "./consent/en";
+import { routes } from "./routes";
+import type { LegalSection } from "../types";
+import type { Dictionary } from "./es";
+
+const common: Dictionary["common"] = {
+  skipToContent: "Skip to content",
+  business: {
+    positioning: `${stillBrand.name} dealers in Las Palmas de Gran Canaria.`,
+    valueProposition:
+      "Complete solutions for businesses, including the sale, rental and repair of forklift trucks, reach trucks, stackers, pallet trucks and heavy machinery. We also specialise in installing and maintaining industrial and commercial air conditioning and climate control systems.",
+    areaServed: "Gran Canaria, Canary Islands",
+    catalogName: "Services",
+  },
+  stillCategories: ["Forklift trucks", "Reach trucks", "Stackers", "Pallet trucks", "Heavy machinery"],
+  countryName: "Spain",
+  phoneLabels: { landline: "Landline", mobile: "Mobile" },
+  hours: { weekdays: "Monday to Friday", weekend: "Saturday and Sunday", closed: "Closed" },
+  nav: {
+    main: "Main",
+    mobile: "Mobile menu",
+    toggle: "Open or close menu",
+    footer: "Footer",
+    legal: "Legal",
+    breadcrumb: "Breadcrumb",
+    quickContact: "Quick contact",
+  },
+  language: {
+    switcherLabel: "Change language",
+    current: "Current language",
+  },
+  brandBadge: `Official ${stillBrand.name} dealer`,
+  cta: {
+    call: { label: "Call now", ariaLabel: `Call us now on ${primaryPhone.display}` },
+    quote: {
+      label: "Request a quote",
+      ariaLabel: "Request a quote using the contact form",
+    },
+  },
+  floatingContact: {
+    phoneLabel: `Call ${primaryPhone.display}`,
+    emailLabel: `Send an email to ${contactInfo.email}`,
+  },
+  footer: {
+    contactHeading: "Contact",
+    hoursHeading: "Opening hours",
+    navHeading: "Navigation",
+    copyright: (year: number, legalName: string) => `© ${year} ${legalName}. All rights reserved.`,
+  },
+};
+
+const home: Dictionary["home"] = {
+  hero: {
+    tagline: "Professionals in the sector",
+    trustChips: [`Official ${stillBrand.name} dealer`, "Multi-brand service", "Gran Canaria"],
+    keyPointsLabel: "Key points",
+  },
+  services: {
+    eyebrow: "Our services",
+    title: "Excellence in machinery services",
+    subtitle:
+      "We are committed to providing quality products, personal attention and excellent after-sales service.",
+    moreLabel: "Learn more",
+    allServicesLabel: "See all services",
+  },
+  brand: {
+    eyebrow: `Official ${stillBrand.name} dealer`,
+    title: `${stillBrand.name} dealers in Las Palmas de Gran Canaria`,
+    subtitle: "Sales advice and technical service for the STILL range and industrial machinery.",
+    body: "As STILL dealers in Las Palmas de Gran Canaria, we help you choose the right machinery for your business needs and support you with sales, rental, repair and maintenance.",
+    categoriesTitle: "Machinery we work with",
+    productsCtaLabel: "See STILL products",
+  },
+  contactBand: {
+    eyebrow: "Contact",
+    title: "Talk to our team",
+    subtitle: "Call or write to us and we will help you prepare your quote.",
+  },
+};
+
+const about: Dictionary["about"] = {
+  sections: [
+    {
+      title: "Over a decade of experience",
+      paragraphs: [
+        "We are CDI Maquinarias, and we are proud to offer a wide range of specialist services to meet all your industrial machinery needs. With more than a decade of experience in the market, we have established ourselves as leaders in the repair, rental and sale of machinery, providing our customers with reliable and efficient solutions.",
+        "Our team of experts is highly trained in repairing a wide variety of machines, including equipment from well-known brands such as STILL. Whether you need a fast, accurate repair or are looking to rent or buy a new machine, we are here to help.",
+      ],
+    },
+    {
+      title: "Air conditioning experts",
+      paragraphs: [
+        "In addition to our solid experience in industrial machinery repair, CDI Maquinarias stands out for its expertise in the maintenance, repair and sale of air conditioning systems. We know how important a comfortable working environment is for productivity, so we make sure your climate control systems perform at their best at all times.",
+        "Trust CDI Maquinarias with all your industrial machinery needs. Our team of professionals is here to serve you with dedication, professionalism and excellence at every step of the process. We are ready to be your trusted partner in maintaining your machinery and air conditioning systems!",
+      ],
+    },
+  ],
+  highlight:
+    "At CDI Maquinarias we understand the importance of offering our customers a complete service. That is why we also provide detailed, transparent quotes, so that you can make informed decisions and plan your project with confidence.",
+};
+
+const services: Dictionary["services"] = {
+  items: {
+    "reparacion-mantenimiento": {
+      title: "Repair and maintenance",
+      description:
+        "A highly specialised technical team for multi-brand breakdown repairs and preventive and corrective maintenance, in our workshop or on site.",
+      detail:
+        "Our machine repair and maintenance service is essential to ensure the durability and performance of your equipment. With highly qualified technicians and the latest technology, we are committed to keeping our customers' machinery in optimum working order, from preventive inspections to specialist repairs. Our team is dedicated to maintaining productivity and safety in every operation.",
+      features: [
+        "Multi-brand breakdown repairs",
+        "Preventive and corrective maintenance",
+        "Workshop or on-site service",
+      ],
+    },
+    "venta-maquinaria": {
+      title: "Sales",
+      description:
+        "Specialists in sales advice to supply the right machinery for each customer's needs (STILL range and industrial machinery).",
+      detail:
+        "Our sales division specialises in offering a wide range of high-quality machines from well-known brands such as STILL. Our commitment is to provide efficient, tailored solutions for our customers' needs. From materials handling equipment to construction machinery, we work to ensure the satisfaction and success of those who trust us with their projects and operations.",
+      features: [
+        "Specialist sales advice",
+        "STILL range and industrial machinery",
+        "The right machinery for every need",
+      ],
+      link: { label: "Learn more", ariaLabel: "Learn more about STILL products" },
+    },
+    "alquiler-flota": {
+      title: "Rental",
+      description: "A versatile, flexible fleet for short, medium or long-term projects and peak workloads.",
+      detail:
+        "Our rental and leasing option offers a flexible, cost-effective solution for anyone who needs first-class equipment without committing to a long-term purchase. With a variety of STILL models available, we tailor our plans to each customer's specific needs. Whether short or long term, our rental service guarantees hassle-free operation.",
+      features: [
+        "Short, medium or long-term projects",
+        "Cover for peak workloads",
+        "A versatile, flexible fleet",
+      ],
+      link: { label: "Learn more", ariaLabel: "Learn more about equipment rental and leasing" },
+    },
+    "asesoramiento-especializado": {
+      title: "Advice",
+      description: "Ongoing technical consultancy to size warehouses and optimise intralogistics.",
+      detail:
+        "Our advisory service is designed to give our customers expert guidance on selecting, acquiring and optimising their equipment. Our highly qualified advisers work closely with each customer to understand their specific needs and offer tailored solutions that boost efficiency and profitability. From the initial assessment to implementation, we are committed to guiding and advising our customers so that their projects and operations succeed.",
+      features: ["Ongoing technical consultancy", "Warehouse sizing", "Intralogistics optimisation"],
+    },
+    climatizacion: {
+      title: "Climate control and air conditioning",
+      description:
+        "Installation, repair and maintenance of climate control equipment for offices, industrial buildings and commercial premises.",
+      detail:
+        "Installation, repair and maintenance of climate control equipment for offices, industrial buildings and commercial premises. We know how important a comfortable working environment is for productivity, so we make sure your climate control systems perform at their best at all times.",
+      features: [
+        "Installation, repair and maintenance",
+        "Offices, industrial buildings and commercial premises",
+      ],
+    },
+  },
+};
+
+const products: Dictionary["products"] = {
+  company: {
+    title: "A leading machinery manufacturer",
+    paragraphs: [
+      "STILL is a world-renowned German company specialising in the manufacture and sale of materials handling equipment such as forklift trucks, pallet trucks, stackers and other storage and logistics equipment. STILL offers innovative solutions for handling goods efficiently in warehouses and distribution centres, with a focus on sustainability, advanced technology and energy efficiency.",
+    ],
+  },
+  distributor: {
+    title: "STILL machinery catalogues",
+    paragraphs: [
+      "STILL offers a wide variety of forklift trucks, pallet trucks, tugger trains, stackers, order pickers and even tow tractors. Browse the catalogue and discover the best in machinery.",
+    ],
+  },
+  catalog: {
+    label: "See the STILL catalogue",
+    ariaLabel: "See the STILL machinery catalogue (opens in a new tab, in Spanish)",
+  },
+  catalogNote: "The catalogue opens on STILL's official Spanish website.",
+};
+
+const rental: Dictionary["rental"] = {
+  categories: {
+    "carretillas-retractiles": "Reach trucks",
+    "carretillas-contrapesadas-electricas": "Electric counterbalance trucks",
+    "carretillas-contrapesadas-diesel-gas": "Diesel and LPG counterbalance trucks",
+    recogepedidos: "Order pickers",
+    "tractores-con-plataforma": "Tow tractors with platform",
+    "apiladoras-electricas": "Electric stackers",
+    "transpaleta-electrica": "Electric pallet truck",
+  },
+  moreInfoLabel: "More information",
+  moreInfoAriaLabel: (name) => `Request more information about ${name}`,
+};
+
+const contact: Dictionary["contact"] = {
+  details: {
+    eyebrow: "Get in touch",
+    title: "Talk to our team",
+    subtitle: "Call us, email us or fill in the form and we will help you prepare your quote.",
+    labels: {
+      phone: "Phone",
+      email: "Email",
+      address: "Address",
+      hours: "Opening hours",
+    },
+  },
+  location: {
+    eyebrow: "Location",
+    title: "Where to find us",
+    subtitle: `We serve businesses across ${common.business.areaServed}.`,
+    directionsLabel: "Open in Google Maps",
+    directionsAriaLabel: "Open the location in Google Maps (opens in a new tab)",
+    mapTitle: `Map showing the location of ${siteMeta.name}`,
+    consent: {
+      title: "Google map",
+      body: "The map is loaded from Google Maps, a third-party service that may set cookies and collect data about your activity. By pressing “Load map” you accept this service; you can change your choice at any time with “Cookie settings” in the footer.",
+      loadLabel: "Load map",
+      cookiesLinkLabel: "More information in the cookie policy",
+    },
+  },
+  form: {
+    title: "Send us a message",
+    intro: "We will reply as soon as possible.",
+    requiredNote: "Fields marked with * are required.",
+    fields: {
+      name: "Name",
+      email: "Email",
+      message: "Message",
+    },
+    privacy: {
+      before: "I have read and accept the",
+      linkLabel: "privacy policy",
+    },
+    honeypotLabel: "Leave this field empty",
+    submitLabel: "Send",
+    success: "Thank you! We will get back to you as soon as possible.",
+    failure: "There was an error sending your message. Please try again or call us.",
+    deliveryUnconfirmed: `We could not confirm that your message was sent. It may have arrived; if you do not hear from us within 24 hours, please call us on ${primaryPhone.display}.`,
+    rateLimited: `You have sent several messages in a short time. Please try again in a few minutes or call us on ${primaryPhone.display}.`,
+    equipmentPrefill: (name: string) => `I would like more information about: ${name}.`,
+    errors: {
+      nameRequired: "Please enter your name.",
+      nameLength: "Your name must be between 2 and 100 characters.",
+      emailInvalid: "The email address is not valid.",
+      messageRequired: "Please write your message.",
+      messageLength: "Your message must be between 10 and 5000 characters.",
+      privacyRequired: "You must accept the privacy policy.",
+    },
+  },
+};
+
+// Courtesy translation of src/i18n/es.ts (the Spanish text prevails).
 // Pending review by the legal advisor; keep the structure aligned with the Spanish file.
 
 const L = legalInfo.legalName;
@@ -484,8 +733,82 @@ const cookies: LegalSection[] = [
   },
 ];
 
-export const legal: Dictionary["legal"] = {
+const legal: Dictionary["legal"] = {
   updatedLabel: "Last updated",
   courtesyNotice: "This is a courtesy translation. In case of discrepancy, the Spanish version prevails.",
   documents: { legalNotice, privacy, cookies },
+};
+
+const seo: Dictionary["seo"] = {
+  pages: {
+    home: {
+      title: "CDI Maquinarias | STILL Forklifts in Las Palmas",
+      description:
+        "Sale, rental and repair of STILL forklifts and industrial machinery in Las Palmas de Gran Canaria. Request your quote today.",
+      label: "Home",
+      heading: "Industrial Machinery Sales, Rental and Repair in Las Palmas",
+    },
+    about: {
+      title: "About us | CDI Maquinarias in Gran Canaria",
+      description:
+        "Over a decade of experience repairing, renting and selling industrial machinery and air conditioning in Las Palmas de Gran Canaria.",
+      label: "About us",
+      heading: "About us",
+    },
+    services: {
+      title: "Industrial machinery services in Las Palmas | CDI",
+      description:
+        "Repair and maintenance, sales, rental, leasing and advice on forklifts and industrial machinery, plus climate control in Gran Canaria.",
+      label: "Services",
+      heading: "Services",
+    },
+    products: {
+      title: "STILL products | Official dealer in Las Palmas",
+      description:
+        "Official STILL dealers in Las Palmas: forklifts, pallet trucks, stackers, order pickers and tow tractors. Browse the catalogue.",
+      label: "Products",
+      heading: "Official STILL dealers",
+    },
+    renting: {
+      title: "Forklift rental in Gran Canaria | CDI Maquinarias",
+      description:
+        "Long-term and short-term rental of reach trucks, counterbalance trucks, order pickers, stackers and electric pallet trucks in Gran Canaria.",
+      label: "Rental",
+      heading: "Rental",
+      intro: "Choose the type of equipment you need and we will tell you about availability and terms.",
+    },
+    contact: {
+      title: "Contact | CDI Maquinarias in Las Palmas de Gran Canaria",
+      description:
+        "Contact CDI Maquinarias in Playa del Hombre, Las Palmas: phone, email, opening hours, location and a form to request a quote.",
+      label: "Contact",
+      heading: "Contact",
+    },
+    legalNotice: {
+      title: "Legal notice | CDI Maquinarias",
+      description:
+        "Legal notice for the CDI Maquinarias S.L. website: ownership, terms of access and use, intellectual property and liability.",
+      label: "Legal notice",
+      heading: "Legal notice",
+    },
+    privacy: {
+      title: "Privacy policy | CDI Maquinarias",
+      description:
+        "Data protection information from CDI Maquinarias S.L.: controller, purposes, retention, legal basis, recipients and your rights.",
+      label: "Privacy policy",
+      heading: "Privacy policy",
+      intro: "Information on data protection.",
+    },
+    cookies: {
+      title: "Cookie policy | CDI Maquinarias",
+      description:
+        "Cookie policy for the CDI Maquinarias website: what local storage is used, the Google map and how to manage cookies.",
+      label: "Cookie policy",
+      heading: "Cookie policy",
+    },
+  },
+};
+
+export const en: Dictionary = {
+  common, home, about, services, products, rental, contact, legal, cookies: cookieCopy, seo,
 };

@@ -1,11 +1,264 @@
-import type { LegalSection } from "../../types";
-import { CONSENT_COOKIE } from "../../data/cookieConsent";
-import { googlePolicyUrl, legalInfo, siteHost } from "../../data/siteInfo";
-import type { Dictionary } from "../es";
-import { routes } from "../routes";
-import { cookies as cookieCopy } from "./cookies";
+// German (de-DE). Typed against the Spanish dictionary so missing or extra keys fail `astro check`.
 
-// Courtesy translation of src/i18n/es/legal.ts (the Spanish text prevails).
+import { CONSENT_COOKIE } from "../data/cookieConsent";
+import { contactInfo, googlePolicyUrl, legalInfo, primaryPhone, siteHost, siteMeta, stillBrand } from "../data/siteInfo";
+import { cookies as cookieCopy } from "./consent/de";
+import { routes } from "./routes";
+import type { LegalSection } from "../types";
+import type { Dictionary } from "./es";
+
+const common: Dictionary["common"] = {
+  skipToContent: "Zum Inhalt springen",
+  business: {
+    positioning: `${stillBrand.name}-Händler in Las Palmas de Gran Canaria.`,
+    valueProposition:
+      "Komplettlösungen für Unternehmen: Verkauf, Vermietung und Reparatur von Gabelstaplern, Schubmaststaplern, Staplern, Hubwagen und Schwerlastmaschinen. Außerdem sind wir Spezialisten für Installation und Wartung von industriellen und gewerblichen Klimaanlagen und Klimatisierungssystemen.",
+    areaServed: "Gran Canaria, Kanarische Inseln",
+    catalogName: "Dienstleistungen",
+  },
+  stillCategories: ["Gabelstapler", "Schubmaststapler", "Stapler", "Hubwagen", "Schwerlastmaschinen"],
+  countryName: "Spanien",
+  phoneLabels: { landline: "Festnetz", mobile: "Mobil" },
+  hours: { weekdays: "Montag bis Freitag", weekend: "Samstag und Sonntag", closed: "Geschlossen" },
+  nav: {
+    main: "Hauptnavigation",
+    mobile: "Mobiles Menü",
+    toggle: "Menü öffnen oder schließen",
+    footer: "Fußzeile",
+    legal: "Rechtliches",
+    breadcrumb: "Navigationspfad",
+    quickContact: "Schnellkontakt",
+  },
+  language: {
+    switcherLabel: "Sprache ändern",
+    current: "Aktuelle Sprache",
+  },
+  brandBadge: `Offizieller ${stillBrand.name}-Händler`,
+  cta: {
+    call: { label: "Jetzt anrufen", ariaLabel: `Jetzt anrufen: ${primaryPhone.display}` },
+    quote: {
+      label: "Angebot anfordern",
+      ariaLabel: "Angebot über das Kontaktformular anfordern",
+    },
+  },
+  floatingContact: {
+    phoneLabel: `Anrufen: ${primaryPhone.display}`,
+    emailLabel: `E-Mail senden an ${contactInfo.email}`,
+  },
+  footer: {
+    contactHeading: "Kontakt",
+    hoursHeading: "Öffnungszeiten",
+    navHeading: "Navigation",
+    copyright: (year: number, legalName: string) => `© ${year} ${legalName}. Alle Rechte vorbehalten.`,
+  },
+};
+
+const home: Dictionary["home"] = {
+  hero: {
+    tagline: "Fachleute der Branche",
+    trustChips: [`Offizieller ${stillBrand.name}-Händler`, "Markenübergreifender Service", "Gran Canaria"],
+    keyPointsLabel: "Wichtigste Punkte",
+  },
+  services: {
+    eyebrow: "Unsere Dienstleistungen",
+    title: "Exzellenz im Maschinenservice",
+    subtitle:
+      "Wir verpflichten uns zu hochwertigen Produkten, persönlicher Betreuung und exzellentem Kundendienst.",
+    moreLabel: "Mehr erfahren",
+    allServicesLabel: "Alle Dienstleistungen ansehen",
+  },
+  brand: {
+    eyebrow: `Offizieller ${stillBrand.name}-Händler`,
+    title: `${stillBrand.name}-Händler in Las Palmas de Gran Canaria`,
+    subtitle: "Verkaufsberatung und technischer Service für das STILL-Sortiment und Industriemaschinen.",
+    body: "Als STILL-Händler in Las Palmas de Gran Canaria helfen wir Ihnen, die richtige Maschine für die Anforderungen Ihres Unternehmens zu finden, und unterstützen Sie bei Verkauf, Vermietung, Reparatur und Wartung.",
+    categoriesTitle: "Maschinen, mit denen wir arbeiten",
+    productsCtaLabel: "STILL-Produkte ansehen",
+  },
+  contactBand: {
+    eyebrow: "Kontakt",
+    title: "Sprechen Sie mit unserem Team",
+    subtitle: "Rufen Sie uns an oder schreiben Sie uns, und wir helfen Ihnen bei Ihrem Angebot.",
+  },
+};
+
+const about: Dictionary["about"] = {
+  sections: [
+    {
+      title: "Mehr als zehn Jahre Erfahrung",
+      paragraphs: [
+        "Wir sind CDI Maquinarias und bieten mit Stolz ein breites Spektrum an Spezialdienstleistungen für all Ihre Anforderungen an Industriemaschinen. Mit mehr als zehn Jahren Erfahrung am Markt haben wir uns als führend in Reparatur, Vermietung und Verkauf von Maschinen etabliert und bieten unseren Kunden zuverlässige und effiziente Lösungen.",
+        "Unser Expertenteam ist bestens geschult in der Reparatur einer großen Vielfalt von Maschinen, auch von Geräten bekannter Marken wie STILL. Ob Sie eine schnelle, präzise Reparatur benötigen oder eine neue Maschine mieten oder kaufen möchten: Wir helfen Ihnen gern.",
+      ],
+    },
+    {
+      title: "Experten für Klimaanlagen",
+      paragraphs: [
+        "Neben unserer soliden Erfahrung in der Reparatur von Industriemaschinen zeichnet sich CDI Maquinarias durch Fachwissen in Wartung, Reparatur und Verkauf von Klimaanlagen aus. Wir wissen, wie wichtig ein angenehmes Arbeitsumfeld für die Produktivität ist, und sorgen dafür, dass Ihre Klimasysteme jederzeit optimal arbeiten.",
+        "Vertrauen Sie CDI Maquinarias bei all Ihren Anforderungen an Industriemaschinen. Unser Team aus Fachleuten steht Ihnen mit Engagement, Professionalität und Exzellenz in jedem Schritt des Prozesses zur Seite. Wir sind bereit, Ihr verlässlicher Partner bei der Wartung Ihrer Maschinen und Klimaanlagen zu sein!",
+      ],
+    },
+  ],
+  highlight:
+    "Bei CDI Maquinarias wissen wir, wie wichtig es ist, unseren Kunden einen vollständigen Service zu bieten. Deshalb erstellen wir auch detaillierte, transparente Angebote, damit Sie fundierte Entscheidungen treffen und Ihr Projekt mit Vertrauen planen können.",
+};
+
+const services: Dictionary["services"] = {
+  items: {
+    "reparacion-mantenimiento": {
+      title: "Reparatur und Wartung",
+      description:
+        "Ein hochspezialisiertes Technikerteam für markenübergreifende Störungsreparaturen sowie präventive und korrektive Wartung in unserer Werkstatt oder vor Ort.",
+      detail:
+        "Unser Service für Reparatur und Wartung von Maschinen ist entscheidend für Langlebigkeit und Leistung Ihrer Geräte. Mit hochqualifizierten Technikern und modernster Technologie sorgen wir dafür, dass die Maschinen unserer Kunden in optimalem Zustand bleiben, von präventiven Inspektionen bis zu Spezialreparaturen. Unser Team sorgt in jedem Arbeitsschritt für Produktivität und Sicherheit.",
+      features: [
+        "Markenübergreifende Störungsreparaturen",
+        "Präventive und korrektive Wartung",
+        "Service in der Werkstatt oder vor Ort",
+      ],
+    },
+    "venta-maquinaria": {
+      title: "Verkauf",
+      description:
+        "Spezialisten für Verkaufsberatung, die für jeden Kundenbedarf die passende Maschine bereitstellen (STILL-Sortiment und Industriemaschinen).",
+      detail:
+        "Unsere Verkaufsabteilung bietet eine breite Auswahl hochwertiger Maschinen bekannter Marken wie STILL. Unser Anspruch ist es, effiziente, maßgeschneiderte Lösungen für die Bedürfnisse unserer Kunden zu liefern. Von Flurfördertechnik bis zu Baumaschinen arbeiten wir daran, dass alle, die uns ihre Projekte und Abläufe anvertrauen, zufrieden sind und Erfolg haben.",
+      features: [
+        "Fachkundige Verkaufsberatung",
+        "STILL-Sortiment und Industriemaschinen",
+        "Die richtige Maschine für jeden Bedarf",
+      ],
+      link: { label: "Mehr erfahren", ariaLabel: "Mehr über STILL-Produkte erfahren" },
+    },
+    "alquiler-flota": {
+      title: "Vermietung",
+      description:
+        "Eine vielseitige, flexible Flotte für kurz-, mittel- oder langfristige Projekte und Auftragsspitzen.",
+      detail:
+        "Unsere Miet- und Leasingoption bietet eine flexible, wirtschaftliche Lösung für alle, die erstklassige Geräte benötigen, ohne sich langfristig zu einem Kauf zu verpflichten. Mit einer Vielzahl verfügbarer STILL-Modelle passen wir unsere Angebote an die spezifischen Bedürfnisse jedes Kunden an. Ob kurz- oder langfristig: Unser Mietservice garantiert einen unkomplizierten Betrieb.",
+      features: [
+        "Kurz-, mittel- oder langfristige Projekte",
+        "Abdeckung von Auftragsspitzen",
+        "Eine vielseitige, flexible Flotte",
+      ],
+      link: { label: "Mehr erfahren", ariaLabel: "Mehr über Gerätevermietung und Leasing erfahren" },
+    },
+    "asesoramiento-especializado": {
+      title: "Beratung",
+      description:
+        "Laufende technische Beratung zur Dimensionierung von Lagern und zur Optimierung der Intralogistik.",
+      detail:
+        "Unser Beratungsservice bietet unseren Kunden fachkundige Unterstützung bei Auswahl, Anschaffung und Optimierung ihrer Geräte. Unsere hochqualifizierten Berater arbeiten eng mit jedem Kunden zusammen, um dessen spezifische Bedürfnisse zu verstehen und maßgeschneiderte Lösungen anzubieten, die Effizienz und Rentabilität steigern. Von der ersten Analyse bis zur Umsetzung begleiten wir unsere Kunden, damit ihre Projekte und Abläufe erfolgreich sind.",
+      features: ["Laufende technische Beratung", "Dimensionierung von Lagern", "Optimierung der Intralogistik"],
+    },
+    climatizacion: {
+      title: "Klimatisierung und Klimaanlagen",
+      description:
+        "Installation, Reparatur und Wartung von Klimatisierungsanlagen für Büros, Industriegebäude und Gewerbeflächen.",
+      detail:
+        "Installation, Reparatur und Wartung von Klimatisierungsanlagen für Büros, Industriegebäude und Gewerbeflächen. Wir wissen, wie wichtig ein angenehmes Arbeitsumfeld für die Produktivität ist, und sorgen dafür, dass Ihre Klimasysteme jederzeit optimal arbeiten.",
+      features: [
+        "Installation, Reparatur und Wartung",
+        "Büros, Industriegebäude und Gewerbeflächen",
+      ],
+    },
+  },
+};
+
+const products: Dictionary["products"] = {
+  company: {
+    title: "Ein führender Maschinenhersteller",
+    paragraphs: [
+      "STILL ist ein weltweit bekanntes deutsches Unternehmen, das auf Herstellung und Verkauf von Flurförderzeugen spezialisiert ist, darunter Gabelstapler, Hubwagen, Stapler und weitere Lager- und Logistiktechnik. STILL bietet innovative Lösungen für den effizienten Warenumschlag in Lagern und Distributionszentren, mit Schwerpunkt auf Nachhaltigkeit, moderner Technik und Energieeffizienz.",
+    ],
+  },
+  distributor: {
+    title: "STILL-Maschinenkataloge",
+    paragraphs: [
+      "STILL bietet eine breite Auswahl an Gabelstaplern, Hubwagen, Schleppzügen, Staplern, Kommissioniergeräten und sogar Schleppern. Stöbern Sie im Katalog und entdecken Sie die besten Maschinen.",
+    ],
+  },
+  catalog: {
+    label: "Zum STILL-Katalog",
+    ariaLabel: "Zum STILL-Maschinenkatalog (öffnet in einem neuen Tab, auf Spanisch)",
+  },
+  catalogNote: "Der Katalog öffnet sich auf der offiziellen spanischsprachigen Website von STILL.",
+};
+
+const rental: Dictionary["rental"] = {
+  categories: {
+    "carretillas-retractiles": "Schubmaststapler",
+    "carretillas-contrapesadas-electricas": "Elektrische Gegengewichtsstapler",
+    "carretillas-contrapesadas-diesel-gas": "Diesel- und Gas-Gegengewichtsstapler",
+    recogepedidos: "Kommissionierer",
+    "tractores-con-plataforma": "Schlepper mit Plattform",
+    "apiladoras-electricas": "Elektrische Stapler",
+    "transpaleta-electrica": "Elektrische Transpaletten",
+  },
+  moreInfoLabel: "Weitere Informationen",
+  moreInfoAriaLabel: (name) => `Weitere Informationen zu ${name} anfordern`,
+};
+
+const contact: Dictionary["contact"] = {
+  details: {
+    eyebrow: "Kontakt aufnehmen",
+    title: "Sprechen Sie mit unserem Team",
+    subtitle:
+      "Rufen Sie uns an, schreiben Sie uns oder füllen Sie das Formular aus, und wir helfen Ihnen bei Ihrem Angebot.",
+    labels: {
+      phone: "Telefon",
+      email: "E-Mail",
+      address: "Adresse",
+      hours: "Öffnungszeiten",
+    },
+  },
+  location: {
+    eyebrow: "Standort",
+    title: "So finden Sie uns",
+    subtitle: `Wir betreuen Unternehmen in ${common.business.areaServed}.`,
+    directionsLabel: "In Google Maps öffnen",
+    directionsAriaLabel: "Standort in Google Maps öffnen (öffnet in einem neuen Tab)",
+    mapTitle: `Karte mit dem Standort von ${siteMeta.name}`,
+    consent: {
+      title: "Google-Karte",
+      body: "Die Karte wird von Google Maps geladen, einem Drittanbieterdienst, der Cookies setzen und Daten über Ihre Aktivität erheben kann. Wenn Sie auf „Karte laden“ drücken, stimmen Sie diesem Dienst zu. Sie können Ihre Wahl jederzeit über „Cookie-Einstellungen“ in der Fußzeile ändern.",
+      loadLabel: "Karte laden",
+      cookiesLinkLabel: "Weitere Informationen in der Cookie-Richtlinie",
+    },
+  },
+  form: {
+    title: "Schreiben Sie uns",
+    intro: "Wir antworten so schnell wie möglich.",
+    requiredNote: "Mit * markierte Felder sind Pflichtfelder.",
+    fields: {
+      name: "Name",
+      email: "E-Mail",
+      message: "Nachricht",
+    },
+    privacy: {
+      before: "Ich habe die",
+      linkLabel: "Datenschutzerklärung gelesen und akzeptiere sie.",
+    },
+    honeypotLabel: "Dieses Feld leer lassen",
+    submitLabel: "Senden",
+    success: "Vielen Dank! Wir melden uns so schnell wie möglich bei Ihnen.",
+    failure:
+      "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an.",
+    deliveryUnconfirmed: `Wir konnten den Versand nicht bestätigen. Ihre Nachricht ist möglicherweise angekommen. Falls Sie innerhalb von 24 Stunden keine Antwort erhalten, rufen Sie uns bitte unter ${primaryPhone.display} an.`,
+    rateLimited: `Sie haben in kurzer Zeit mehrere Nachrichten gesendet. Bitte versuchen Sie es in einigen Minuten erneut oder rufen Sie uns unter ${primaryPhone.display} an.`,
+    equipmentPrefill: (name: string) => `Ich möchte mehr Informationen zu: ${name}.`,
+    errors: {
+      nameRequired: "Bitte geben Sie Ihren Namen ein.",
+      nameLength: "Ihr Name muss zwischen 2 und 100 Zeichen lang sein.",
+      emailInvalid: "Die E-Mail-Adresse ist ungültig.",
+      messageRequired: "Bitte schreiben Sie Ihre Nachricht.",
+      messageLength: "Ihre Nachricht muss zwischen 10 und 5000 Zeichen lang sein.",
+      privacyRequired: "Sie müssen die Datenschutzerklärung akzeptieren.",
+    },
+  },
+};
+
+// Courtesy translation of src/i18n/es.ts (the Spanish text prevails).
 // Pending review by the legal advisor; keep the structure aligned with the Spanish file.
 
 const L = legalInfo.legalName;
@@ -484,8 +737,82 @@ const cookies: LegalSection[] = [
   },
 ];
 
-export const legal: Dictionary["legal"] = {
+const legal: Dictionary["legal"] = {
   updatedLabel: "Zuletzt aktualisiert",
   courtesyNotice: "Dies ist eine Übersetzung zu Informationszwecken. Bei Abweichungen ist die spanische Fassung maßgeblich.",
   documents: { legalNotice, privacy, cookies },
+};
+
+const seo: Dictionary["seo"] = {
+  pages: {
+    home: {
+      title: "CDI Maquinarias | STILL-Stapler in Las Palmas",
+      description:
+        "Verkauf, Vermietung und Reparatur von STILL-Staplern und Industriemaschinen in Las Palmas de Gran Canaria. Fordern Sie jetzt Ihr Angebot an.",
+      label: "Startseite",
+      heading: "Verkauf, Vermietung und Reparatur von Industriemaschinen in Las Palmas",
+    },
+    about: {
+      title: "Über uns | CDI Maquinarias auf Gran Canaria",
+      description:
+        "Mehr als zehn Jahre Erfahrung in Reparatur, Vermietung und Verkauf von Industriemaschinen und Klimaanlagen in Las Palmas de Gran Canaria.",
+      label: "Über uns",
+      heading: "Über uns",
+    },
+    services: {
+      title: "Industriemaschinen-Service in Las Palmas | CDI",
+      description:
+        "Reparatur und Wartung, Verkauf, Vermietung, Leasing und Beratung für Stapler und Industriemaschinen sowie Klimatisierung auf Gran Canaria.",
+      label: "Dienstleistungen",
+      heading: "Dienstleistungen",
+    },
+    products: {
+      title: "STILL-Produkte | Offizieller Händler in Las Palmas",
+      description:
+        "Offizielle STILL-Händler in Las Palmas: Gabelstapler, Hubwagen, Stapler, Kommissionierer und Schlepper. Stöbern Sie im Katalog.",
+      label: "Produkte",
+      heading: "Offizielle STILL-Händler",
+    },
+    renting: {
+      title: "Staplervermietung auf Gran Canaria | CDI Maquinarias",
+      description:
+        "Lang- und kurzfristige Vermietung von Schubmaststaplern, Gegengewichtsstaplern, Kommissionierern, Staplern und E-Transpaletten auf Gran Canaria.",
+      label: "Vermietung",
+      heading: "Vermietung",
+      intro: "Wählen Sie die Art der benötigten Ausrüstung, und wir informieren Sie über Verfügbarkeit und Konditionen.",
+    },
+    contact: {
+      title: "Kontakt | CDI Maquinarias in Las Palmas de Gran Canaria",
+      description:
+        "Kontaktieren Sie CDI Maquinarias in Playa del Hombre, Las Palmas: Telefon, E-Mail, Öffnungszeiten, Standort und Formular für Angebotsanfragen.",
+      label: "Kontakt",
+      heading: "Kontakt",
+    },
+    legalNotice: {
+      title: "Impressum | CDI Maquinarias",
+      description:
+        "Impressum der Website von CDI Maquinarias S.L.: Betreiber, Nutzungsbedingungen, geistiges Eigentum und Haftung.",
+      label: "Impressum",
+      heading: "Impressum",
+    },
+    privacy: {
+      title: "Datenschutzerklärung | CDI Maquinarias",
+      description:
+        "Datenschutzinformationen der CDI Maquinarias S.L.: Verantwortlicher, Zwecke, Speicherdauer, Rechtsgrundlage, Empfänger und Ihre Rechte.",
+      label: "Datenschutz",
+      heading: "Datenschutzerklärung",
+      intro: "Informationen zum Datenschutz.",
+    },
+    cookies: {
+      title: "Cookie-Richtlinie | CDI Maquinarias",
+      description:
+        "Cookie-Richtlinie der Website von CDI Maquinarias: verwendeter lokaler Speicher, die Google-Karte und wie Sie Cookies verwalten.",
+      label: "Cookie-Richtlinie",
+      heading: "Cookie-Richtlinie",
+    },
+  },
+};
+
+export const de: Dictionary = {
+  common, home, about, services, products, rental, contact, legal, cookies: cookieCopy, seo,
 };
