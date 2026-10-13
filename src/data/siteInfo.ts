@@ -7,34 +7,22 @@ import type {
   SiteMeta,
 } from "../types";
 
+// Language-neutral business data. Translatable copy lives in src/i18n/<locale>/.
+
 export const siteMeta: SiteMeta = {
   name: "CDI Maquinarias",
   legalName: "CDI Maquinarias S.L.",
   url: "https://www.cdimaquinarias.com",
-  title: "CDI Maquinarias | Carretillas STILL en Las Palmas",
-  description:
-    "Venta, alquiler y reparación de carretillas STILL y maquinaria industrial en Las Palmas de Gran Canaria. Solicite su presupuesto.",
-  locale: "es_ES",
   ogImage: "/og-image.jpg",
-  areaServed: "Gran Canaria, Islas Canarias",
-  tagline: "VENTA, ALQUILER Y REPARACIÓN DE MAQUINARIA INDUSTRIAL. Profesionales en el sector.",
-  positioning: "Distribuidores de STILL en Las Palmas de Gran Canaria.",
-  valueProposition:
-    "Soluciones integrales para empresas que incluyen venta, alquiler y reparación de carretillas elevadoras, retráctiles, apiladores, transpaletas y maquinaria pesada. Además, especialistas en instalación y mantenimiento de sistemas de aire acondicionado y climatización industrial/comercial.",
 };
 
 export const stillBrand: Brand = {
   name: "STILL",
-  categories: [
-    "Carretillas elevadoras",
-    "Retráctiles",
-    "Apiladores",
-    "Transpaletas",
-    "Maquinaria pesada",
-  ],
+  catalogUrl: "https://www.still.shop/es-es",
 };
 
-const address: PostalAddress = {
+/** Official postal address; `country` is the name used in the Google Maps query. */
+export const address: PostalAddress = {
   street: "Calle Simón Bolívar 13b",
   postalCode: "35214",
   locality: "Playa del Hombre",
@@ -45,14 +33,14 @@ const address: PostalAddress = {
 
 const hours: OpeningHours[] = [
   {
-    label: "Lunes a Viernes",
+    id: "weekdays",
     days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     opens: "08:00",
     closes: "16:00",
     closed: false,
   },
   {
-    label: "Sábado y Domingo",
+    id: "weekend",
     days: ["Saturday", "Sunday"],
     closed: true,
   },
@@ -60,8 +48,8 @@ const hours: OpeningHours[] = [
 
 export const contactInfo: ContactInfo = {
   phones: [
-    { label: "Teléfono fijo", display: "928 13 38 51", href: "tel:+34928133851" },
-    { label: "Teléfono móvil", display: "625 444 646", href: "tel:+34625444646" },
+    { kind: "landline", display: "928 13 38 51", href: "tel:+34928133851" },
+    { kind: "mobile", display: "625 444 646", href: "tel:+34625444646" },
   ],
   email: "cdi@cdimaquinarias.com",
   address,
@@ -80,22 +68,32 @@ export const legalInfo: LegalInfo = {
 
 export const primaryPhone = contactInfo.phones[0]!;
 
-export function formatAddress(a: PostalAddress = contactInfo.address): string {
-  return `${a.street}, ${a.postalCode} ${a.locality} (${a.region}), ${a.country}`;
+/** One-line address; `countryName` is the localized country name. */
+export function formatAddress(countryName: string, a: PostalAddress = address): string {
+  return `${a.street}, ${a.postalCode} ${a.locality} (${a.region}), ${countryName}`;
 }
 
-export function formatHours(entry: OpeningHours): string {
-  if (entry.closed || !entry.opens || !entry.closes) return "Cerrado";
+/** "8:00–16:00", or `closedLabel` when closed. */
+export function formatHours(entry: OpeningHours, closedLabel: string): string {
+  if (entry.closed || !entry.opens || !entry.closes) return closedLabel;
   return `${entry.opens.replace(/^0/, "")}–${entry.closes.replace(/^0/, "")}`;
 }
 
-const mapsQuery = encodeURIComponent(`${siteMeta.name}, ${formatAddress()}`);
+const mapsQuery = encodeURIComponent(`${siteMeta.name}, ${formatAddress(address.country)}`);
 
 export const mapEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
 export const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
 
 export const emailHref = `mailto:${contactInfo.email}`;
 
+export const siteHost = new URL(siteMeta.url).hostname;
+
 export function absoluteUrl(path: string): string {
   return new URL(path, siteMeta.url).toString();
+}
+
+/** Google policy pages in the visitor's language. */
+export function googlePolicyUrl(kind: "cookies" | "privacy", lang: string): string {
+  const path = kind === "cookies" ? "technologies/cookies" : "privacy";
+  return `https://policies.google.com/${path}?hl=${lang}`;
 }

@@ -12,6 +12,12 @@ export default defineConfig({
   // No Astro sessions are used; skips the adapter's default SESSION KV binding.
   session: false,
   trailingSlash: "always",
+  // Spanish is unprefixed (original URLs); other locales live under /<locale>/ with translated slugs.
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en"],
+    routing: { prefixDefaultLocale: false },
+  },
   integrations: [sitemap()],
   env: {
     schema: {

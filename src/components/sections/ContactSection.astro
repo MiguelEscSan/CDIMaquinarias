@@ -2,11 +2,18 @@
 import Card from "../ui/Card.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { contactDetailsContent } from "../../data/contactContent";
 import { contactInfo, emailHref, formatAddress, formatHours } from "../../data/siteInfo";
+import { getDictionary, type Locale } from "../../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
 
 const headingId = "contacto-datos-titulo";
-const { labels, ...header } = contactDetailsContent;
+const { labels, ...header } = t.contact.details;
 const iconBox =
   "flex size-11 items-center justify-center rounded-xl bg-orange-50 text-brand-hover ring-1 ring-orange-200";
 const linkClass =
@@ -24,7 +31,7 @@ const linkClass =
         <ul class="mt-2 flex flex-col">
           {contactInfo.phones.map((phone) => (
             <li>
-              <a href={phone.href} class={linkClass} aria-label={`${phone.label}: ${phone.display}`}>
+              <a href={phone.href} class={linkClass} aria-label={`${t.common.phoneLabels[phone.kind]}: ${phone.display}`}>
                 {phone.display}
               </a>
             </li>
@@ -41,7 +48,7 @@ const linkClass =
       <Card>
         <div class={iconBox}><Icon name="map-pin" /></div>
         <h3 class="mt-4 text-lg font-bold">{labels.address}</h3>
-        <address class="mt-2 text-slate-700 not-italic">{formatAddress()}</address>
+        <address class="mt-2 text-slate-700 not-italic">{formatAddress(t.common.countryName)}</address>
       </Card>
 
       <Card>
@@ -50,8 +57,8 @@ const linkClass =
         <dl class="mt-2 flex flex-col gap-2 text-slate-700">
           {contactInfo.hours.map((entry) => (
             <div>
-              <dt class="text-sm">{entry.label}</dt>
-              <dd class="font-semibold text-slate-900">{formatHours(entry)}</dd>
+              <dt class="text-sm">{t.common.hours[entry.id]}</dt>
+              <dd class="font-semibold text-slate-900">{formatHours(entry, t.common.hours.closed)}</dd>
             </div>
           ))}
         </dl>

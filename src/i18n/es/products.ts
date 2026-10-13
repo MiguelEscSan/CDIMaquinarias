@@ -1,6 +1,6 @@
-import type { ProductsContent } from "../types";
+import type { ProductsContent } from "../../types";
 
-export const productsContent: ProductsContent = {
+export const products: ProductsContent = {
   company: {
     title: "Gran empresa en maquinaria",
     paragraphs: [
@@ -15,7 +15,6 @@ export const productsContent: ProductsContent = {
   },
   catalog: {
     label: "Ver catálogo STILL",
-    href: "https://www.still.shop/es-es",
     ariaLabel: "Ver el catálogo de maquinaria STILL (se abre en una pestaña nueva)",
   },
   catalogNote: "El catálogo se abre en la web oficial de STILL.",

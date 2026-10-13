@@ -3,12 +3,19 @@ import Button from "../ui/Button.astro";
 import Card from "../ui/Card.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { servicesContent } from "../../data/homeContent";
-import { pages } from "../../data/pages";
-import { services } from "../../data/services";
+import { getServices } from "../../data/services";
+import { getDictionary, localizedPath, type Locale } from "../../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const services = getServices(locale);
+const servicesPath = localizedPath("services", locale);
 
 const headingId = "servicios-titulo";
-const { eyebrow, title, subtitle, moreLabel, allServices } = servicesContent;
+const { eyebrow, title, subtitle, moreLabel, allServicesLabel } = getDictionary(locale).home.services;
 ---
 
 <section aria-labelledby={headingId} class="relative bg-slate-50 py-16 sm:py-24">
@@ -33,7 +40,7 @@ const { eyebrow, title, subtitle, moreLabel, allServices } = servicesContent;
             ))}
           </ul>
           <a
-            href={`${pages.services.path}#${service.slug}`}
+            href={`${servicesPath}#${service.slug}`}
             class="mt-auto inline-flex min-h-11 items-center gap-2 self-start rounded-md pt-5 font-bold text-brand-hover underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
             aria-label={`${moreLabel}: ${service.title}`}
           >
@@ -45,8 +52,8 @@ const { eyebrow, title, subtitle, moreLabel, allServices } = servicesContent;
     </ul>
 
     <div class="mt-10">
-      <Button href={allServices.href} variant="secondary">
-        {allServices.label}
+      <Button href={servicesPath} variant="secondary">
+        {allServicesLabel}
         <Icon name="arrow" size={20} />
       </Button>
     </div>

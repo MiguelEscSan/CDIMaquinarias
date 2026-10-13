@@ -1,11 +1,5 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import RentingGrid from "../components/sections/RentingGrid.astro";
-import CtaBand from "../components/sections/CtaBand.astro";
-import { pages } from "../data/pages";
+import RentingPage from "../views/RentingPage.astro";
 ---
 
-<PageLayout page={pages.renting}>
-  <RentingGrid />
-  <CtaBand />
-</PageLayout>
+<RentingPage locale="es" />

@@ -2,24 +2,16 @@
 import { actions } from "astro:actions";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
-import { contactFormCopy as copy } from "../../data/contactContent";
-
-export type ContactField = "name" | "email" | "message" | "privacy";
-
-export interface ContactFormState {
-  success: boolean;
-  formError?: string;
-  fieldErrors: Partial<Record<ContactField, string[]>>;
-  values: { name: string; email: string; message: string; privacy: boolean };
-  /** Renting category slug carried through the submission. */
-  equipo?: string;
-}
+import { getDictionary, localizedPath, type Locale } from "../../i18n";
+import type { ContactField, ContactFormState } from "../../lib/contactPageState";
 
 interface Props {
   state: ContactFormState;
+  locale: Locale;
 }
 
-const { state } = Astro.props;
+const { state, locale } = Astro.props;
+const copy = getDictionary(locale).contact.form;
 const { fieldErrors, values } = state;
 const headingId = "formulario-titulo";
 
@@ -60,7 +52,7 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
         <form method="POST" action={actions.contact} class="mt-6 flex flex-col gap-5">
           <div>
             <label for="contact-name" class={labelClass}>
-              {copy.fields.name.label} <span aria-hidden="true" class="text-red-700">*</span>
+              {copy.fields.name} <span aria-hidden="true" class="text-red-700">*</span>
             </label>
             <input
               id="contact-name"
@@ -69,7 +61,7 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
               required
               minlength={2}
               maxlength={100}
-              autocomplete={copy.fields.name.autocomplete}
+              autocomplete="name"
               value={values.name}
               aria-invalid={invalid("name")}
               aria-describedby={describedBy("name")}
@@ -80,7 +72,7 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
 
           <div>
             <label for="contact-email" class={labelClass}>
-              {copy.fields.email.label} <span aria-hidden="true" class="text-red-700">*</span>
+              {copy.fields.email} <span aria-hidden="true" class="text-red-700">*</span>
             </label>
             <input
               id="contact-email"
@@ -89,7 +81,7 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
               inputmode="email"
               required
               maxlength={254}
-              autocomplete={copy.fields.email.autocomplete}
+              autocomplete="email"
               value={values.email}
               aria-invalid={invalid("email")}
               aria-describedby={describedBy("email")}
@@ -100,7 +92,7 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
 
           <div>
             <label for="contact-message" class={labelClass}>
-              {copy.fields.message.label} <span aria-hidden="true" class="text-red-700">*</span>
+              {copy.fields.message} <span aria-hidden="true" class="text-red-700">*</span>
             </label>
             <textarea
               id="contact-message"
@@ -109,7 +101,7 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
               required
               minlength={10}
               maxlength={5000}
-              autocomplete={copy.fields.message.autocomplete}
+              autocomplete="off"
               aria-invalid={invalid("message")}
               aria-describedby={describedBy("message")}
               class={`${inputClass} resize-y`}
@@ -141,10 +133,10 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
               <label for="contact-privacy" class="text-sm text-slate-700">
                 {copy.privacy.before}{" "}
                 <a
-                  href={copy.privacy.link.href}
+                  href={localizedPath("privacy", locale)}
                   class="font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 hover:text-brand-hover"
                 >
-                  {copy.privacy.link.label}
+                  {copy.privacy.linkLabel}
                 </a>{" "}
                 <span aria-hidden="true" class="text-red-700">*</span>
               </label>

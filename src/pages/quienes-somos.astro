@@ -1,11 +1,5 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import AboutSection from "../components/sections/AboutSection.astro";
-import CtaBand from "../components/sections/CtaBand.astro";
-import { pages } from "../data/pages";
+import AboutPage from "../views/AboutPage.astro";
 ---
 
-<PageLayout page={pages.about}>
-  <AboutSection />
-  <CtaBand />
-</PageLayout>
+<AboutPage locale="es" />

@@ -1,64 +1,12 @@
 ---
-import { actions, isInputError } from "astro:actions";
-import PageLayout from "../layouts/PageLayout.astro";
-import ContactSection from "../components/sections/ContactSection.astro";
-import ContactForm, { type ContactFormState } from "../components/sections/ContactForm.astro";
-import MapSection from "../components/sections/MapSection.astro";
-import { contactFormCopy } from "../data/contactContent";
-import { contactErrorFeedback } from "../lib/contactFeedback";
-import { pages } from "../data/pages";
-import { findRentingCategory } from "../data/renting";
+import ContactPage from "../views/ContactPage.astro";
+import { resolveContactPageState } from "../lib/contactPageState";
 
 // On-demand so the form works without JavaScript via Astro Actions.
 export const prerender = false;
 
-const result = Astro.getActionResult(actions.contact);
-const inputError = isInputError(result?.error) ? result.error : undefined;
-const failure = result?.error && !inputError ? contactErrorFeedback(result.error.code) : undefined;
-
-const state: ContactFormState = {
-  success: result?.data?.sent === true,
-  formError: failure?.message,
-  fieldErrors: inputError?.fields ?? {},
-  values: { name: "", email: "", message: "", privacy: false },
-};
-
-let submittedEquipo: string | undefined;
-if (result?.error && Astro.request.method === "POST") {
-  try {
-    const form = await Astro.request.formData();
-    const text = (key: string) => {
-      const value = form.get(key);
-      return typeof value === "string" ? value.slice(0, 5000) : "";
-    };
-    state.values = {
-      name: text("name"),
-      email: text("email"),
-      message: text("message"),
-      privacy: form.get("privacy") === "on",
-    };
-    submittedEquipo = text("equipo") || undefined;
-  } catch {
-    // Keep empty values if the body cannot be read again.
-  }
-}
-
-const equipment = findRentingCategory(submittedEquipo ?? Astro.url.searchParams.get("equipo"));
-if (equipment) {
-  state.equipo = equipment.slug;
-  if (!state.values.message) state.values.message = contactFormCopy.equipmentPrefill(equipment.name);
-}
-
-if (inputError) Astro.response.status = 400;
-else if (failure) Astro.response.status = failure.status;
+const { state, status } = await resolveContactPageState(Astro, "es");
+if (status) Astro.response.status = status;
 ---
 
-<PageLayout page={pages.contact}>
-  <ContactSection />
-  <div class="bg-slate-50 py-16 sm:py-20">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <ContactForm state={state} />
-    </div>
-  </div>
-  <MapSection />
-</PageLayout>
+<ContactPage locale="es" state={state} />

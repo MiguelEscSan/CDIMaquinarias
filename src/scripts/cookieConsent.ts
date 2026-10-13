@@ -6,7 +6,19 @@ import {
   hidePreferences,
   run,
 } from "vanilla-cookieconsent";
-import { CONSENT_CATEGORIES, cookieConsentConfig } from "../data/cookieConsent";
+import { CONSENT_CATEGORIES, cookieConsentBaseConfig } from "../data/cookieConsent";
+import { defaultLocale } from "../i18n/config";
+import { cookies as esCookies } from "../i18n/es/cookies";
+
+// Banner language follows <html lang>; the consent cookie is shared by every language.
+const cookieConsentConfig = {
+  ...cookieConsentBaseConfig,
+  language: {
+    default: defaultLocale,
+    autoDetect: "document" as const,
+    translations: { es: esCookies.translation },
+  },
+};
 
 // Single client-side source of truth for consent. Every module on the page shares this instance.
 

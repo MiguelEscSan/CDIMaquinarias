@@ -8,7 +8,12 @@ import type {
 } from "../types";
 
 interface SchemaInput {
-  meta: SiteMeta;
+  site: SiteMeta;
+  /** Localized business description. */
+  description: string;
+  areaServed: string;
+  /** Localized name of the service catalogue. */
+  catalogName: string;
   contact: ContactInfo;
   services: Service[];
   brand: Brand;
@@ -35,7 +40,15 @@ function telephoneValue(href: string): string {
   return href.replace(/^tel:/, "");
 }
 
-export function buildLocalBusinessSchema({ meta, contact, services, brand }: SchemaInput) {
+export function buildLocalBusinessSchema({
+  site: meta,
+  description,
+  areaServed,
+  catalogName,
+  contact,
+  services,
+  brand,
+}: SchemaInput) {
   const openEntries = contact.hours.filter((h) => !h.closed && h.opens && h.closes);
   const pageUrl = new URL("/", meta.url).toString();
   const openingHours = openEntries.map(toOpeningHoursString);
@@ -46,7 +59,7 @@ export function buildLocalBusinessSchema({ meta, contact, services, brand }: Sch
     "@id": `${pageUrl}#business`,
     name: meta.name,
     legalName: meta.legalName,
-    description: meta.description,
+    description,
     url: pageUrl,
     image: new URL(meta.ogImage, meta.url).toString(),
     telephone: contact.phones.map((p) => telephoneValue(p.href)),
@@ -59,7 +72,7 @@ export function buildLocalBusinessSchema({ meta, contact, services, brand }: Sch
       addressRegion: contact.address.region,
       addressCountry: contact.address.countryCode,
     },
-    areaServed: meta.areaServed,
+    areaServed,
     openingHours: openingHours.length === 1 ? openingHours[0] : openingHours,
     openingHoursSpecification: openEntries.map((h) => ({
       "@type": "OpeningHoursSpecification",
@@ -70,14 +83,14 @@ export function buildLocalBusinessSchema({ meta, contact, services, brand }: Sch
     brand: { "@type": "Brand", name: brand.name },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Servicios",
+      name: catalogName,
       itemListElement: services.map((s) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
           name: s.title,
           description: s.description,
-          areaServed: meta.areaServed,
+          areaServed,
         },
       })),
     },

@@ -1,15 +1,5 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import Hero from "../components/sections/Hero.astro";
-import ServicesSection from "../components/sections/ServicesSection.astro";
-import BrandTrust from "../components/sections/BrandTrust.astro";
-import CtaBand from "../components/sections/CtaBand.astro";
-import { pages } from "../data/pages";
+import HomePage from "../views/HomePage.astro";
 ---
 
-<PageLayout page={pages.home}>
-  <Hero />
-  <ServicesSection />
-  <BrandTrust />
-  <CtaBand />
-</PageLayout>
+<HomePage locale="es" />

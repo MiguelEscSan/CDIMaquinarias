@@ -2,11 +2,24 @@
 import Badge from "../ui/Badge.astro";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
-import { brandBadge, callCta, mainNav, menuLabels } from "../../data/navigation";
-import { pages } from "../../data/pages";
-import { siteMeta } from "../../data/siteInfo";
+import { mainNavIds, navLinks } from "../../data/navigation";
+import { primaryPhone, siteMeta } from "../../data/siteInfo";
+import { getDictionary, localizedPath, type Locale } from "../../i18n";
 import { isCurrentPath } from "../../lib/paths";
+import type { PageId } from "../../types";
 
+interface Props {
+  locale: Locale;
+  /** Current page, for the language switcher. */
+  pageId: PageId;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale).common;
+const mainNav = navLinks(mainNavIds, locale);
+const homePath = localizedPath("home", locale);
+const callCta = { href: primaryPhone.href, ...t.cta.call };
+const menuLabels = t.nav;
 const pathname = Astro.url.pathname;
 const current = (href: string) => (isCurrentPath(pathname, href) ? "page" : undefined);
 const [firstWord, ...restWords] = siteMeta.name.split(" ");
@@ -21,14 +34,14 @@ const mobileLinkClass =
   <div class="hazard-stripes h-1" aria-hidden="true"></div>
   <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-8">
     <a
-      href={pages.home.path}
+      href={homePath}
       class="flex min-h-11 items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
-      aria-current={current(pages.home.path)}
+      aria-current={current(homePath)}
     >
       <span class="text-lg font-black leading-none tracking-tight text-slate-900 sm:text-xl">
         {firstWord}<span class="text-brand-hover"> {restWords.join(" ")}</span>
       </span>
-      <Badge tone="navy" class="max-xl:hidden">{brandBadge}</Badge>
+      <Badge tone="navy" class="max-xl:hidden">{t.brandBadge}</Badge>
     </a>
 
     <nav aria-label={menuLabels.main} class="hidden lg:block">

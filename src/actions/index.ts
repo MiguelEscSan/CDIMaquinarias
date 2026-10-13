@@ -20,11 +20,19 @@ import { NodemailerMailSender } from "../infrastructure/mail/NodemailerMailSende
 import { createRateLimiter } from "../infrastructure/rateLimit/createRateLimiter";
 import { CONTACT_RATE_LIMITS, SEND_DEADLINE_MS } from "../config/contactLimits";
 import { clientRateLimitKey, resolveClientIp } from "../lib/clientKey";
-import { contactFailureFor } from "../lib/contactFeedback";
-import { contactFormCopy } from "../data/contactContent";
+import { contactFailureFor, type ContactErrorKey } from "../lib/contactFeedback";
 import { findRentingCategory } from "../data/renting";
+import { defaultLocale, getLocaleFromUrl } from "../i18n";
 
-const { errors } = contactFormCopy;
+// Messages are validation codes; the page renders them in the visitor's language.
+const errors: Record<ContactErrorKey, ContactErrorKey> = {
+  nameRequired: "nameRequired",
+  nameLength: "nameLength",
+  emailInvalid: "emailInvalid",
+  messageRequired: "messageRequired",
+  messageLength: "messageLength",
+  privacyRequired: "privacyRequired",
+};
 
 const contactInput = z.object({
   name: z
@@ -80,6 +88,8 @@ export const server = {
     accept: "form",
     input: contactInput,
     handler: async (input, context) => {
+      // The form posts to its own page (?_action=contact), so the URL carries the locale.
+      const locale = getLocaleFromUrl(context.url);
       const ip = resolveClientIp(() => context.clientAddress, context.request.headers);
 
       try {
@@ -88,7 +98,8 @@ export const server = {
             name: input.name,
             email: input.email,
             message: input.message,
-            equipment: findRentingCategory(input.equipo)?.name,
+            // The inbox is Spanish-speaking: equipment names are always sent in Spanish.
+            equipment: findRentingCategory(input.equipo, defaultLocale)?.name,
             honeypot: input.website,
           },
           {
@@ -102,7 +113,7 @@ export const server = {
         );
       } catch (error) {
         logFailure(error);
-        throw new ActionError(contactFailureFor(error));
+        throw new ActionError(contactFailureFor(error, locale));
       }
 
       return { sent: true as const };

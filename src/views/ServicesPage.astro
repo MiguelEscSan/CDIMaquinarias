@@ -1,0 +1,18 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import ServiceDetailList from "../components/sections/ServiceDetailList.astro";
+import CtaBand from "../components/sections/CtaBand.astro";
+import { getPage } from "../data/pages";
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<PageLayout page={getPage("services", locale)} locale={locale}>
+  <ServiceDetailList locale={locale} />
+  <CtaBand locale={locale} />
+</PageLayout>

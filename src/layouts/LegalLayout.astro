@@ -1,16 +1,20 @@
 ---
 import PageLayout from "./PageLayout.astro";
 import InlineText from "../components/ui/InlineText.astro";
-import { getLegalDocument, legalCopy } from "../data/legal";
-import { pages } from "../data/pages";
-import type { LegalDocument } from "../types";
+import { getLegalDocument } from "../data/legal";
+import { getPage } from "../data/pages";
+import { getDictionary, localeMeta, type Locale } from "../i18n";
+import type { LegalPageId } from "../types";
 
 interface Props {
-  id: LegalDocument["pageId"];
+  id: LegalPageId;
+  locale: Locale;
 }
 
-const doc = getLegalDocument(Astro.props.id);
-const updated = new Date(`${doc.updated}T00:00:00Z`).toLocaleDateString("es-ES", {
+const { id, locale } = Astro.props;
+const legalCopy = getDictionary(locale).legal;
+const doc = getLegalDocument(id, locale);
+const updated = new Date(`${doc.updated}T00:00:00Z`).toLocaleDateString(localeMeta[locale].dateLocale, {
   day: "numeric",
   month: "long",
   year: "numeric",
@@ -18,7 +22,7 @@ const updated = new Date(`${doc.updated}T00:00:00Z`).toLocaleDateString("es-ES",
 });
 ---
 
-<PageLayout page={pages[doc.pageId]}>
+<PageLayout page={getPage(doc.pageId, locale)} locale={locale}>
   <div class="bg-white py-12 sm:py-16">
     <article class="legal-prose mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <p class="legal-updated">

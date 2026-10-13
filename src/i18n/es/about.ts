@@ -1,6 +1,6 @@
-import type { AboutContent } from "../types";
+import type { AboutContent } from "../../types";
 
-export const aboutContent: AboutContent = {
+export const about: AboutContent = {
   sections: [
     {
       title: "Más de una década de experiencia",

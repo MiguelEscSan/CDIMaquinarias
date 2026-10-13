@@ -1,0 +1,22 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import ServicesSection from "../components/sections/ServicesSection.astro";
+import BrandTrust from "../components/sections/BrandTrust.astro";
+import CtaBand from "../components/sections/CtaBand.astro";
+import { getPage } from "../data/pages";
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<PageLayout page={getPage("home", locale)} locale={locale}>
+  <Hero locale={locale} />
+  <ServicesSection locale={locale} />
+  <BrandTrust locale={locale} />
+  <CtaBand locale={locale} />
+</PageLayout>

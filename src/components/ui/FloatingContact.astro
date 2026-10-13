@@ -2,20 +2,22 @@
 import Icon from "./Icon.astro";
 
 interface Props {
+  /** Accessible name of the navigation landmark. */
+  label: string;
   phoneHref: string;
   phoneLabel: string;
   emailHref: string;
   emailLabel: string;
 }
 
-const { phoneHref, phoneLabel, emailHref, emailLabel } = Astro.props;
+const { label, phoneHref, phoneLabel, emailHref, emailLabel } = Astro.props;
 
 const fab =
   "flex size-14 items-center justify-center rounded-full shadow-lg ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2";
 ---
 
 <nav
-  aria-label="Contacto rápido"
+  aria-label={label}
   class="fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 flex flex-col gap-3 md:hidden print:hidden"
 >
   <a href={emailHref} aria-label={emailLabel} class={`${fab} bg-navy text-white`}>

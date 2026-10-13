@@ -1,11 +1,5 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import ServiceDetailList from "../components/sections/ServiceDetailList.astro";
-import CtaBand from "../components/sections/CtaBand.astro";
-import { pages } from "../data/pages";
+import ServicesPage from "../views/ServicesPage.astro";
 ---
 
-<PageLayout page={pages.services}>
-  <ServiceDetailList />
-  <CtaBand />
-</PageLayout>
+<ServicesPage locale="es" />

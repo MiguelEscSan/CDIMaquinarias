@@ -2,11 +2,13 @@
 import "../styles/global.css";
 import CookieConsent from "../components/layout/CookieConsent.astro";
 import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "../lib/schema";
-import { services } from "../data/services";
+import { getServices } from "../data/services";
 import { absoluteUrl, contactInfo, siteMeta, stillBrand } from "../data/siteInfo";
+import { getDictionary, localeMeta, type Locale } from "../i18n";
 import type { BreadcrumbItem } from "../types";
 
 interface Props {
+  locale: Locale;
   title?: string;
   description?: string;
   canonical?: string;
@@ -15,9 +17,12 @@ interface Props {
   breadcrumbs?: BreadcrumbItem[];
 }
 
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const meta = localeMeta[locale];
 const {
-  title = siteMeta.title,
-  description = siteMeta.description,
+  title = t.seo.pages.home.title,
+  description = t.seo.pages.home.description,
   canonical = absoluteUrl(Astro.url.pathname),
   ogImage = siteMeta.ogImage,
   noindex = false,
@@ -28,9 +33,12 @@ const ogImageUrl = absoluteUrl(ogImage);
 const robots = noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large";
 const schemas: object[] = [
   buildLocalBusinessSchema({
-    meta: siteMeta,
+    site: siteMeta,
+    description: t.seo.pages.home.description,
+    areaServed: t.common.business.areaServed,
+    catalogName: t.common.business.catalogName,
     contact: contactInfo,
-    services,
+    services: getServices(locale),
     brand: stillBrand,
   }),
 ];
@@ -38,7 +46,7 @@ if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, site
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={meta.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,7 +60,7 @@ if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, site
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content={siteMeta.locale} />
+    <meta property="og:locale" content={meta.ogLocale} />
     <meta property="og:site_name" content={siteMeta.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -74,7 +82,7 @@ if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, site
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-navy focus:px-4 focus:py-3 focus:font-semibold focus:text-white focus:ring-2 focus:ring-orange-500"
     >
-      Saltar al contenido
+      {t.common.skipToContent}
     </a>
     <slot name="header" />
     <main id="contenido" tabindex="-1" class="focus:outline-none">

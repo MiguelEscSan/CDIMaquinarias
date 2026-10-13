@@ -1,10 +1,16 @@
 ---
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
-import { productsContent } from "../../data/products";
 import { stillBrand } from "../../data/siteInfo";
+import { getDictionary, type Locale } from "../../i18n";
 
-const { company, distributor, catalog, catalogNote } = productsContent;
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const { company, distributor, catalog, catalogNote } = t.products;
 ---
 
 <div class="bg-white py-16 sm:py-20">
@@ -13,7 +19,7 @@ const { company, distributor, catalog, catalogNote } = productsContent;
       <h2 id="still-empresa-titulo" class="text-3xl font-extrabold tracking-tight sm:text-4xl">{company.title}</h2>
       {company.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
       <ul class="mt-2 grid gap-3 sm:grid-cols-2">
-        {stillBrand.categories.map((category) => (
+        {t.common.stillCategories.map((category) => (
           <li class="flex min-h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 font-semibold text-slate-800">
             <Icon name="forklift" size={20} class="text-brand-hover" />
             {category}
@@ -36,7 +42,7 @@ const { company, distributor, catalog, catalogNote } = productsContent;
       {distributor.paragraphs.map((p) => <p class="relative leading-relaxed sm:text-lg">{p}</p>)}
       <div class="relative flex flex-col gap-2">
         <div>
-          <Button href={catalog.href} ariaLabel={catalog.ariaLabel} external>
+          <Button href={stillBrand.catalogUrl} ariaLabel={catalog.ariaLabel} external>
             {catalog.label}
             <Icon name="arrow" size={20} />
           </Button>

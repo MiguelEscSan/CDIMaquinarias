@@ -2,8 +2,16 @@
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { locationContent } from "../../data/contactContent";
 import { directionsUrl, formatAddress, mapEmbedUrl } from "../../data/siteInfo";
+import { getDictionary, localizedPath, type Locale } from "../../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const locationContent = t.contact.location;
 
 const headingId = "ubicacion-titulo";
 const { consent } = locationContent;
@@ -20,7 +28,7 @@ const { consent } = locationContent;
       />
       <address class="flex gap-3 text-slate-700 not-italic">
         <Icon name="map-pin" class="mt-0.5 text-brand-hover" />
-        {formatAddress()}
+        {formatAddress(t.common.countryName)}
       </address>
       <div>
         <Button
@@ -54,10 +62,10 @@ const { consent } = locationContent;
           {consent.loadLabel}
         </Button>
         <a
-          href={consent.cookiesLink.href}
+          href={localizedPath("cookies", locale)}
           class="text-sm font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 hover:text-brand-hover"
         >
-          {consent.cookiesLink.label}
+          {consent.cookiesLinkLabel}
         </a>
       </div>
     </div>

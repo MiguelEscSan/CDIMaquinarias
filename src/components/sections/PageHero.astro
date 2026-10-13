@@ -5,9 +5,11 @@ interface Props {
   heading: string;
   intro?: string;
   breadcrumbs?: BreadcrumbItem[];
+  /** Accessible name of the breadcrumb navigation. */
+  breadcrumbLabel?: string;
 }
 
-const { heading, intro, breadcrumbs = [] } = Astro.props;
+const { heading, intro, breadcrumbs = [], breadcrumbLabel } = Astro.props;
 const lastIndex = breadcrumbs.length - 1;
 ---
 
@@ -16,7 +18,7 @@ const lastIndex = breadcrumbs.length - 1;
   <div class="relative mx-auto flex max-w-7xl flex-col gap-4 px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
     {
       breadcrumbs.length > 1 && (
-        <nav aria-label="Breadcrumb">
+        <nav aria-label={breadcrumbLabel}>
           <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             {breadcrumbs.map((crumb, index) => (
               <li class="flex items-center gap-2">

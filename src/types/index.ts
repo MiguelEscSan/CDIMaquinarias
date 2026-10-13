@@ -14,8 +14,36 @@ export type IconName =
   | "close"
   | "shield";
 
+export type ServiceId =
+  | "reparacion-mantenimiento"
+  | "venta-maquinaria"
+  | "alquiler-flota"
+  | "asesoramiento-especializado"
+  | "climatizacion";
+
+/** Language-neutral service data; copy comes from the dictionary. */
+export interface ServiceDefinition {
+  id: ServiceId;
+  /** Anchor on the services page (shared by every locale). */
+  slug: string;
+  icon: IconName;
+  /** Page the "learn more" link points to. */
+  linkTo?: PageId;
+}
+
+/** Translatable copy of one service. */
+export interface ServiceCopy {
+  title: string;
+  /** Short copy for cards. */
+  description: string;
+  /** Long copy for the services page. */
+  detail: string;
+  features: string[];
+  link?: { label: string; ariaLabel: string };
+}
+
 export interface Service {
-  id: string;
+  id: ServiceId;
   slug: string;
   title: string;
   /** Short copy for cards. */
@@ -29,7 +57,7 @@ export interface Service {
 }
 
 export interface PhoneContact {
-  label: string;
+  kind: "landline" | "mobile";
   display: string;
   href: string;
 }
@@ -53,8 +81,8 @@ export type DayOfWeek =
   | "Sunday";
 
 export interface OpeningHours {
-  /** Human-readable label, e.g. "Lunes a Viernes". */
-  label: string;
+  /** Key of the localized label. */
+  id: "weekdays" | "weekend";
   days: DayOfWeek[];
   /** 24h "HH:MM"; omitted when closed. */
   opens?: string;
@@ -80,22 +108,15 @@ export interface CtaLink extends NavLink {
 
 export interface Brand {
   name: string;
-  /** Machine categories the brand covers. */
-  categories: string[];
+  /** Official online catalogue. */
+  catalogUrl: string;
 }
 
 export interface SiteMeta {
   name: string;
   legalName: string;
   url: string;
-  title: string;
-  description: string;
-  locale: string;
   ogImage: string;
-  areaServed: string;
-  tagline: string;
-  positioning: string;
-  valueProposition: string;
 }
 
 export type PageId =
@@ -109,10 +130,8 @@ export type PageId =
   | "privacy"
   | "cookies";
 
-export interface PageMeta {
-  id: PageId;
-  /** Route with trailing slash, e.g. "/servicios/". */
-  path: string;
+/** Translatable copy of one page. */
+export interface PageCopy {
   /** Document title, < 60 chars. */
   title: string;
   /** Meta description, < 155 chars. */
@@ -122,6 +141,12 @@ export interface PageMeta {
   /** Visible page heading (the page's single h1). */
   heading: string;
   intro?: string;
+}
+
+export interface PageMeta extends PageCopy {
+  id: PageId;
+  /** Route with trailing slash, e.g. "/servicios/". */
+  path: string;
 }
 
 export interface BreadcrumbItem {
@@ -142,7 +167,7 @@ export interface AboutContent {
 export interface ProductsContent {
   company: ContentSection;
   distributor: ContentSection;
-  catalog: CtaLink;
+  catalog: { label: string; ariaLabel: string };
   catalogNote: string;
 }
 
@@ -171,8 +196,10 @@ export interface LegalSection {
   blocks: LegalBlock[];
 }
 
+export type LegalPageId = Extract<PageId, "legalNotice" | "privacy" | "cookies">;
+
 export interface LegalDocument {
-  pageId: Extract<PageId, "legalNotice" | "privacy" | "cookies">;
+  pageId: LegalPageId;
   /** ISO date (YYYY-MM-DD). */
   updated: string;
   sections: LegalSection[];
