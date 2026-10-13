@@ -1,4 +1,11 @@
-import type { Brand, ContactInfo, OpeningHours, PostalAddress, SiteMeta } from "../types";
+import type {
+  Brand,
+  ContactInfo,
+  LegalInfo,
+  OpeningHours,
+  PostalAddress,
+  SiteMeta,
+} from "../types";
 
 export const siteMeta: SiteMeta = {
   name: "CDI Maquinarias",
@@ -59,6 +66,16 @@ export const contactInfo: ContactInfo = {
   email: "cdi@cdimaquinarias.com",
   address,
   hours,
+};
+
+/** Company identification as stated in the original legal notice and privacy policy. */
+export const legalInfo: LegalInfo = {
+  legalName: "CDI MAQUINARIAS S.L.",
+  taxId: "B76075506",
+  registeredAddress: "Calle Simón Bolívar 13, 35214 Playa de las Clavellinas",
+  privacyEmail: "administracion2@cdimaquinarias.com",
+  controllerName: "Carlos Daniel Igualador Sosa",
+  controllerPhone: "625 444 646",
 };
 
 export const primaryPhone = contactInfo.phones[0]!;

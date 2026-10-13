@@ -1,44 +1,39 @@
+import type { CtaLink, SectionCopy } from "../types";
+import { pages } from "./pages";
 import { siteMeta, stillBrand } from "./siteInfo";
-
-export interface SectionCopy {
-  eyebrow: string;
-  title: string;
-  subtitle?: string;
-}
 
 export const heroContent = {
   eyebrow: siteMeta.positioning.replace(/\.$/, ""),
-  heading: "Venta, Alquiler y Reparación de Maquinaria Industrial en Las Palmas",
+  heading: pages.home.heading,
   tagline: "Profesionales en el sector",
   valueProposition: siteMeta.valueProposition,
-  trustChips: [`Distribuidor ${stillBrand.name}`, "Servicio multimarca", "Gran Canaria"],
+  trustChips: [`Distribuidor oficial ${stillBrand.name}`, "Servicio multimarca", "Gran Canaria"],
 };
 
-export const servicesContent: SectionCopy = {
-  eyebrow: "Servicios",
-  title: "Soluciones integrales para su empresa",
+export const servicesContent: SectionCopy & { moreLabel: string; allServices: CtaLink } = {
+  eyebrow: "Nuestros servicios",
+  title: "La excelencia en servicios de maquinaria",
   subtitle:
-    "Venta, alquiler, reparación y asesoramiento en maquinaria industrial, además de climatización para oficinas, naves y locales comerciales.",
+    "Nuestro compromiso es brindarle productos de calidad, atención personalizada y un excelente servicio de postventa.",
+  moreLabel: "Saber más",
+  allServices: { label: "Ver todos los servicios", href: pages.services.path },
 };
 
-export const brandContent: SectionCopy & { body: string; categoriesTitle: string } = {
-  eyebrow: `Distribuidor ${stillBrand.name}`,
+export const brandContent: SectionCopy & {
+  body: string;
+  categoriesTitle: string;
+  productsCta: CtaLink;
+} = {
+  eyebrow: `Distribuidor oficial ${stillBrand.name}`,
   title: `Distribuidores de ${stillBrand.name} en Las Palmas de Gran Canaria`,
   subtitle: "Asesoramiento comercial y servicio técnico para la gama STILL y maquinaria industrial.",
   body: "Como distribuidores de STILL en Las Palmas de Gran Canaria, le ayudamos a elegir la maquinaria adecuada a las necesidades de su negocio y le acompañamos con venta, alquiler, reparación y mantenimiento.",
   categoriesTitle: "Maquinaria con la que trabajamos",
+  productsCta: { label: "Ver productos STILL", href: pages.products.path },
 };
 
-export const contactContent: SectionCopy = {
+export const contactBandContent: SectionCopy = {
   eyebrow: "Contacto",
   title: "Hable con nuestro equipo",
   subtitle: "Llámenos o escríbanos y le atenderemos para preparar su presupuesto.",
-};
-
-export const locationContent: SectionCopy & { directionsLabel: string; mapTitle: string } = {
-  eyebrow: "Ubicación",
-  title: "Dónde encontrarnos",
-  subtitle: `Atendemos a empresas de ${siteMeta.areaServed}.`,
-  directionsLabel: "Cómo llegar",
-  mapTitle: `Mapa de la ubicación de ${siteMeta.name}`,
 };

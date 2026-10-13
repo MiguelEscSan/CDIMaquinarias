@@ -1,6 +1,8 @@
-import type { CtaLink, NavLink } from "../types";
-import { contactInfo, emailHref, primaryPhone, quoteMailto } from "./siteInfo";
+import type { CtaLink, NavLink, PageId } from "../types";
+import { pages } from "./pages";
+import { contactInfo, emailHref, primaryPhone } from "./siteInfo";
 
+/** @deprecated Anchor ids of the former single-page layout; removed once pages are split. */
 export const sectionIds = {
   home: "inicio",
   services: "servicios",
@@ -9,13 +11,15 @@ export const sectionIds = {
   location: "ubicacion",
 } as const;
 
-export const mainNav: NavLink[] = [
-  { label: "Inicio", href: `#${sectionIds.home}` },
-  { label: "Servicios", href: `#${sectionIds.services}` },
-  { label: "STILL", href: `#${sectionIds.brand}` },
-  { label: "Contacto", href: `#${sectionIds.contact}` },
-  { label: "Ubicación", href: `#${sectionIds.location}` },
-];
+const toLink = (id: PageId): NavLink => ({ label: pages[id].label, href: pages[id].path });
+
+export const mainNav: NavLink[] = (["home", "about", "services", "products", "contact"] as const).map(
+  toLink,
+);
+
+export const footerNav: NavLink[] = [...mainNav, toLink("renting")];
+
+export const legalNav: NavLink[] = (["legalNotice", "privacy", "cookies"] as const).map(toLink);
 
 export const callCta: CtaLink = {
   label: "Llamar ahora",
@@ -25,8 +29,8 @@ export const callCta: CtaLink = {
 
 export const quoteCta: CtaLink = {
   label: "Solicitar presupuesto",
-  href: quoteMailto,
-  ariaLabel: "Solicitar presupuesto por correo electrónico",
+  href: pages.contact.path,
+  ariaLabel: "Solicitar presupuesto mediante el formulario de contacto",
 };
 
 export const primaryCta = callCta;
