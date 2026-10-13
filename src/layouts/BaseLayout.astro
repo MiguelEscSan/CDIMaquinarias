@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import CookieConsent from "../components/layout/CookieConsent.astro";
 import { buildBreadcrumbSchema, buildLocalBusinessSchema } from "../lib/schema";
 import { services } from "../data/services";
 import { absoluteUrl, contactInfo, siteMeta, stillBrand } from "../data/siteInfo";
@@ -80,5 +81,6 @@ if (breadcrumbs.length > 1) schemas.push(buildBreadcrumbSchema(breadcrumbs, site
       <slot />
     </main>
     <slot name="footer" />
+    <CookieConsent />
   </body>
 </html>

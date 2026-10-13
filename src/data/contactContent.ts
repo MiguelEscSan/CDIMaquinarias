@@ -35,7 +35,7 @@ export const locationContent: SectionCopy & {
   mapTitle: `Mapa de la ubicación de ${siteMeta.name}`,
   consent: {
     title: "Mapa de Google",
-    body: "El mapa se carga desde Google Maps, un servicio de terceros que puede instalar cookies y recopilar datos sobre su actividad. Solo se cargará si pulsa el botón.",
+    body: "El mapa se carga desde Google Maps, un servicio de terceros que puede instalar cookies y recopilar datos sobre su actividad. Al pulsar «Cargar mapa» acepta este servicio; puede cambiar su elección en cualquier momento con «Configurar cookies», en el pie de página.",
     loadLabel: "Cargar mapa",
     cookiesLink: { label: "Más información en la política de cookies", href: pages.cookies.path },
   },

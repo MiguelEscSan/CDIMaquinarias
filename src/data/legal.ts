@@ -1,6 +1,7 @@
 import type { LegalDocument, PageId } from "../types";
 import { pages } from "./pages";
-import { legalInfo } from "./siteInfo";
+import { CONSENT_COOKIE, GOOGLE_COOKIES_POLICY_URL, consentLabels } from "./cookieConsent";
+import { legalInfo, siteMeta } from "./siteInfo";
 
 // Ported from the original site's legal pages. Inline links use "[label](href)".
 // Adaptations to the new site are listed in odd/tasks/cdi-website-rebuild.md (T9).
@@ -8,7 +9,8 @@ import { legalInfo } from "./siteInfo";
 const L = legalInfo.legalName;
 const privacyLink = `[política de privacidad](${pages.privacy.path})`;
 const cookiesLink = `[política de cookies](${pages.cookies.path})`;
-const privacyMail = `[${legalInfo.privacyEmail}](mailto:${legalInfo.privacyEmail})`;
+const siteHost = new URL(siteMeta.url).hostname;
+const privacyMail =`[${legalInfo.privacyEmail}](mailto:${legalInfo.privacyEmail})`;
 
 export const LEGAL_UPDATED = "2026-10-13";
 
@@ -385,15 +387,65 @@ const cookies: LegalDocument = {
       blocks: [
         {
           type: "p",
-          text: "Este sitio web no instala cookies propias, publicitarias ni de análisis al navegar por él, y no utiliza herramientas de medición de visitas.",
+          text: "Este sitio web no instala cookies publicitarias ni de análisis y no utiliza herramientas de medición de visitas. Las cookies que pueden instalarse en su dispositivo son las siguientes:",
+        },
+        {
+          type: "table",
+          caption: "Cookies de este sitio web",
+          headers: ["Cookie", "Titular", "Tipo y finalidad", "Duración"],
+          rows: [
+            [
+              CONSENT_COOKIE.name,
+              `Propia (${siteHost})`,
+              "Técnica, necesaria. Guarda su elección sobre las cookies (servicios de terceros aceptados o rechazados).",
+              `${CONSENT_COOKIE.expiresAfterDays} días`,
+            ],
+            [
+              "__cf_bm",
+              "Cloudflare, Inc. (proveedor de alojamiento)",
+              "Técnica de seguridad. Solo se instala si la protección contra bots de Cloudflare está activa; sirve para distinguir a las personas de los programas automatizados.",
+              "30 minutos de inactividad",
+            ],
+            [
+              "NID y otras similares",
+              "Google (en sus propios dominios)",
+              "De terceros. Solo si usted acepta los servicios de terceros y se carga el mapa de Google Maps en la página de contacto.",
+              `Según la [política de cookies de Google](${GOOGLE_COOKIES_POLICY_URL})`,
+            ],
+          ],
         },
         {
           type: "p",
-          text: "Mapa de Google: en la página de contacto, el mapa de Google Maps no se carga automáticamente. Solo se carga si usted pulsa el botón «Cargar mapa». A partir de ese momento, Google puede instalar cookies en su dispositivo y tratar datos sobre su actividad conforme a su propia [política de privacidad](https://policies.google.com/privacy). El enlace «Abrir en Google Maps» le lleva al sitio web de Google.",
+          text: `Cookies técnicas: la cookie ${CONSENT_COOKIE.name} es estrictamente necesaria para recordar su elección y no requiere consentimiento. Además, si nuestro proveedor de alojamiento, Cloudflare, tiene activa su protección contra bots, puede instalar la cookie técnica __cf_bm, necesaria para la seguridad del sitio web, que tampoco requiere consentimiento.`,
+        },
+        {
+          type: "p",
+          text: `Mapa de Google: en la página de contacto, el mapa de Google Maps no se carga hasta que usted acepta los servicios de terceros, ya sea en el aviso de cookies o pulsando el botón «Cargar mapa». A partir de ese momento, Google puede instalar cookies en su propio dominio y tratar datos sobre su actividad conforme a su [política de cookies](${GOOGLE_COOKIES_POLICY_URL}) y su [política de privacidad](https://policies.google.com/privacy?hl=es). El enlace «Abrir en Google Maps» le lleva al sitio web de Google.`,
+        },
+        {
+          type: "p",
+          text: `El formulario de contacto no utiliza cookies. Los datos que introduce en él se tratan conforme a nuestra ${privacyLink}.`,
         },
         {
           type: "p",
           text: `Si ${L} cambia el uso de las cookies en este sitio web, actualizará esta política y, cuando sea necesario, se lo notificará con un mensaje.`,
+        },
+      ],
+    },
+    {
+      heading: "Cómo aceptar, rechazar o retirar su consentimiento",
+      blocks: [
+        {
+          type: "p",
+          text: `La primera vez que visita el sitio web se le muestra un aviso en el que puede pulsar «${consentLabels.acceptAll}» o «${consentLabels.rejectAll}», o bien «${consentLabels.configure}» para elegir qué servicios de terceros permite. Rechazar es tan sencillo como aceptar, y seguir navegando o desplazarse por la página no se considera aceptación.`,
+        },
+        {
+          type: "p",
+          text: `Puede cambiar o retirar su consentimiento en cualquier momento con el botón «${consentLabels.settings}» del pie de página. Si lo retira, el mapa de Google deja de mostrarse. Las cookies que Google ya haya instalado en su propio dominio no pueden eliminarse desde este sitio web; puede borrarlas desde la configuración de su navegador, como se explica más abajo.`,
+        },
+        {
+          type: "p",
+          text: `Su elección se conserva durante ${CONSENT_COOKIE.expiresAfterDays} días. Pasado ese plazo, o si modificamos esta política, se le volverá a preguntar.`,
         },
       ],
     },

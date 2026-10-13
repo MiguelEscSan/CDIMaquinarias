@@ -4,7 +4,8 @@ Sitio corporativo de CDI Maquinarias (distribuidores de STILL en Las Palmas de G
 
 ## Stack
 
-- [Astro](https://astro.build) 7 (generación estática, sin JavaScript en cliente)
+- [Astro](https://astro.build) 7 (generación estática; el único JavaScript en cliente es el aviso de cookies y la carga del mapa)
+- [vanilla-cookieconsent](https://github.com/orestbida/cookieconsent) 3.1.0 para el consentimiento de cookies (Google Maps), alojado con el sitio
 - Tailwind CSS 4 mediante `@tailwindcss/vite`
 - TypeScript en modo estricto
 - `@astrojs/sitemap` para `sitemap-index.xml`
@@ -82,6 +83,7 @@ Los componentes no contienen datos del negocio: todo se recibe por `Props` o se 
 - `src/data/siteInfo.ts`: nombre, metadatos SEO, teléfonos, email, dirección, horario.
 - `src/data/services.ts`: catálogo de servicios.
 - `src/data/navigation.ts`: enlaces del menú y CTA principal.
+- `src/data/cookieConsent.ts`: textos y categorías del aviso de cookies. Si cambia la política de cookies de forma relevante, incremente `CONSENT_REVISION` para volver a pedir el consentimiento.
 
 ## Recursos pendientes
 

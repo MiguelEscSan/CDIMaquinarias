@@ -162,7 +162,8 @@ export interface LegalInfo {
 
 export type LegalBlock =
   | { type: "p"; text: string }
-  | { type: "ul" | "ol"; items: string[] };
+  | { type: "ul" | "ol"; items: string[] }
+  | { type: "table"; caption: string; headers: string[]; rows: string[][] };
 
 export interface LegalSection {
   heading: string;

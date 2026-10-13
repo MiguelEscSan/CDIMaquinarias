@@ -1,6 +1,7 @@
 ---
 import Icon from "../ui/Icon.astro";
 import { footerNav, legalNav, menuLabels } from "../../data/navigation";
+import { cookieSettingsLabel } from "../../data/cookieConsent";
 import {
   contactInfo,
   emailHref,
@@ -82,6 +83,16 @@ const linkClass =
               <a href={link.href} class={linkClass}>{link.label}</a>
             </li>
           ))}
+          <li data-cc-settings hidden>
+            <button
+              type="button"
+              class={`${linkClass} cursor-pointer`}
+              data-cc="show-preferencesModal"
+              aria-haspopup="dialog"
+            >
+              {cookieSettingsLabel}
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
