@@ -1,8 +1,8 @@
 # Estado del proyecto — Web CDI Maquinarias
 
-> Actualizado el 13 de octubre de 2026 · Rama `feat/cdi-website-rebuild` (24 commits, sin repositorio remoto)
+> Actualizado el 13 de octubre de 2026 · Rama `feat/cdi-website-rebuild` (29 commits, sin repositorio remoto)
 
-La nueva web está **funcionalmente completa en local**: tiene 9 páginas con las mismas URL que la web original, formulario de contacto con envío por SMTP, límite de envíos, aviso de cookies y despliegue preparado para Cloudflare Workers. **Todavía no puede publicarse**: faltan la revisión legal, la configuración de Cloudflare, una prueba real de envío de correo y las imágenes.
+La nueva web está **funcionalmente completa en local**: tiene 9 páginas con las mismas URL que la web original, las mismas 9 páginas en inglés bajo `/en/`, formulario de contacto con envío por SMTP, límite de envíos, aviso de cookies y despliegue preparado para Cloudflare Workers. **Todavía no puede publicarse**: faltan la revisión legal (también de la traducción inglesa), la configuración de Cloudflare, una prueba real de envío de correo y las imágenes.
 
 ## Resumen rápido
 
@@ -16,12 +16,12 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | Despliegue en Cloudflare | ✅ Configurado · ⏳ falta la cuenta, los secretos y el DNS |
 | Textos legales | ⚠️ Adaptados; **pendientes de revisión por la asesora** |
 | Imágenes, logo y foto para redes | ❌ No existen todavía (ver [Próximas mejoras](#próximas-mejoras)) |
-| Cambio de idioma | ❌ No implementado: la web solo está en español |
+| Cambio de idioma | ✅ Español e inglés (`/en/`) · ⚠️ falta revisar la traducción inglesa (textos legales por la asesora y el resto por un nativo) |
 | Revisión SEO completa | ⏳ Hay base técnica; falta auditarla con herramientas reales |
 
 ## Qué hay que hacer para publicar
 
-1. **Revisión legal.** La asesora revisa las adaptaciones A1 a A8 de los textos legales (ver [Textos legales](#textos-legales-pendientes-de-revisión)).
+1. **Revisión legal.** La asesora revisa las adaptaciones A1 a A8 de los textos legales y su traducción al inglés (ver [Textos legales](#textos-legales-pendientes-de-revisión)).
 2. **Imágenes.** Hay que aportar el logo, las fotos y `public/og-image.jpg` (1200×630), que es la imagen que se muestra al compartir la web en redes y buscadores. El plan está en [Próximas mejoras](#próximas-mejoras).
 3. **Cuenta de Cloudflare.** Hay que iniciar sesión con `npx wrangler login`. Crear el namespace de KV es opcional, pero recomendable.
 4. **Secretos.** Con `npx wrangler secret put <NOMBRE>` se cargan `SMTP_HOST` (`smtp.ionos.es`), `SMTP_PORT` (`465`), `SMTP_SECURE` (`true`), `SMTP_USER`, `SMTP_PASS` y, si hace falta, `CONTACT_TO`.
@@ -34,13 +34,14 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | Bloque | Contenido |
 |--------|-----------|
 | Estructura | Inicio, Quiénes somos, Servicios, Productos, Renting, Contacto y 3 páginas legales, con las mismas URL que la web actual |
+| Idiomas | Español sin prefijo (URL de siempre) e inglés en `/en/` con URL traducidas (`/en/about-us/`, `/en/rental/`…). Selector de idioma en el menú que lleva a la misma página en el otro idioma, sin JavaScript. Todos los textos están en `src/i18n/` (ver [README](../README.md#idiomas-y-textos)) |
 | Arquitectura | Los datos del negocio solo viven en `src/data/`. Los componentes son reutilizables. El formulario sigue una arquitectura hexagonal: casos de uso en `src/core/` y adaptadores en `src/infrastructure/` |
-| SEO | Un solo `<h1>` por página, títulos de menos de 60 caracteres y descripciones de menos de 155 (todos únicos), JSON-LD `LocalBusiness` + `BreadcrumbList`, sitemap y `robots.txt` |
+| SEO | Un solo `<h1>` por página, títulos de menos de 60 caracteres y descripciones de menos de 155 (todos únicos en los dos idiomas), JSON-LD `LocalBusiness` + `BreadcrumbList` + `WebPage` traducido, `hreflang` es/en/x-default, sitemap con las 18 URL y sus alternativas, y `robots.txt` |
 | Formulario | Astro Action con validación Zod. Funciona sin JavaScript, tiene un campo trampa contra bots y conserva los datos escritos si hay un error |
 | Antiabuso | Máximo 3 envíos cada 10 min por visitante y 30 por hora en total. La IP solo se guarda como hash SHA-256. El límite se lleva en memoria o, si se configura, en Workers KV, y si KV falla se vuelve a la memoria |
 | Tiempo máximo | El envío SMTP se corta a los 8 s y se muestra un mensaje que no invita a reenviar, para evitar duplicados |
 | Cookies | `vanilla-cookieconsent` con dos categorías: necesarias y Google Maps. Los botones Aceptar y Rechazar tienen el mismo peso, como exige la guía de la AEPD de 2023. El mapa solo se carga con consentimiento |
-| Calidad | 59 tests (Vitest), `astro check` sin errores ni avisos, y sin scroll horizontal a 375 px en ninguna página |
+| Calidad | 149 tests (Vitest), incluido uno que impide textos fijos en los componentes, `astro check` sin errores ni avisos, y sin scroll horizontal a 375 px en ninguna página |
 
 ## Errores encontrados y corregidos
 
@@ -67,6 +68,8 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | F7 | "Cargar mapa" se puede pulsar antes de que termine de iniciarse el gestor de cookies | Al hacer clic muy rápido, puede que no pase nada o que no se guarde el consentimiento | Esperar a que el gestor arranque y capturar el error (pocas líneas) |
 | C1 | El botón principal usa blanco sobre `#EA580C` (contraste 3,56:1) | No cumple WCAG AA para texto de 16–18 px | Usar `#C2410C` como fondo (5,18:1); el aviso de cookies ya lo usa |
 | L1 | Los textos legales no están revisados | Riesgo legal (RGPD y LSSI) | Revisión por la asesora (ver abajo) |
+| L2 | Los textos legales en inglés son una traducción propia, no revisada | Que la traducción diga algo distinto del original | Revisión por la asesora; mientras tanto, el aviso de cortesía indica que prevalece el español |
+| T1 | Toda la web en inglés es una traducción propia (inglés británico) | Errores de tono o de terminología técnica | Revisión por un hablante nativo, idealmente con conocimientos del sector |
 | S1 | El envío por SMTP con TLS en el puerto 465 no se ha probado | Que el formulario falle en producción | Envío real después del despliegue |
 
 ### Pueden esperar
@@ -107,18 +110,9 @@ La web actual tiene unas 17 imágenes: 1 en Inicio, 2 en Quiénes somos, 4 en Se
 | Accesibilidad | Un texto `alt` descriptivo por imagen, guardado en `src/data/` junto al contenido |
 | Peso | Objetivo orientativo: menos de 200 KB por imagen grande |
 
-### 2. Cambio de idioma
+### 2. Cambio de idioma ✅ hecho
 
-**Decisiones pendientes:** qué idiomas (por ejemplo inglés o alemán, por el turismo y la empresa extranjera en Gran Canaria) y quién traduce.
-
-| Paso | Detalle |
-|------|---------|
-| Rutas | i18n nativo de Astro: el español sin prefijo (las URL actuales no cambian) y los demás idiomas con prefijo (`/en/servicios/`) |
-| Contenido | `src/data/` pasa a organizarse por idioma (`es`, `en`…), sin texto fijo en los componentes |
-| Selector | Selector de idioma en el menú, que lleve a la misma página en el otro idioma, no a la portada |
-| SEO multilingüe | `hreflang` en cada página (más `x-default`), `<html lang>` según el idioma, sitemap con alternativas por idioma y JSON-LD traducido |
-| Cookies y formulario | Traducir los textos del aviso de cookies (la librería admite varios idiomas) y los mensajes de error del formulario |
-| Textos legales | Una traducción de los textos legales también debe pasar por la asesora; si no se traducen, hay que enlazar la versión en español e indicarlo |
+Implementado como estaba previsto: español sin prefijo, inglés en `/en/` con URL traducidas, selector en el menú, `hreflang` + `x-default`, `<html lang>`, sitemap con alternativas, JSON-LD, aviso de cookies y errores del formulario traducidos. Los textos legales en inglés llevan el aviso "This is a courtesy translation. In case of discrepancy, the Spanish version prevails." El correo que recibe el negocio sigue en español e indica el idioma del visitante.
 
 ### 3. Revisión SEO
 
@@ -127,7 +121,8 @@ La web actual tiene unas 17 imágenes: 1 en Inicio, 2 en Quiénes somos, 4 en Se
 | Rendimiento | Lighthouse / PageSpeed Insights en móvil y escritorio, Core Web Vitals (LCP, CLS, INP), sobre todo después de añadir las imágenes |
 | Indexación | Google Search Console: verificar el dominio, enviar `sitemap-index.xml` y revisar la cobertura después del cambio de hosting |
 | Migración | Las URL coinciden con la web actual, pero hay que comprobar las variantes sin barra final, sin `www` y `http`, que deben redirigir con 301 a la URL canónica. También buscar URL antiguas indexadas que no existan en la nueva web |
-| Datos estructurados | Validar `LocalBusiness` y `BreadcrumbList` con la prueba de resultados enriquecidos de Google |
+| Datos estructurados | Validar `LocalBusiness`, `BreadcrumbList` y `WebPage` con la prueba de resultados enriquecidos de Google, en los dos idiomas |
+| Multilingüe | En Search Console, revisar que Google reconoce los `hreflang` (sin errores de "falta enlace de retorno") y que indexa las páginas `/en/` |
 | SEO local | Que el nombre, la dirección, el teléfono y el horario coincidan con Google Business Profile y con los directorios; enlazar la ficha de Google |
 | Contenido | Revisar palabras clave por página (carretillas, alquiler, reparación, Las Palmas, Gran Canaria), títulos, descripciones y enlaces internos |
 | Imágenes | Nombres de archivo y `alt` descriptivos, `og-image` presente |
@@ -146,6 +141,8 @@ La web actual tiene unas 17 imágenes: 1 en Inicio, 2 en Quiénes somos, 4 en Se
 | A7 | Privacidad §4: hash de la IP para el límite de envíos. **Dice "anonimizado", pero según el RGPD es un dato seudonimizado** |
 | A8 | Cookies: tabla con `cc_cookie`, `__cf_bm` (si Cloudflare lo activa) y las cookies de Google Maps; se aclara que el formulario no usa cookies |
 
+La **traducción inglesa** de los tres textos (`src/i18n/en/legal.ts`) también debe revisarla la asesora (L2).
+
 También falta definir el **plazo de conservación** de los mensajes del formulario. Las guías para navegadores de la política de cookies son las de la web original y están anticuadas (mencionan Internet Explorer).
 
 ## Qué no se ha verificado
@@ -153,6 +150,8 @@ También falta definir el **plazo de conservación** de los mensajes del formula
 - El envío real por SMTP con IONOS (puerto 465).
 - Lighthouse (rendimiento y accesibilidad) y la vista de escritorio del aviso de cookies.
 - La animación de cierre del aviso de cookies.
+- La traducción inglesa por un hablante nativo y por la asesora (textos legales).
+- Cómo interpreta Google los `hreflang` (solo se puede ver en Search Console tras publicar).
 
 ## Revisiones de código (Gentle AI)
 
