@@ -1,0 +1,41 @@
+---
+import Card from "../ui/Card.astro";
+import Icon from "../ui/Icon.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { servicesContent } from "../../data/homeContent";
+import { sectionIds } from "../../data/navigation";
+import { services } from "../../data/services";
+
+const headingId = `${sectionIds.services}-titulo`;
+---
+
+<section
+  id={sectionIds.services}
+  aria-labelledby={headingId}
+  class="relative scroll-mt-24 bg-slate-50 py-16 sm:py-24"
+>
+  <div class="bg-diagonal absolute inset-0" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeader id={headingId} {...servicesContent} />
+
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => (
+        <Card as="li" interactive class="group">
+          <div class="flex size-12 items-center justify-center rounded-xl bg-orange-50 text-brand-hover ring-1 ring-orange-200 transition-colors duration-300 group-hover:bg-brand group-hover:text-white">
+            <Icon name={service.icon} size={26} />
+          </div>
+          <h3 class="mt-5 text-xl font-bold">{service.title}</h3>
+          <p class="mt-2 text-slate-600">{service.description}</p>
+          <ul class="mt-5 flex flex-col gap-2 border-t border-slate-200 pt-5 text-sm text-slate-700">
+            {service.features.map((feature) => (
+              <li class="flex items-start gap-2">
+                <Icon name="check" size={18} strokeWidth={2.25} class="mt-0.5 text-brand-hover" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      ))}
+    </ul>
+  </div>
+</section>

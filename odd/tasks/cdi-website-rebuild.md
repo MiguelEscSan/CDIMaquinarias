@@ -25,7 +25,7 @@ Current site looks like an old template; business data is not structured; local 
 - [x] T2 — Types + data layer (`types/index.ts`, `data/siteInfo.ts`, `data/services.ts`, `data/navigation.ts`). Route: delegated writer.
 - [x] T3 — UI atoms (Button, Card, Badge, SectionHeader, FloatingContact) + layout (Navbar, Footer). Route: delegated writer.
 - [x] T4 — BaseLayout with SEO meta, OG/Twitter, JSON-LD. Route: delegated writer.
-- [ ] T5 — Sections (Hero, ServicesSection, BrandTrust, ContactSection, MapSection) + `pages/index.astro`. Route: delegated writer.
+- [x] T5 — Sections (Hero, ServicesSection, BrandTrust, ContactSection, MapSection) + `pages/index.astro`. Route: delegated writer.
 
 ## Acceptance criteria
 - `npm run build` and `npx astro check` pass with 0 errors.
@@ -50,7 +50,14 @@ Current site looks like an old template; business data is not structured; local 
   - `npm run check`: 0 errors, 0 warnings, 0 hints.
   - `npm run build`: Complete; JSON-LD in `dist/index.html` parses (`openingHours` "Mo-Fr 08:00-16:00", telephone ["+34928133851","+34625444646"]).
   - Pending asset: `/og-image.jpg` is referenced (OG/Twitter/JSON-LD `image`) but not yet provided.
-  - Commit: recorded in T5 entry.
+  - Commit: `0cedf3a` feat(seo): add base layout with meta tags and local business schema.
+- T5 home: `src/components/sections/{Hero,ServicesSection,BrandTrust,ContactSection,MapSection}.astro`, final `src/pages/index.astro`; Button gained an `inverse` variant for dark backgrounds; `floatingContact` props added to `src/data/navigation.ts` (the page, as composition root, imports this one data object to feed the props-only FloatingContact atom).
+  - `npm run check`: 0 errors, 0 warnings, 0 hints.
+  - `npm run build`: Complete, 1 page built.
+  - dist inspection: h1=1; title 49 chars; description 129 chars; ld+json parses (`LocalBusiness`, 5 offers); `href="tel:` = 9; heading sequence 1,2,3…; section ids inicio/servicios/still/contacto/ubicacion; 1 non-JSON-LD script (inline menu closer).
+  - `rg "928|625|cdi@|Simón|35214" src/components src/layouts`: 0 matches.
+  - Not run: visual/browser check, Lighthouse.
+  - Commit: HEAD (feat(home): compose home page sections).
 
 ## Next step
-T5.
+Native review / delivery decision by the user (push and PR are human decisions). Provide `public/og-image.jpg`, real photos and logo.

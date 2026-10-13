@@ -1,5 +1,5 @@
 import type { CtaLink, NavLink } from "../types";
-import { primaryPhone, quoteMailto } from "./siteInfo";
+import { contactInfo, emailHref, primaryPhone, quoteMailto } from "./siteInfo";
 
 export const sectionIds = {
   home: "inicio",
@@ -30,3 +30,10 @@ export const quoteCta: CtaLink = {
 };
 
 export const primaryCta = callCta;
+
+export const floatingContact = {
+  phoneHref: primaryPhone.href,
+  phoneLabel: `Llamar al ${primaryPhone.display}`,
+  emailHref,
+  emailLabel: `Enviar un correo a ${contactInfo.email}`,
+};
