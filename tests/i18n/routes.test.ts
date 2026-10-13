@@ -126,14 +126,21 @@ describe("pageIdFromPath", () => {
 });
 
 describe("page files", () => {
-  it("exist for every localized route", async () => {
-    const { existsSync } = await import("node:fs");
+  it("are served for every localized route", async () => {
+    // Static pages come from the catch-all route; contact has its own files (server-rendered form).
+    const { existsSync, readFileSync } = await import("node:fs");
+    const catchAll = readFileSync("src/pages/[...slug].astro", "utf8");
     for (const id of pageIds) {
       for (const locale of locales) {
         const path = routes[id][locale];
-        const file = path === "/" ? "src/pages/index.astro" : `src/pages${path.replace(/\/$/, "")}.astro`;
-        const indexFile = `src/pages${path}index.astro`;
-        expect(existsSync(file) || existsSync(indexFile), `${id}/${locale}: ${file}`).toBe(true);
+        if (path === "/") {
+          expect(existsSync("src/pages/index.astro"), `${id}/${locale}`).toBe(true);
+        } else if (id === "contact") {
+          const file = `src/pages${path.replace(/\/$/, "")}.astro`;
+          expect(existsSync(file), `${id}/${locale}: ${file}`).toBe(true);
+        } else {
+          expect(catchAll.includes(`pageId === "${id}"`), `${id}/${locale}`).toBe(true);
+        }
       }
     }
   });
