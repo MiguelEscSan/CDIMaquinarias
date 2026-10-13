@@ -10,10 +10,14 @@ import {
 } from "astro:env/server";
 import { handleContactSubmission } from "../core/contact/handleContactSubmission";
 import type { MailSender } from "../core/contact/MailSender";
-import { ContactMailNotConfiguredError, ContactRateLimitedError } from "../core/contact/errors";
+import {
+  ContactDeliveryTimeoutError,
+  ContactMailNotConfiguredError,
+  ContactRateLimitedError,
+} from "../core/contact/errors";
 import { NodemailerMailSender } from "../infrastructure/mail/NodemailerMailSender";
 import { InMemoryRateLimiter } from "../infrastructure/rateLimit/InMemoryRateLimiter";
-import { CONTACT_RATE_LIMITS } from "../config/contactLimits";
+import { CONTACT_RATE_LIMITS, SEND_DEADLINE_MS } from "../config/contactLimits";
 import { clientRateLimitKey, resolveClientIp } from "../lib/clientKey";
 import { contactFailureFor } from "../lib/contactFeedback";
 import { contactFormCopy } from "../data/contactContent";
@@ -61,6 +65,8 @@ function logFailure(error: unknown): void {
   // Server-side only; visitors get a generic message.
   if (error instanceof ContactRateLimitedError) {
     console.warn(`[contact] rate limited (retry after ${error.retryAfterSeconds}s).`);
+  } else if (error instanceof ContactDeliveryTimeoutError) {
+    console.error(`[contact] delivery not confirmed within ${error.deadlineMs}ms; it may still arrive.`);
   } else if (error instanceof ContactMailNotConfiguredError) {
     console.error("[contact] SMTP is not configured (SMTP_HOST, SMTP_USER, SMTP_PASS).");
   } else {
@@ -90,6 +96,7 @@ export const server = {
             globalLimiter,
             createSender: createMailSender,
             to: CONTACT_TO,
+            deadlineMs: SEND_DEADLINE_MS,
           },
         );
       } catch (error) {

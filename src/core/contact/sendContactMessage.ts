@@ -1,6 +1,7 @@
 import type { ContactMessage } from "./ContactMessage";
 import type { MailSender, OutgoingEmail } from "./MailSender";
-import { ContactDeliveryError } from "./errors";
+import { ContactDeliveryError, ContactDeliveryTimeoutError } from "./errors";
+import { DeadlineExceededError, withDeadline } from "../shared/withDeadline";
 
 export type SendContactResult = { status: "sent" } | { status: "discarded" };
 
@@ -8,6 +9,8 @@ export interface SendContactDeps {
   sender: MailSender;
   /** Inbox that receives the inquiries. */
   to: string;
+  /** Overall time budget for the send; unbounded when omitted. */
+  deadlineMs?: number;
 }
 
 /** Bots fill the hidden field; humans leave it empty. */
@@ -34,14 +37,17 @@ export function buildContactEmail(input: ContactMessage, to: string): OutgoingEm
 
 export async function sendContactMessage(
   input: ContactMessage,
-  { sender, to }: SendContactDeps,
+  { sender, to, deadlineMs }: SendContactDeps,
 ): Promise<SendContactResult> {
   // Bots fill the hidden field; pretend success so they get no signal.
   if (isHoneypotFilled(input)) return { status: "discarded" };
 
+  const email = buildContactEmail(input, to);
   try {
-    await sender.send(buildContactEmail(input, to));
+    if (deadlineMs === undefined) await sender.send(email);
+    else await withDeadline((signal) => sender.send(email, { signal }), deadlineMs);
   } catch (error) {
+    if (error instanceof DeadlineExceededError) throw new ContactDeliveryTimeoutError(error.ms);
     throw new ContactDeliveryError(error);
   }
   return { status: "sent" };

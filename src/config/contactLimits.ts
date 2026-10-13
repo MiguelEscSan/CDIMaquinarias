@@ -1,5 +1,11 @@
 import type { RateLimitPolicy } from "../core/contact/RateLimiter";
 
+/**
+ * Overall budget for one SMTP send. Keep it well below the hosting platform's
+ * request/function time limit so the page can still render its own response.
+ */
+export const SEND_DEADLINE_MS = 8000;
+
 /** Contact form anti-abuse limits; a submission must pass both. */
 export const CONTACT_RATE_LIMITS = {
   /** Per client (hashed IP). */

@@ -1,8 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { ContactMessage } from "../../src/core/contact/ContactMessage";
 import type { MailSender, OutgoingEmail } from "../../src/core/contact/MailSender";
 import type { RateLimitDecision, RateLimiter } from "../../src/core/contact/RateLimiter";
 import {
+  ContactDeliveryTimeoutError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
 } from "../../src/core/contact/errors";
@@ -48,6 +49,7 @@ function setup(overrides: Partial<ContactSubmissionDeps> = {}) {
       return sender;
     },
     to: "buzon@example.com",
+    deadlineMs: 8000,
     ...overrides,
   };
   return { deps, sender, clientLimiter, globalLimiter, senderRequests: () => senderRequests };
@@ -106,5 +108,22 @@ describe("handleContactSubmission", () => {
     await expect(handleContactSubmission(message, deps)).rejects.toBeInstanceOf(
       ContactMailNotConfiguredError,
     );
+  });
+
+  it("applies the send deadline from its dependencies", async () => {
+    vi.useFakeTimers();
+    try {
+      const hanging: MailSender = { send: () => new Promise<void>(() => {}) };
+      const { deps } = setup({ createSender: () => hanging, deadlineMs: 5000 });
+      const outcome = expect(handleContactSubmission(message, deps)).rejects.toBeInstanceOf(
+        ContactDeliveryTimeoutError,
+      );
+
+      await vi.advanceTimersByTimeAsync(5000);
+
+      await outcome;
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

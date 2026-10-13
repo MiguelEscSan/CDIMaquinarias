@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ContactDeliveryError,
+  ContactDeliveryTimeoutError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
 } from "../../src/core/contact/errors";
@@ -13,6 +14,13 @@ describe("contactFailureFor", () => {
     expect(contactFailureFor(new ContactRateLimitedError(60))).toEqual({
       code: "TOO_MANY_REQUESTS",
       message: contactFormCopy.rateLimited,
+    });
+  });
+
+  it("maps an unconfirmed delivery to GATEWAY_TIMEOUT with the unconfirmed copy", () => {
+    expect(contactFailureFor(new ContactDeliveryTimeoutError(8000))).toEqual({
+      code: "GATEWAY_TIMEOUT",
+      message: contactFormCopy.deliveryUnconfirmed,
     });
   });
 
@@ -32,6 +40,13 @@ describe("contactErrorFeedback", () => {
     });
   });
 
+  it("returns HTTP 504 and the unconfirmed-delivery message for GATEWAY_TIMEOUT", () => {
+    expect(contactErrorFeedback("GATEWAY_TIMEOUT")).toEqual({
+      status: 504,
+      message: contactFormCopy.deliveryUnconfirmed,
+    });
+  });
+
   it("returns HTTP 500 and the generic failure for anything else", () => {
     expect(contactErrorFeedback("INTERNAL_SERVER_ERROR")).toEqual({
       status: 500,
@@ -40,7 +55,8 @@ describe("contactErrorFeedback", () => {
     expect(contactErrorFeedback(undefined).status).toBe(500);
   });
 
-  it("includes the phone number from site data in the rate-limit message", () => {
+  it("includes the phone number from site data in the rate-limit and unconfirmed messages", () => {
     expect(contactFormCopy.rateLimited).toContain(primaryPhone.display);
+    expect(contactFormCopy.deliveryUnconfirmed).toContain(primaryPhone.display);
   });
 });

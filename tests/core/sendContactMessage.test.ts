@@ -1,7 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MailSender, OutgoingEmail } from "../../src/core/contact/MailSender";
 import type { ContactMessage } from "../../src/core/contact/ContactMessage";
-import { ContactDeliveryError } from "../../src/core/contact/errors";
+import {
+  ContactDeliveryError,
+  ContactDeliveryTimeoutError,
+} from "../../src/core/contact/errors";
 import { sendContactMessage } from "../../src/core/contact/sendContactMessage";
 
 class FakeMailSender implements MailSender {
@@ -91,5 +94,56 @@ describe("sendContactMessage", () => {
 
     await expect(attempt).rejects.toBeInstanceOf(ContactDeliveryError);
     await expect(attempt).rejects.toMatchObject({ cause: smtpError });
+  });
+});
+
+describe("sendContactMessage deadline", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  const hangingSender = () => {
+    const signals: AbortSignal[] = [];
+    const sender: MailSender = {
+      send: (_email, options) => {
+        if (options?.signal) signals.push(options.signal);
+        return new Promise<void>(() => {});
+      },
+    };
+    return { sender, signals };
+  };
+
+  it("fails with ContactDeliveryTimeoutError when the sender does not finish within 8000ms", async () => {
+    const { sender, signals } = hangingSender();
+    const attempt = sendContactMessage(baseMessage, { sender, to: TO, deadlineMs: 8000 });
+    const outcome = expect(attempt).rejects.toBeInstanceOf(ContactDeliveryTimeoutError);
+
+    await vi.advanceTimersByTimeAsync(7999);
+    expect(signals[0]?.aborted).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+
+    await outcome;
+    expect(signals[0]?.aborted).toBe(true);
+  });
+
+  it("reports success when the sender finishes before the deadline", async () => {
+    const sender = new FakeMailSender();
+
+    await expect(
+      sendContactMessage(baseMessage, { sender, to: TO, deadlineMs: 8000 }),
+    ).resolves.toEqual({ status: "sent" });
+    expect(sender.sent).toHaveLength(1);
+  });
+
+  it("keeps rejections as ContactDeliveryError, not a timeout", async () => {
+    const sender = new FakeMailSender(new Error("550 Mailbox unavailable"));
+
+    const attempt = sendContactMessage(baseMessage, { sender, to: TO, deadlineMs: 8000 });
+
+    await expect(attempt).rejects.toBeInstanceOf(ContactDeliveryError);
+    await expect(attempt).rejects.not.toBeInstanceOf(ContactDeliveryTimeoutError);
   });
 });

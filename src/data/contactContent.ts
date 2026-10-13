@@ -58,6 +58,7 @@ export const contactFormCopy = {
   submitLabel: "Enviar",
   success: "¡Gracias! Nos pondremos en contacto con usted lo antes posible.",
   failure: "Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo o llámenos.",
+  deliveryUnconfirmed: `No hemos podido confirmar el envío. Es posible que su mensaje haya llegado; si no recibe respuesta en 24 horas, llámenos al ${primaryPhone.display}.`,
   rateLimited: `Ha enviado varios mensajes en poco tiempo. Inténtelo de nuevo en unos minutos o llámenos al ${primaryPhone.display}.`,
   equipmentPrefill: (name: string) => `Me interesa recibir más información sobre: ${name}.`,
   errors: {

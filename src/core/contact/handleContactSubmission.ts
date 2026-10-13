@@ -16,6 +16,8 @@ export interface ContactSubmissionDeps {
   createSender: () => MailSender | undefined;
   /** Inbox that receives the inquiries. */
   to: string;
+  /** Overall time budget for the SMTP send. */
+  deadlineMs: number;
 }
 
 /**
@@ -37,5 +39,5 @@ export async function handleContactSubmission(
   const sender = deps.createSender();
   if (!sender) throw new ContactMailNotConfiguredError();
 
-  return sendContactMessage(input, { sender, to: deps.to });
+  return sendContactMessage(input, { sender, to: deps.to, deadlineMs: deps.deadlineMs });
 }

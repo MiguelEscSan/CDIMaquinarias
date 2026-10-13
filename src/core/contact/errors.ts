@@ -6,6 +6,17 @@ export class ContactDeliveryError extends Error {
   }
 }
 
+/**
+ * The send did not finish within the deadline. Delivery is unknown: the SMTP
+ * session may still complete after we stop waiting, so the message may arrive.
+ */
+export class ContactDeliveryTimeoutError extends Error {
+  constructor(readonly deadlineMs: number) {
+    super(`Contact delivery not confirmed within ${deadlineMs}ms`);
+    this.name = "ContactDeliveryTimeoutError";
+  }
+}
+
 /** Too many submissions from this client or overall; nothing was sent. */
 export class ContactRateLimitedError extends Error {
   constructor(readonly retryAfterSeconds: number) {
