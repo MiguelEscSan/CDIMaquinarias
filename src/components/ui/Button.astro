@@ -14,6 +14,9 @@ interface Props {
   fullWidth?: boolean;
   class?: string;
   rel?: HTMLAttributes<"a">["rel"];
+  hidden?: boolean;
+  /** Extra data-* attributes, e.g. hooks for inline scripts. */
+  [dataAttribute: `data-${string}`]: unknown;
 }
 
 const {
@@ -26,6 +29,8 @@ const {
   fullWidth = false,
   class: className = "",
   rel,
+  hidden,
+  ...dataAttributes
 } = Astro.props;
 
 const base =
@@ -63,12 +68,14 @@ const linkRel = rel ?? (external ? "noopener noreferrer" : undefined);
       aria-label={ariaLabel}
       target={external ? "_blank" : undefined}
       rel={linkRel}
+      hidden={hidden}
+      {...dataAttributes}
     >
       <slot name="icon" />
       <slot />
     </a>
   ) : (
-    <button type={type} class={classes} aria-label={ariaLabel}>
+    <button type={type} class={classes} aria-label={ariaLabel} hidden={hidden} {...dataAttributes}>
       <slot name="icon" />
       <slot />
     </button>

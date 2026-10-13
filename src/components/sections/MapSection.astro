@@ -6,13 +6,10 @@ import { locationContent } from "../../data/contactContent";
 import { directionsUrl, formatAddress, mapEmbedUrl } from "../../data/siteInfo";
 
 const headingId = "ubicacion-titulo";
+const { consent } = locationContent;
 ---
 
-<section
-  id="ubicacion"
-  aria-labelledby={headingId}
-  class="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-24"
->
+<section id="ubicacion" aria-labelledby={headingId} class="border-t border-slate-200 bg-white py-16 sm:py-24">
   <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
     <div class="flex flex-col gap-6">
       <SectionHeader
@@ -30,7 +27,7 @@ const headingId = "ubicacion-titulo";
           href={directionsUrl}
           external
           variant="secondary"
-          ariaLabel={`${locationContent.directionsLabel} (se abre en una pestaña nueva)`}
+          ariaLabel={locationContent.directionsAriaLabel}
         >
           {locationContent.directionsLabel}
           <Icon name="arrow" size={20} />
@@ -38,15 +35,51 @@ const headingId = "ubicacion-titulo";
       </div>
     </div>
 
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm lg:col-span-2">
-      <iframe
-        src={mapEmbedUrl}
-        title={locationContent.mapTitle}
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen
-        class="block aspect-[4/3] w-full border-0 sm:aspect-video"
-      ></iframe>
+    <div
+      class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm lg:col-span-2"
+      data-map-consent
+      data-map-src={mapEmbedUrl}
+      data-map-title={locationContent.mapTitle}
+    >
+      <div class="bg-grid flex aspect-[4/3] w-full flex-col items-center justify-center gap-4 p-6 text-center sm:aspect-video sm:p-10">
+        <div class="flex size-14 items-center justify-center rounded-full bg-orange-50 text-brand-hover ring-1 ring-orange-200">
+          <Icon name="map-pin" size={28} />
+        </div>
+        <p class="text-lg font-bold text-slate-900">{consent.title}</p>
+        <p class="max-w-md text-sm text-slate-600">{consent.body}</p>
+        <Button type="button" size="sm" hidden data-map-load>
+          {consent.loadLabel}
+        </Button>
+        <a
+          href={consent.cookiesLink.href}
+          class="text-sm font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 hover:text-brand-hover"
+        >
+          {consent.cookiesLink.label}
+        </a>
+      </div>
     </div>
   </div>
 </section>
+
+<script is:inline>
+  document.querySelectorAll("[data-map-consent]").forEach((root) => {
+    const button = root.querySelector("[data-map-load]");
+    if (!button) return;
+    button.hidden = false;
+    button.addEventListener(
+      "click",
+      () => {
+        const frame = document.createElement("iframe");
+        frame.src = root.dataset.mapSrc;
+        frame.title = root.dataset.mapTitle;
+        frame.loading = "lazy";
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        frame.allowFullscreen = true;
+        frame.className = "block aspect-[4/3] w-full border-0 sm:aspect-video";
+        root.replaceChildren(frame);
+        frame.focus();
+      },
+      { once: true },
+    );
+  });
+</script>

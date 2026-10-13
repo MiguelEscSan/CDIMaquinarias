@@ -18,6 +18,7 @@ export const contactDetailsContent: SectionCopy & {
 
 export const locationContent: SectionCopy & {
   directionsLabel: string;
+  directionsAriaLabel: string;
   mapTitle: string;
   consent: {
     title: string;
@@ -30,6 +31,7 @@ export const locationContent: SectionCopy & {
   title: "Dónde encontrarnos",
   subtitle: `Atendemos a empresas de ${siteMeta.areaServed}.`,
   directionsLabel: "Abrir en Google Maps",
+  directionsAriaLabel: "Abrir la ubicación en Google Maps (se abre en una pestaña nueva)",
   mapTitle: `Mapa de la ubicación de ${siteMeta.name}`,
   consent: {
     title: "Mapa de Google",

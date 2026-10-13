@@ -1,0 +1,59 @@
+---
+import PageLayout from "./PageLayout.astro";
+import InlineText from "../components/ui/InlineText.astro";
+import { getLegalDocument, legalCopy } from "../data/legal";
+import { pages } from "../data/pages";
+import type { LegalDocument } from "../types";
+
+interface Props {
+  id: LegalDocument["pageId"];
+}
+
+const doc = getLegalDocument(Astro.props.id);
+const updated = new Date(`${doc.updated}T00:00:00Z`).toLocaleDateString("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+---
+
+<PageLayout page={pages[doc.pageId]}>
+  <div class="bg-white py-12 sm:py-16">
+    <article class="legal-prose mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <p class="legal-updated">
+        {legalCopy.updatedLabel}: <time datetime={doc.updated}>{updated}</time>
+      </p>
+      {
+        doc.sections.map((section) => (
+          <section>
+            {section.level === 3 ? <h3>{section.heading}</h3> : <h2>{section.heading}</h2>}
+            {section.blocks.map((block) =>
+              block.type === "p" ? (
+                <p>
+                  <InlineText text={block.text} />
+                </p>
+              ) : block.type === "ul" ? (
+                <ul>
+                  {block.items.map((item) => (
+                    <li>
+                      <InlineText text={item} />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ol>
+                  {block.items.map((item) => (
+                    <li>
+                      <InlineText text={item} />
+                    </li>
+                  ))}
+                </ol>
+              ),
+            )}
+          </section>
+        ))
+      }
+    </article>
+  </div>
+</PageLayout>

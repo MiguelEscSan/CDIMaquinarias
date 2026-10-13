@@ -32,7 +32,7 @@ Rationale: user asked to mirror the original multi-page structure, add Quiénes 
 - [x] T6 — Extend data layer: per-page SEO meta, about, products/STILL, renting categories, legal company data; multi-page navigation; "Distribuidor oficial STILL" (the claim appears on the original site). Route: delegated writer.
 - [x] T7 — Multi-page routing with original slugs (`/quienes-somos/`, `/servicios/`, `/productos/`, `/renting/`, `/contacto/`), PageHero + breadcrumbs (BreadcrumbList JSON-LD), per-path `aria-current`, location merged into Contacto. Route: delegated writer.
 - [x] T8 — Contact form: Vercel adapter, `contact` Astro Action (zod), hexagonal core (`MailSender` port, Nodemailer adapter, use case), honeypot, progressive enhancement, Vitest unit tests (test-first). Route: delegated writer.
-- [ ] T9 — Consent-gated (click-to-load) Google Map in Contacto; legal pages `/aviso-legal/`, `/politica-de-datos/`, `/politica-de-cookies-1/` ported and adapted. Route: delegated writer.
+- [x] T9 — Consent-gated (click-to-load) Google Map in Contacto; legal pages `/aviso-legal/`, `/politica-de-datos/`, `/politica-de-cookies-1/` ported and adapted. Route: delegated writer.
 - [ ] T10 — Verification: check, build, vitest, one h1 per page, unique titles/descriptions, sitemap lists all pages. Route: delegated writer.
 
 Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the PR chain strategy is deferred until a remote exists.
@@ -82,7 +82,20 @@ Delivery note: running count exceeds ~400 lines; repo has no remote yet, so the 
   - Test-first: RED 1 — `npm test` failed: "Cannot find module '../../src/core/contact/sendContactMessage'". RED 2 (stub) — 6 failed (6): "Error: Not implemented" / "expected Error: Not implemented to be an instance of ContactDeliveryError". GREEN — 6 passed (6).
   - `npm run check`: 50 files, 0 errors. `npm run build`: Complete with `@astrojs/vercel` (`.vercel/output/static` + `_render.func`).
   - Dev smoke (`astro dev --port 4333`): GET `/contacto/?equipo=recogepedidos` → form with `action="?_action=contact"`, message prefilled and hidden equipo; POST invalid → HTTP 400 with 4 Spanish field errors and preserved values; POST valid without SMTP env → HTTP 500 with the generic alert and server log "[contact] SMTP is not configured". Real SMTP delivery not exercised (no credentials).
-  - Commit: see T9 entry.
+  - Commit: `f7f07c3` feat(contact): add contact form with astro action and smtp sender.
+- T9 map + legal: `MapSection` renders a consent placeholder (address, Google cookies notice, link to política de cookies, "Abrir en Google Maps" link that works without JS); the "Cargar mapa" button ships `hidden` and an inline script reveals it and swaps in the iframe (`loading="lazy"`, `title`, `referrerpolicy="strict-origin-when-cross-origin"`) only on click. Button atom gained `hidden` + `data-*` passthrough. Legal texts as typed data in `src/data/legal.ts` (inline links `[label](href)` parsed by `src/lib/inlineLinks.ts`, rendered by `src/components/ui/InlineText.astro`), `src/layouts/LegalLayout.astro` with minimal `.legal-prose` styles in `global.css`, visible "Última actualización: 13 de octubre de 2026"; pages `src/pages/{aviso-legal,politica-de-datos,politica-de-cookies-1}.astro` (indexable, footer-only links). Route: delegated writer.
+  - Legal adaptations (everything else is the original text with light cleanup: spacing, typos, tú/usted consistency, "de de" duplicates):
+    - A1 Aviso legal §2: the empty "Inscripción al registro mercantil" line was omitted (no data on the original); "medios especificados en la política de privacidad" now links to `/politica-de-datos/`.
+    - A2 Aviso legal §5: the broken placeholder "Juzgados y Tribunales más cercanos a la sede de (España)" became "más cercanos a su sede (España)".
+    - A3 Privacidad §2: added the finality "Atender las consultas y solicitudes de presupuesto que nos envíe a través del formulario de contacto" (the new form exists).
+    - A4 Privacidad §5: "No comparto los datos con terceros" replaced by: no cessions save legal obligation; processors = hosting provider (Vercel Inc.) and the company's email/SMTP provider that relays the form data by email.
+    - A5 Privacidad §6: the six "haga clic aquí" links (forms of the previous provider, not available) replaced by "escríbanos a administracion2@cdimaquinarias.com indicando el derecho que desea ejercer".
+    - A6 Cookies: removed the statements about advertising, segmentation, analytics/measurement and tracking cookies (the new site has no IONOS SiteAnalytics and no cookies by default); new section "Cookies que utiliza este sitio web": no own/advertising/analytics cookies; Google Maps loads only after "Cargar mapa", then Google may set cookies (link to Google's privacy policy); the change-notice sentence now refers to updating this policy. Browser how-to guides kept as in the original (they are outdated: IE, old Chrome menus).
+    - Needs review by the business / legal advisor before go-live (processors, possible international transfer to Vercel, retention period, Registro Mercantil data).
+  - Tests (test-first): `tests/lib/inlineLinks.test.ts` RED "Cannot find module '../../src/lib/inlineLinks'", then GREEN; `tests/lib/paths.test.ts` added. `npm test`: 3 files, 12 passed.
+  - `npm run check`: 0 errors, 0 warnings, 0 hints. `npm run build`: Complete; 8 prerendered pages + on-demand `/contacto/`; no `<iframe` in any built HTML.
+  - Browser (dev, 375px emulation): scrollWidth = clientWidth on all 9 pages; `aria-current` correct per page; clicking "Cargar mapa" inserts exactly one iframe with lazy loading, title and strict-origin-when-cross-origin.
+  - Commit: see T10 entry.
 
 ## Next step
 Native review / delivery decision by the user (push and PR are human decisions). Provide `public/og-image.jpg`, real photos and logo.
