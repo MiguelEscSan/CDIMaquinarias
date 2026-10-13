@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clientRateLimitKey, resolveClientIp } from "../../src/lib/clientKey";
+import { clientRateLimitKey, resolveClientIp } from "../../src/shared/lib/clientKey";
 
 describe("resolveClientIp", () => {
   it("prefers the cf-connecting-ip header set by Cloudflare", () => {

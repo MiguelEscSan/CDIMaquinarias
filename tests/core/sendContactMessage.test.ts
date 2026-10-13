@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { MailSender, OutgoingEmail } from "../../src/core/contact/MailSender";
-import type { ContactMessage } from "../../src/core/contact/ContactMessage";
+import type { MailSender, OutgoingEmail } from "../../src/server/core/contact/MailSender";
+import type { ContactMessage } from "../../src/server/core/contact/ContactMessage";
 import {
   ContactDeliveryError,
   ContactDeliveryTimeoutError,
-} from "../../src/core/contact/errors";
-import { buildContactEmail, sendContactMessage } from "../../src/core/contact/sendContactMessage";
+} from "../../src/server/core/contact/errors";
+import { buildContactEmail, sendContactMessage } from "../../src/server/core/contact/sendContactMessage";
 
 class FakeMailSender implements MailSender {
   sent: OutgoingEmail[] = [];

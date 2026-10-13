@@ -1,0 +1,52 @@
+---
+import type { BreadcrumbItem } from "@shared/types";
+
+interface Props {
+  heading: string;
+  intro?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  /** Accessible name of the breadcrumb navigation. */
+  breadcrumbLabel?: string;
+}
+
+const { heading, intro, breadcrumbs = [], breadcrumbLabel } = Astro.props;
+const lastIndex = breadcrumbs.length - 1;
+---
+
+<section class="relative overflow-hidden bg-navy text-slate-300" aria-labelledby="page-titulo">
+  <div class="bg-grid absolute inset-0 opacity-60" aria-hidden="true"></div>
+  <div class="relative mx-auto flex max-w-7xl flex-col gap-4 px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    {
+      breadcrumbs.length > 1 && (
+        <nav aria-label={breadcrumbLabel}>
+          <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+            {breadcrumbs.map((crumb, index) => (
+              <li class="flex items-center gap-2">
+                {index === lastIndex ? (
+                  <a href={crumb.href} aria-current="page" class="font-semibold text-white">
+                    {crumb.label}
+                  </a>
+                ) : (
+                  <>
+                    <a
+                      href={crumb.href}
+                      class="rounded-sm text-slate-300 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    >
+                      {crumb.label}
+                    </a>
+                    <span aria-hidden="true" class="text-slate-500">/</span>
+                  </>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    <h1 id="page-titulo" class="text-4xl font-black tracking-tight text-white sm:text-5xl">
+      {heading}
+    </h1>
+    {intro && <p class="max-w-2xl text-base text-slate-300 sm:text-lg">{intro}</p>}
+  </div>
+  <div class="hazard-stripes relative h-1.5" aria-hidden="true"></div>
+</section>

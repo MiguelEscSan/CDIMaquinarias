@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { InMemoryRateLimiter } from "../../src/infrastructure/rateLimit/InMemoryRateLimiter";
+import { InMemoryRateLimiter } from "../../src/server/infrastructure/rateLimit/InMemoryRateLimiter";
 
 function fakeClock(start = 1_000_000) {
   let now = start;

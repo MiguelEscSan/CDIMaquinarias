@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { DeadlineExceededError } from "../../src/core/shared/withDeadline";
-import { createRateLimiter } from "../../src/infrastructure/rateLimit/createRateLimiter";
-import { InMemoryRateLimiter } from "../../src/infrastructure/rateLimit/InMemoryRateLimiter";
-import type { KvNamespaceLike } from "../../src/infrastructure/rateLimit/KvRateLimiter";
+import { DeadlineExceededError } from "../../src/server/core/shared/withDeadline";
+import { createRateLimiter } from "../../src/server/infrastructure/rateLimit/createRateLimiter";
+import { InMemoryRateLimiter } from "../../src/server/infrastructure/rateLimit/InMemoryRateLimiter";
+import type { KvNamespaceLike } from "../../src/server/infrastructure/rateLimit/KvRateLimiter";
 
 const policy = { limit: 2, windowSeconds: 600 };
 

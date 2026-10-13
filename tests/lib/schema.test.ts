@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildWebPageSchema } from "../../src/lib/schema";
-import { getServices } from "../../src/data/services";
-import { contactInfo, siteMeta, stillBrand } from "../../src/data/siteInfo";
-import { getDictionary } from "../../src/i18n";
+import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildWebPageSchema } from "../../src/shared/lib/schema";
+import { getServices } from "../../src/content/data/services";
+import { contactInfo, siteMeta, stillBrand } from "../../src/content/data/siteInfo";
+import { getDictionary } from "../../src/content/i18n";
 
 describe("buildWebPageSchema", () => {
   it("describes the page with its language and links to the business", () => {

@@ -3,7 +3,7 @@ import { defineConfig, envField } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
-import { sitemapLinks } from "./src/i18n/sitemap.ts";
+import { sitemapLinks } from "./src/content/i18n/sitemap.ts";
 
 const site = "https://www.cdimaquinarias.com";
 

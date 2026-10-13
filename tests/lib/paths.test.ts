@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isCurrentPath, normalizePath } from "../../src/lib/paths";
+import { isCurrentPath, normalizePath } from "../../src/shared/lib/paths";
 
 describe("normalizePath", () => {
   it("adds a trailing slash and drops query and hash", () => {
