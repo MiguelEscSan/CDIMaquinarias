@@ -1,0 +1,25 @@
+{
+  "name": "cdi-maquinarias-web",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web corporativo de CDI Maquinarias (Astro + Tailwind CSS).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.8",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@emnapi/runtime": "^1.11.3",
+    "typescript": "^6.0.3"
+  }
+}

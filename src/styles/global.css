@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --color-brand: #ea580c;
+  --color-brand-hover: #c2410c;
+  --color-brand-accent: #f97316;
+  --color-navy: #0f172a;
+  --color-navy-deep: #172554;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-slate-900;
+    text-wrap: balance;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* Industrial background patterns */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(148 163 184 / 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@utility bg-diagonal {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(148 163 184 / 0.08) 0 2px,
+    transparent 2px 14px
+  );
+}
+
+@utility hazard-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-brand) 0 14px,
+    var(--color-navy) 14px 28px
+  );
+}
