@@ -143,7 +143,7 @@ Los archivos de `public/` se sirven tal cual en la raíz del sitio (`public/imag
 | `public/brand/` | Logotipo (`logo-cdi.webp`) y su icono |
 | `public/favicon.png` | Icono de la pestaña del navegador (512×512) |
 | `public/og-image.jpg` | Imagen al compartir el enlace (1200×630, referenciada en `src/content/data/siteInfo.ts`) |
-| `public/images/` | Fotografías y otras imágenes de las páginas |
+| `public/images/` | Fotografías y otras imágenes de las páginas. Los `example-*.webp` son marcadores ilustrados: sustitúyalos por fotos reales y bórrelos |
 
 Reglas al añadir imágenes:
 - Nombres en minúsculas, con guiones y sin espacios (`carretilla-electrica.webp`).
