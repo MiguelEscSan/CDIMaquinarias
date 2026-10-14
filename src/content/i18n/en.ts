@@ -71,10 +71,12 @@ const home: Dictionary["home"] = {
     body: "As STILL dealers in Las Palmas de Gran Canaria, we help you choose the right machinery for your business needs and support you with sales, rental, repair and maintenance.",
     categoriesTitle: "Machinery we work with",
     productsCtaLabel: "See STILL products",
+    logoAlt: "STILL logo, the brand we are official dealers for",
   },
 };
 
 const about: Dictionary["about"] = {
+  imageAlt: "CDI Maquinarias showroom with STILL pallet trucks and electric forklifts",
   sections: [
     {
       title: "Over a decade of experience",
@@ -156,6 +158,7 @@ const services: Dictionary["services"] = {
 };
 
 const products: Dictionary["products"] = {
+  logoAlt: "STILL logo",
   company: {
     title: "A leading machinery manufacturer",
     paragraphs: [
@@ -185,6 +188,7 @@ const rental: Dictionary["rental"] = {
     "apiladoras-electricas": "Electric stackers",
     "transpaleta-electrica": "Electric pallet truck",
   },
+  imageAlt: "Operator driving a STILL order picker with a cage platform in a loading yard",
   moreInfoLabel: "More information",
   moreInfoAriaLabel: (name) => `Request more information about ${name}`,
 };

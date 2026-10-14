@@ -2,7 +2,6 @@
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { stillBrand } from "@content/data/siteInfo";
 import { getDictionary, localizedPath, type Locale } from "@content/i18n";
 
 interface Props {
@@ -42,12 +41,17 @@ const headingId = "still-titulo";
 
     <div class="relative rounded-3xl border border-slate-700 bg-slate-900/70 p-6 sm:p-8">
       <div class="hazard-stripes absolute inset-x-0 top-0 h-1.5 rounded-t-3xl" aria-hidden="true"></div>
-      <p
-        class="text-6xl font-black tracking-tighter text-white sm:text-7xl"
-        aria-hidden="true"
-      >
-        {stillBrand.name}
-      </p>
+      <div class="inline-flex rounded-2xl bg-white p-4 sm:p-5">
+        <img
+          src="/brand/logo-still.webp"
+          alt={brandContent.logoAlt}
+          width="792"
+          height="274"
+          loading="lazy"
+          decoding="async"
+          class="h-12 w-auto sm:h-16"
+        />
+      </div>
       <h3 class="mt-6 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
         {brandContent.categoriesTitle}
       </h3>

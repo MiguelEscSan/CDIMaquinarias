@@ -71,10 +71,12 @@ const home: Dictionary["home"] = {
     body: "Als STILL-Händler in Las Palmas de Gran Canaria helfen wir Ihnen, die richtige Maschine für die Anforderungen Ihres Unternehmens zu finden, und unterstützen Sie bei Verkauf, Vermietung, Reparatur und Wartung.",
     categoriesTitle: "Maschinen, mit denen wir arbeiten",
     productsCtaLabel: "STILL-Produkte ansehen",
+    logoAlt: "STILL-Logo, Marke, für die wir offizieller Händler sind",
   },
 };
 
 const about: Dictionary["about"] = {
+  imageAlt: "Ausstellung von CDI Maquinarias mit STILL-Hubwagen und Elektrostaplern",
   sections: [
     {
       title: "Mehr als zehn Jahre Erfahrung",
@@ -158,6 +160,7 @@ const services: Dictionary["services"] = {
 };
 
 const products: Dictionary["products"] = {
+  logoAlt: "STILL-Logo",
   company: {
     title: "Ein führender Maschinenhersteller",
     paragraphs: [
@@ -187,6 +190,7 @@ const rental: Dictionary["rental"] = {
     "apiladoras-electricas": "Elektrische Stapler",
     "transpaleta-electrica": "Elektrische Transpaletten",
   },
+  imageAlt: "Bediener fährt einen STILL-Kommissionierer mit Käfigplattform auf einem Ladehof",
   moreInfoLabel: "Weitere Informationen",
   moreInfoAriaLabel: (name) => `Weitere Informationen zu ${name} anfordern`,
 };

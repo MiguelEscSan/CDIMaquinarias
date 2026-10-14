@@ -140,16 +140,12 @@ Los archivos de `public/` se sirven tal cual en la raíz del sitio (`public/imag
 
 | Ruta | Uso |
 | --- | --- |
-| `public/brand/` | Logotipo (`logo-cdi.webp`) y su icono |
+| `public/brand/` | Logotipos: `logo-cdi.webp` y `logo-still.webp` (fondo blanco, va sobre placa clara) |
 | `public/favicon.png` | Icono de la pestaña del navegador (512×512) |
 | `public/og-image.jpg` | Imagen al compartir el enlace (1200×630, referenciada en `src/content/data/siteInfo.ts`) |
-| `public/images/` | Fotografías y otras imágenes de las páginas. Los `example-*.webp` son marcadores ilustrados: sustitúyalos por fotos reales y bórrelos |
+| `public/images/` | Fotografías de las páginas (`fachada-cdi-still.webp` en la hero, `cdi-showroom.webp` en nosotros, `almacen-carretillas-still.webp` en productos, `still-carretilla-renting.webp` en renting) |
 
 Reglas al añadir imágenes:
 - Nombres en minúsculas, con guiones y sin espacios (`carretilla-electrica.webp`).
 - WebP siempre que sea posible; los rastreadores de redes no admiten SVG como imagen Open Graph.
 - El texto alternativo (`alt`) va en los diccionarios de `src/content/i18n/`, en los tres idiomas, no escrito en el componente.
-
-## Recursos pendientes
-
-- Fotografías reales de maquinaria, instalaciones y equipo técnico en `public/images/`.

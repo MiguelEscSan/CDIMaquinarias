@@ -80,10 +80,12 @@ const home = {
     body: "Como distribuidores de STILL en Las Palmas de Gran Canaria, le ayudamos a elegir la maquinaria adecuada a las necesidades de su negocio y le acompañamos con venta, alquiler, reparación y mantenimiento.",
     categoriesTitle: "Maquinaria con la que trabajamos",
     productsCtaLabel: "Ver productos STILL",
+    logoAlt: "Logotipo de STILL, marca de la que somos distribuidores oficiales",
   },
 };
 
 const about: AboutContent = {
+  imageAlt: "Exposición de CDI Maquinarias con transpaletas y carretillas eléctricas STILL",
   sections: [
     {
       title: "Más de una década de experiencia",
@@ -168,6 +170,7 @@ const services: { items: Record<ServiceId, ServiceCopy> } = {
 };
 
 const products: ProductsContent = {
+  logoAlt: "Logotipo de STILL",
   company: {
     title: "Gran empresa en maquinaria",
     paragraphs: [
@@ -189,6 +192,7 @@ const products: ProductsContent = {
 
 const rental: {
   categories: Record<RentingSlug, string>;
+  imageAlt: string;
   moreInfoLabel: string;
   moreInfoAriaLabel: (name: string) => string;
 } = {
@@ -201,6 +205,7 @@ const rental: {
     "apiladoras-electricas": "Apiladoras eléctricas",
     "transpaleta-electrica": "Transpaleta eléctrica",
   },
+  imageAlt: "Operario conduciendo una carretilla STILL de plataforma con jaula en un patio de carga",
   moreInfoLabel: "Más información",
   moreInfoAriaLabel: (name) => `Solicitar más información sobre ${name}`,
 };

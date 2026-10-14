@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const services = getServices(locale);
+const services = getServices(locale).slice(0, 3);
 const servicesPath = localizedPath("services", locale);
 
 const headingId = "servicios-titulo";
@@ -23,7 +23,7 @@ const { eyebrow, title, subtitle, moreLabel, allServicesLabel } = getDictionary(
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <SectionHeader id={headingId} eyebrow={eyebrow} title={title} subtitle={subtitle} />
 
-    <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="mt-12 grid gap-6 md:grid-cols-3">
       {services.map((service) => (
         <Card as="li" interactive class="group">
           <div class="flex size-12 items-center justify-center rounded-xl bg-orange-50 text-brand-hover ring-1 ring-orange-200 transition-colors duration-300 group-hover:bg-brand group-hover:text-white">

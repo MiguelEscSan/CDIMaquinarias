@@ -162,9 +162,13 @@ export interface ContentSection {
 export interface AboutContent {
   sections: ContentSection[];
   highlight: string;
+  /** Alt text of the showroom photo. */
+  imageAlt: string;
 }
 
 export interface ProductsContent {
+  /** Alt text of the STILL logo shown on the products page. */
+  logoAlt: string;
   company: ContentSection;
   distributor: ContentSection;
   catalog: { label: string; ariaLabel: string };

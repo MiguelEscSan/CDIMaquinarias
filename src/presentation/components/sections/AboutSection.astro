@@ -16,9 +16,20 @@ const sectionId = (index: number) => `nosotros-${index}-titulo`;
 <div class="bg-white py-16 sm:py-20">
   <div class="mx-auto flex max-w-5xl flex-col gap-14 px-4 sm:px-6 lg:px-8">
     {experience && (
-      <section aria-labelledby={sectionId(0)} class="flex flex-col gap-5">
-        <h2 id={sectionId(0)} class="text-3xl font-extrabold tracking-tight sm:text-4xl">{experience.title}</h2>
-        {experience.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
+      <section aria-labelledby={sectionId(0)} class="grid items-center gap-10 lg:grid-cols-2">
+        <div class="flex flex-col gap-5">
+          <h2 id={sectionId(0)} class="text-3xl font-extrabold tracking-tight sm:text-4xl">{experience.title}</h2>
+          {experience.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
+        </div>
+        <img
+          src="/images/cdi-showroom.webp"
+          alt={aboutContent.imageAlt}
+          width="683"
+          height="512"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full rounded-3xl object-cover shadow-lg"
+        />
       </section>
     )}
 
