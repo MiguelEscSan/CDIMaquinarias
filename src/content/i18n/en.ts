@@ -24,7 +24,6 @@ const common: Dictionary["common"] = {
     main: "Main",
     mobile: "Mobile menu",
     toggle: "Open or close menu",
-    footer: "Footer",
     legal: "Legal",
     breadcrumb: "Breadcrumb",
     quickContact: "Quick contact",
@@ -47,7 +46,6 @@ const common: Dictionary["common"] = {
   footer: {
     contactHeading: "Contact",
     hoursHeading: "Opening hours",
-    navHeading: "Navigation",
     copyright: (year: number, legalName: string) => `© ${year} ${legalName}. All rights reserved.`,
   },
 };

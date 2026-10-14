@@ -32,7 +32,6 @@ const common = {
     main: "Principal",
     mobile: "Menú móvil",
     toggle: "Abrir o cerrar menú",
-    footer: "Pie de página",
     legal: "Legal",
     breadcrumb: "Breadcrumb",
     quickContact: "Contacto rápido",
@@ -55,7 +54,6 @@ const common = {
   footer: {
     contactHeading: "Contacto",
     hoursHeading: "Horario",
-    navHeading: "Navegación",
     copyright: (year: number, legalName: string) =>
       `© ${year} ${legalName}. Todos los derechos reservados.`,
   },

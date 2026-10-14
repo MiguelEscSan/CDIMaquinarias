@@ -3,7 +3,6 @@ import type { Locale } from "../i18n";
 import { getPage } from "./pages";
 
 export const mainNavIds: PageId[] = ["home", "about", "services", "products", "contact"];
-export const footerNavIds: PageId[] = [...mainNavIds, "renting"];
 export const legalNavIds: PageId[] = ["legalNotice", "privacy", "cookies"];
 
 export function navLinks(ids: PageId[], locale: Locale): NavLink[] {
