@@ -24,6 +24,7 @@ export const stillBrand: Brand = {
 /** Official postal address; `country` is the name used in the Google Maps query. */
 export const address: PostalAddress = {
   street: "Calle Simón Bolívar 13b",
+  landmark: "Parque Empresarial Melenara",
   postalCode: "35214",
   locality: "Playa del Hombre",
   region: "Las Palmas",
@@ -70,7 +71,8 @@ export const primaryPhone = contactInfo.phones[0]!;
 
 /** One-line address; `countryName` is the localized country name. */
 export function formatAddress(countryName: string, a: PostalAddress = address): string {
-  return `${a.street}, ${a.postalCode} ${a.locality} (${a.region}), ${countryName}`;
+  const parts = [a.street, a.landmark, `${a.postalCode} ${a.locality} (${a.region})`, countryName];
+  return parts.filter(Boolean).join(", ");
 }
 
 /** "8:00–16:00", or `closedLabel` when closed. */

@@ -64,6 +64,8 @@ export interface PhoneContact {
 
 export interface PostalAddress {
   street: string;
+  /** Optional landmark shown after the street, e.g. a business park. */
+  landmark?: string;
   postalCode: string;
   locality: string;
   region: string;
