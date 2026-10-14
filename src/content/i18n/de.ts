@@ -864,6 +864,9 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Beraten Sie nur zu STILL-Geräten?", answer: "Wir beraten zu der Maschine, die am besten zu Ihrem Bedarf passt." },
     ],
     ctaLabel: "Beratung vereinbaren",
+    bandTitle: "Technisches Urteil für Ihre Entscheidung",
+    ctaTitle: "Brauchen Sie eine fundierte Entscheidung?",
+    ctaText: "Schildern Sie uns Ihre Situation, dann vereinbaren wir eine unverbindliche Beratung.",
   },
   climatizacion: {
     processTitle: "So arbeiten wir",

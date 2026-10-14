@@ -860,6 +860,9 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Is this a paid service?", answer: "We explain the terms at the first consultation." },
       { question: "Do you only advise on STILL equipment?", answer: "We advise on the machinery that best fits your needs." },
     ],
+    bandTitle: "Technical judgement to decide",
+    ctaTitle: "Need an informed decision?",
+    ctaText: "Tell us about your situation and we will arrange a no-obligation consultation.",
     ctaLabel: "Book a consultation",
   },
   climatizacion: {

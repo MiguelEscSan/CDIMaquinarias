@@ -908,6 +908,9 @@ const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
       { question: "¿Solo asesoran sobre equipos STILL?", answer: "Asesoramos sobre la maquinaria que mejor se adapte a su necesidad." },
     ],
     ctaLabel: "Concertar una consulta",
+    bandTitle: "Criterio técnico para decidir",
+    ctaTitle: "¿Necesita una decisión informada?",
+    ctaText: "Cuéntenos su situación y concertamos una consulta sin compromiso.",
   },
   climatizacion: {
     processTitle: "Cómo trabajamos",

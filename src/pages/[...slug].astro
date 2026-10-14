@@ -4,6 +4,7 @@
 import AboutPage from "@presentation/views/AboutPage.astro";
 import HomePage from "@presentation/views/HomePage.astro";
 import ProductsPage from "@presentation/views/ProductsPage.astro";
+import AdvisoryPage from "@presentation/views/AdvisoryPage.astro";
 import RentingPage from "@presentation/views/RentingPage.astro";
 import RepairPage from "@presentation/views/RepairPage.astro";
 import ServicePage from "@presentation/views/ServicePage.astro";
@@ -37,4 +38,5 @@ const { pageId, locale } = Astro.props;
 {pageId === "privacy" && <LegalLayout id="privacy" locale={locale} />}
 {pageId === "cookies" && <LegalLayout id="cookies" locale={locale} />}
 {pageId === "reparacion-mantenimiento" && <RepairPage locale={locale} />}
-{isServiceId(pageId) && pageId !== "reparacion-mantenimiento" && <ServicePage serviceId={pageId} locale={locale} />}
+{pageId === "asesoramiento-especializado" && <AdvisoryPage locale={locale} />}
+{isServiceId(pageId) && pageId !== "reparacion-mantenimiento" && pageId !== "asesoramiento-especializado" && <ServicePage serviceId={pageId} locale={locale} />}
