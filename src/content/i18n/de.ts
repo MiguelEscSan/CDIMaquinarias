@@ -197,18 +197,6 @@ const rental: Dictionary["rental"] = {
 };
 
 const contact: Dictionary["contact"] = {
-  details: {
-    eyebrow: "Kontakt aufnehmen",
-    title: "Sprechen Sie mit unserem Team",
-    subtitle:
-      "Rufen Sie uns an, schreiben Sie uns oder füllen Sie das Formular aus, und wir helfen Ihnen bei Ihrem Angebot.",
-    labels: {
-      phone: "Telefon",
-      email: "E-Mail",
-      address: "Adresse",
-      hours: "Öffnungszeiten",
-    },
-  },
   location: {
     eyebrow: "Standort",
     title: "So finden Sie uns",

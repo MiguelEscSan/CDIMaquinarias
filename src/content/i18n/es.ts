@@ -211,17 +211,6 @@ const rental: {
 };
 
 const contact = {
-  details: {
-    eyebrow: "Contáctanos",
-    title: "Hable con nuestro equipo",
-    subtitle: "Llámenos, escríbanos o rellene el formulario y le atenderemos para preparar su presupuesto.",
-    labels: {
-      phone: "Teléfono",
-      email: "Correo electrónico",
-      address: "Dirección",
-      hours: "Horario",
-    },
-  },
   location: {
     eyebrow: "Ubicación",
     title: "Dónde encontrarnos",
