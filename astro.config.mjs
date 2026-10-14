@@ -15,6 +15,12 @@ export default defineConfig({
   // No Astro sessions are used; skips the adapter's default SESSION KV binding.
   session: false,
   trailingSlash: "always",
+  // Rental has no service page of its own: its old service URLs go to the renting page.
+  redirects: {
+    "/servicios/alquiler/": "/renting/",
+    "/en/services/rental/": "/en/rental/",
+    "/de/dienstleistungen/vermietung/": "/de/vermietung/",
+  },
   // Spanish is unprefixed (original URLs); other locales live under /<locale>/ with translated slugs.
   i18n: {
     defaultLocale: "es",

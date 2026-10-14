@@ -192,6 +192,21 @@ const rental: Dictionary["rental"] = {
   },
   moreInfoLabel: "Weitere Informationen",
   moreInfoAriaLabel: (name) => `Weitere Informationen zu ${name} anfordern`,
+  intro: {
+    title: "Mieten Sie die Maschinen, die Sie brauchen",
+    paragraphs: [
+      "Bei CDI Maquinarias verfügen wir über eine Flotte aus Staplern und Industriemaschinen zur Vermietung kurz-, mittel- und langfristig. Wir arbeiten hauptsächlich mit STILL-Geräten, abgestimmt auf die jeweilige Lagerart und Last.",
+      "Wählen Sie in der Liste die Geräteart, die Sie benötigen. Wir informieren Sie über Verfügbarkeit, Tarife und Bedingungen.",
+    ],
+  },
+  faqTitle: "Häufig gestellte Fragen",
+  faq: [
+    { question: "Welche Mietzeiträume bieten Sie an?", answer: "Wir vermieten kurz-, mittel- und langfristig, je nach Bedarf Ihres Projekts." },
+    { question: "Was benötige ich, um ein Gerät zu mieten?", answer: "Nennen Sie uns die Geräteart und den Zeitraum, wir bestätigen Verfügbarkeit und Bedingungen." },
+    { question: "Kann ich mieten, ohne mich zum Kauf zu verpflichten?", answer: "Ja, die Miete ist unabhängig vom Kauf. Fragen Sie nach den Bedingungen." },
+  ],
+  ctaTitle: "Sie möchten ein Gerät mieten?",
+  ctaLabel: "Für eine Miete kontaktieren",
 };
 
 const contact: Dictionary["contact"] = {
@@ -808,16 +823,7 @@ const seo: Dictionary["seo"] = {
       label: "Verkauf",
       heading: "Maschinenverkauf",
       intro: "Wir helfen Ihnen, das passende Gerät für Ihr Geschäft zu wählen, mit persönlicher Verkaufsberatung.",
-    },
-    "alquiler-flota": {
-      title: "Staplervermietung auf Gran Canaria | CDI",
-      description:
-        "Kurz-, mittel- und langfristige Vermietung von Staplern und Industriemaschinen in Las Palmas, mit flexibler Flotte für Arbeitsspitzen.",
-      label: "Vermietung",
-      heading: "Maschinenvermietung",
-      intro: "Eine flexible Flotte für einmalige Projekte, Arbeitsspitzen oder langfristigen Bedarf.",
-    },
-    "asesoramiento-especializado": {
+    },    "asesoramiento-especializado": {
       title: "Beratung zu Industriemaschinen | CDI",
       description:
         "Fachberatung zur Auswahl, Verwaltung und Wartung von Industriemaschinen auf Gran Canaria, mit technischem Fachwissen.",
@@ -864,22 +870,7 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Beraten Sie mich zur Finanzierung?", answer: "Wir informieren Sie über die Möglichkeiten, die in Ihrem Fall verfügbar sind." },
     ],
     ctaLabel: "Angebot anfragen",
-  },
-  "alquiler-flota": {
-    processTitle: "So arbeiten wir",
-    process: [
-      { title: "Auswahl des Geräts", text: "Sie nennen uns den Maschinentyp und den benötigten Zeitraum." },
-      { title: "Konditionen", text: "Wir bestätigen Verfügbarkeit, Tarife und Mietbedingungen." },
-      { title: "Lieferung", text: "Wir bringen das Gerät an Ihren Arbeitsplatz und geben eine Grundeinweisung." },
-    ],
-    faqTitle: "Häufig gestellte Fragen",
-    faq: [
-      { question: "Wie lang ist die Mindestmietdauer?", answer: "Das hängt von Gerät und Projekt ab. Wir vermieten kurz-, mittel- und langfristig." },
-      { question: "Ist eine Wartung enthalten?", answer: "Fragen Sie nach den Bedingungen des jeweiligen Vertrags." },
-    ],
-    ctaLabel: "Verfügbarkeit prüfen",
-  },
-  "asesoramiento-especializado": {
+  },  "asesoramiento-especializado": {
     processTitle: "So arbeiten wir",
     process: [
       { title: "Erstgespräch", text: "Wir verstehen Ihre Situation, Ihre aktuelle Flotte und Ihre Ziele." },

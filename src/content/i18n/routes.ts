@@ -18,7 +18,6 @@ export const routes: Record<PageId, Record<Locale, string>> = {
     de: "/de/dienstleistungen/reparatur-und-wartung/",
   },
   "venta-maquinaria": { es: "/servicios/ventas/", en: "/en/services/sales/", de: "/de/dienstleistungen/verkauf/" },
-  "alquiler-flota": { es: "/servicios/alquiler/", en: "/en/services/rental/", de: "/de/dienstleistungen/vermietung/" },
   "asesoramiento-especializado": {
     es: "/servicios/asesoramiento/",
     en: "/en/services/advice/",

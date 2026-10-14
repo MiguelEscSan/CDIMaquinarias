@@ -1,7 +1,7 @@
 ---
 import Icon from "../ui/Icon.astro";
 import { getServices } from "@content/data/services";
-import { getDictionary, localizedPath, type Locale } from "@content/i18n";
+import { getDictionary, type Locale } from "@content/i18n";
 
 interface Props {
   locale: Locale;
@@ -22,7 +22,7 @@ const { moreLabel } = getDictionary(locale).home.services;
         <h2 class="text-2xl font-extrabold tracking-tight">{service.title}</h2>
         <p class="leading-relaxed text-slate-700">{service.description}</p>
         <a
-          href={localizedPath(service.id, locale)}
+          href={service.href}
           class="mt-auto inline-flex min-h-11 items-center gap-2 self-start rounded-md font-bold text-brand-hover underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
           aria-label={`${moreLabel}: ${service.title}`}
         >

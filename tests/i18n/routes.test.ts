@@ -16,7 +16,6 @@ describe("route map", () => {
     expect(pageIds.sort()).toEqual(
       [
         "about",
-        "alquiler-flota",
         "asesoramiento-especializado",
         "climatizacion",
         "contact",
@@ -146,7 +145,7 @@ describe("page files", () => {
     // Service pages are rendered by the catch-all through the isServiceId guard.
     const { existsSync, readFileSync } = await import("node:fs");
     const catchAll = readFileSync("src/pages/[...slug].astro", "utf8");
-    const serviceIds = ["reparacion-mantenimiento", "venta-maquinaria", "alquiler-flota", "asesoramiento-especializado", "climatizacion"];
+    const serviceIds = ["reparacion-mantenimiento", "venta-maquinaria", "asesoramiento-especializado", "climatizacion"];
     for (const id of pageIds) {
       for (const locale of locales) {
         const path = routes[id][locale];

@@ -5,10 +5,10 @@ import Icon from "../components/ui/Icon.astro";
 import { getPage } from "@content/data/pages";
 import { getServices } from "@content/data/services";
 import { getDictionary, localizedPath, type Locale } from "@content/i18n";
-import type { ServiceId } from "@shared/types";
+import type { ServiceDetailId } from "@shared/types";
 
 interface Props {
-  serviceId: ServiceId;
+  serviceId: ServiceDetailId;
   locale: Locale;
 }
 

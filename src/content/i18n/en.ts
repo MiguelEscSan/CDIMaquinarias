@@ -190,6 +190,21 @@ const rental: Dictionary["rental"] = {
   },
   moreInfoLabel: "More information",
   moreInfoAriaLabel: (name) => `Request more information about ${name}`,
+  intro: {
+    title: "Rent the machinery you need",
+    paragraphs: [
+      "At CDI Maquinarias we have a fleet of forklifts and industrial machinery for short, medium and long-term rental. We mainly work with STILL equipment, matched to each type of warehouse and load.",
+      "Choose the type of equipment you need from the list and we will tell you about availability, rates and terms.",
+    ],
+  },
+  faqTitle: "Frequently asked questions",
+  faq: [
+    { question: "What rental periods do you offer?", answer: "We rent short, medium and long term, depending on the needs of your project." },
+    { question: "What do I need to rent a machine?", answer: "Tell us the type of equipment and the period, and we will confirm availability and terms." },
+    { question: "Can I rent without committing to buy?", answer: "Yes, renting is independent of buying. Ask us about the terms." },
+  ],
+  ctaTitle: "Need to rent equipment?",
+  ctaLabel: "Contact us to rent",
 };
 
 const contact: Dictionary["contact"] = {
@@ -805,16 +820,7 @@ const seo: Dictionary["seo"] = {
       label: "Sales",
       heading: "Machinery sales",
       intro: "We help you choose the right equipment for your business, with personalised sales advice.",
-    },
-    "alquiler-flota": {
-      title: "Forklift rental in Gran Canaria | CDI",
-      description:
-        "Short, medium and long-term rental of forklifts and industrial machinery in Las Palmas, with a flexible fleet for peak workloads.",
-      label: "Rental",
-      heading: "Machinery rental",
-      intro: "A flexible fleet for one-off projects, peak workloads or long-term needs.",
-    },
-    "asesoramiento-especializado": {
+    },    "asesoramiento-especializado": {
       title: "Industrial machinery advice in Las Palmas | CDI",
       description:
         "Specialist advice to choose, manage and maintain industrial machinery in Gran Canaria, backed by technical expertise.",
@@ -861,22 +867,7 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Can you advise me on financing?", answer: "We will tell you about the options available in each case." },
     ],
     ctaLabel: "Request a quote",
-  },
-  "alquiler-flota": {
-    processTitle: "How we work",
-    process: [
-      { title: "Choosing the equipment", text: "You tell us the type of machine and the period you need." },
-      { title: "Terms", text: "We confirm availability, rates and the rental conditions." },
-      { title: "Delivery", text: "We take the equipment to your workplace and give you basic training." },
-    ],
-    faqTitle: "Frequently asked questions",
-    faq: [
-      { question: "What is the minimum rental period?", answer: "It depends on the equipment and the project. We rent short, medium and long term." },
-      { question: "Does it include maintenance?", answer: "Ask us about the terms of each contract." },
-    ],
-    ctaLabel: "Check availability",
-  },
-  "asesoramiento-especializado": {
+  },  "asesoramiento-especializado": {
     processTitle: "How we work",
     process: [
       { title: "Initial consultation", text: "We understand your situation, your current fleet and your goals." },

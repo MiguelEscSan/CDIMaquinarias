@@ -13,6 +13,7 @@ import type {
   PageId,
   ProductsContent,
   ServiceCopy,
+  ServiceDetailId,
   ServiceId,
   ServicePageCopy,
 } from "@shared/types";
@@ -201,10 +202,22 @@ const products: ProductsContent = {
 };
 
 const rental: {
+  intro: { title: string; paragraphs: string[] };
   categories: Record<RentingSlug, string>;
   moreInfoLabel: string;
   moreInfoAriaLabel: (name: string) => string;
+  faqTitle: string;
+  faq: { question: string; answer: string }[];
+  ctaTitle: string;
+  ctaLabel: string;
 } = {
+  intro: {
+    title: "Alquile la maquinaria que necesita",
+    paragraphs: [
+      "En CDI Maquinarias disponemos de una flota de carretillas y maquinaria industrial para alquiler a corto, medio y largo plazo. Trabajamos principalmente con equipos STILL, adaptados a cada tipo de almacén y de carga.",
+      "Elija el tipo de equipo que necesita en el listado y le informaremos de disponibilidad, tarifas y condiciones.",
+    ],
+  },
   categories: {
     "carretillas-retractiles": "Carretillas retráctiles",
     "carretillas-contrapesadas-electricas": "Carretillas contrapesadas eléctricas",
@@ -216,6 +229,23 @@ const rental: {
   },
   moreInfoLabel: "Más información",
   moreInfoAriaLabel: (name) => `Solicitar más información sobre ${name}`,
+  faqTitle: "Preguntas frecuentes",
+  faq: [
+    {
+      question: "¿Qué plazos de alquiler ofrecen?",
+      answer: "Alquilamos a corto, medio y largo plazo, según las necesidades de su proyecto.",
+    },
+    {
+      question: "¿Qué necesito para alquilar un equipo?",
+      answer: "Nos indica el tipo de equipo y el plazo, y le confirmamos disponibilidad y condiciones.",
+    },
+    {
+      question: "¿Puedo alquilar sin comprometerme a comprar?",
+      answer: "Sí, el alquiler es independiente de la compra. Consúltenos las condiciones.",
+    },
+  ],
+  ctaTitle: "¿Necesita alquilar un equipo?",
+  ctaLabel: "Contactar para alquilar",
 };
 
 const contact = {
@@ -837,16 +867,7 @@ const seo: { pages: Record<PageId, PageCopy> } = {
       label: "Ventas",
       heading: "Venta de maquinaria",
       intro: "Le ayudamos a elegir el equipo adecuado para su actividad, con asesoramiento comercial personalizado.",
-    },
-    "alquiler-flota": {
-      title: "Alquiler de carretillas en Gran Canaria | CDI",
-      description:
-        "Alquiler de carretillas y maquinaria industrial a corto, medio y largo plazo en Las Palmas, con flota flexible para picos de trabajo.",
-      label: "Alquiler",
-      heading: "Alquiler de maquinaria",
-      intro: "Flota flexible para proyectos puntuales, picos de trabajo o necesidades a largo plazo.",
-    },
-    "asesoramiento-especializado": {
+    },    "asesoramiento-especializado": {
       title: "Asesoramiento en maquinaria industrial | CDI",
       description:
         "Asesoramiento especializado para elegir, gestionar y mantener maquinaria industrial en Gran Canaria, con criterio técnico.",
@@ -865,7 +886,7 @@ const seo: { pages: Record<PageId, PageCopy> } = {
   },
 };
 
-const servicePages: Record<ServiceId, ServicePageCopy> = {
+const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
   "reparacion-mantenimiento": {
     processTitle: "Cómo trabajamos",
     process: [
@@ -893,22 +914,7 @@ const servicePages: Record<ServiceId, ServicePageCopy> = {
       { question: "¿Pueden orientarme sobre financiación?", answer: "Le informamos de las opciones disponibles en cada caso." },
     ],
     ctaLabel: "Pedir presupuesto",
-  },
-  "alquiler-flota": {
-    processTitle: "Cómo trabajamos",
-    process: [
-      { title: "Elección del equipo", text: "Nos indica el tipo de máquina y el plazo que necesita." },
-      { title: "Condiciones", text: "Le confirmamos disponibilidad, tarifas y condiciones del alquiler." },
-      { title: "Entrega", text: "Llevamos el equipo a su centro de trabajo y le damos una formación básica." },
-    ],
-    faqTitle: "Preguntas frecuentes",
-    faq: [
-      { question: "¿Cuál es la duración mínima?", answer: "Depende del equipo y del proyecto. Alquilamos a corto, medio y largo plazo." },
-      { question: "¿Incluye mantenimiento?", answer: "Consúltenos las condiciones de cada contrato." },
-    ],
-    ctaLabel: "Consultar disponibilidad",
-  },
-  "asesoramiento-especializado": {
+  },  "asesoramiento-especializado": {
     processTitle: "Cómo trabajamos",
     process: [
       { title: "Consulta inicial", text: "Entendemos su situación, su flota actual y sus objetivos." },
