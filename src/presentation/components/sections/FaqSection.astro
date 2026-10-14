@@ -1,4 +1,5 @@
 ---
+import Icon from "../ui/Icon.astro";
 import type { FaqItem } from "@shared/types";
 
 interface Props {
@@ -15,14 +16,59 @@ const { id, title, items } = Astro.props;
   <h2 id={`${id}-titulo`} class="text-2xl font-extrabold tracking-tight sm:text-3xl">
     {title}
   </h2>
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col divide-y divide-slate-200 border-y border-slate-200">
     {
       items.map((item) => (
-        <div class="flex flex-col gap-2">
-          <h3 class="text-lg font-bold">{item.question}</h3>
-          <p class="leading-relaxed text-slate-700">{item.answer}</p>
-        </div>
+        <details class="group py-5" data-faq>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden">
+            <h3 class="text-lg font-bold">{item.question}</h3>
+            <Icon
+              name="arrow"
+              size={20}
+              class="shrink-0 text-brand-hover transition-transform duration-300 group-open:rotate-90 motion-reduce:transition-none"
+            />
+          </summary>
+          <p class="mt-3 leading-relaxed text-slate-700">{item.answer}</p>
+        </details>
       ))
     }
   </div>
 </section>
+
+<script>
+  // Animates the answer's height when opening and closing. Without JS the native <details> toggle still works.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const duration = 500;
+  const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+  for (const details of document.querySelectorAll<HTMLDetailsElement>("details[data-faq]")) {
+    const summary = details.querySelector("summary")!;
+    const closedHeight = details.offsetHeight;
+    let animation: Animation | undefined;
+
+    const animateHeight = (from: number, to: number, onDone?: () => void) => {
+      animation?.cancel();
+      details.style.overflow = "hidden";
+      animation = details.animate(
+        { height: [`${from}px`, `${to}px`] },
+        { duration: reduceMotion.matches ? 0 : duration, easing },
+      );
+      animation.onfinish = () => {
+        details.style.overflow = "";
+        onDone?.();
+      };
+    };
+
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (details.open) {
+        animateHeight(details.offsetHeight, closedHeight, () => {
+          details.open = false;
+        });
+      } else {
+        details.open = true;
+        animateHeight(closedHeight, details.offsetHeight);
+      }
+    });
+  }
+</script>
