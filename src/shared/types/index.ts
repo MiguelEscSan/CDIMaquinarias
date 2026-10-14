@@ -140,12 +140,17 @@ export type PageId =
   | "cookies"
   | ServiceDetailId;
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 /** Translatable copy of one service detail page (process and FAQ). */
 export interface ServicePageCopy {
   processTitle: string;
   process: { title: string; text: string }[];
   faqTitle: string;
-  faq: { question: string; answer: string }[];
+  faq: FaqItem[];
   ctaLabel: string;
 }
 
