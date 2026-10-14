@@ -881,6 +881,15 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Verkaufen Sie auch neue Geräte?", answer: "Ja, wir beraten Sie zum Gerät, das zu Ihrem Raum passt." },
     ],
     ctaLabel: "Prüfung anfragen",
+    bandTitle: "Klimatisierung und Klimaanlagen",
+    pillars: [
+      { title: "Montage", text: "Wir installieren Geräte, die zum verfügbaren Raum und der Wärmelast jedes Standorts passen." },
+      { title: "Reparatur", text: "Wir finden den Fehler und nennen Ihnen die Kosten, bevor wir eingreifen." },
+      { title: "Wartung", text: "Regelmäßige Kontrollen, die die Anlage effizient halten und Ausfälle verhindern." },
+    ],
+    spaces: ["Büros", "Industriehallen", "Gewerbeflächen"],
+    ctaTitle: "Braucht Ihre Anlage Aufmerksamkeit?",
+    ctaText: "Nennen Sie uns Ihr Gerät, und wir melden uns so schnell wie möglich.",
   },
 };
 

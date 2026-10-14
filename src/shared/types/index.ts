@@ -152,6 +152,10 @@ export interface ServicePageCopy {
   /** Optional closing banner heading and text, shown above the CTA button. */
   ctaTitle?: string;
   ctaText?: string;
+  /** Optional capability cards shown after the intro band. */
+  pillars?: { title: string; text: string }[];
+  /** Optional list of spaces the service targets, shown as chips. */
+  spaces?: string[];
 }
 
 /** Translatable copy of one page. */

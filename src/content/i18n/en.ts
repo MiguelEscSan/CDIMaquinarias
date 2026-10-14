@@ -878,6 +878,15 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Do you sell new units?", answer: "Yes, we advise you on the unit that suits your space." },
     ],
     ctaLabel: "Request an inspection",
+    bandTitle: "Air conditioning and climate control",
+    pillars: [
+      { title: "Installation", text: "We install units matched to the space available and the heat load of each premises." },
+      { title: "Repair", text: "We locate the fault and give you the cost before we intervene, with no surprises." },
+      { title: "Maintenance", text: "Regular checks that keep the system efficient and prevent downtime." },
+    ],
+    spaces: ["Offices", "Industrial units", "Commercial premises"],
+    ctaTitle: "Does your system need attention?",
+    ctaText: "Tell us which unit you have and we will get back to you as soon as possible.",
   },
 };
 

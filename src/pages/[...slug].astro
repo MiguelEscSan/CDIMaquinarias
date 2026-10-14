@@ -5,6 +5,7 @@ import AboutPage from "@presentation/views/AboutPage.astro";
 import HomePage from "@presentation/views/HomePage.astro";
 import ProductsPage from "@presentation/views/ProductsPage.astro";
 import AdvisoryPage from "@presentation/views/AdvisoryPage.astro";
+import ClimatizacionPage from "@presentation/views/ClimatizacionPage.astro";
 import RentingPage from "@presentation/views/RentingPage.astro";
 import RepairPage from "@presentation/views/RepairPage.astro";
 import ServicePage from "@presentation/views/ServicePage.astro";
@@ -39,4 +40,5 @@ const { pageId, locale } = Astro.props;
 {pageId === "cookies" && <LegalLayout id="cookies" locale={locale} />}
 {pageId === "reparacion-mantenimiento" && <RepairPage locale={locale} />}
 {pageId === "asesoramiento-especializado" && <AdvisoryPage locale={locale} />}
-{isServiceId(pageId) && pageId !== "reparacion-mantenimiento" && pageId !== "asesoramiento-especializado" && <ServicePage serviceId={pageId} locale={locale} />}
+{pageId === "climatizacion" && <ClimatizacionPage locale={locale} />}
+{isServiceId(pageId) && pageId !== "reparacion-mantenimiento" && pageId !== "asesoramiento-especializado" && pageId !== "climatizacion" && <ServicePage serviceId={pageId} locale={locale} />}
