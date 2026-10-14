@@ -1,5 +1,4 @@
 ---
-import Badge from "../ui/Badge.astro";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
@@ -45,7 +44,6 @@ const mobileLinkClass =
         height="437"
         class="h-9 w-auto sm:h-10 lg:h-12"
       />
-      <Badge tone="navy" class="max-xl:hidden">{t.brandBadge}</Badge>
     </a>
 
     <nav aria-label={menuLabels.main} class="hidden lg:block">
@@ -60,10 +58,6 @@ const mobileLinkClass =
 
     <div class="flex items-center gap-2">
       <LanguageSwitcher locale={locale} pageId={pageId} class="max-lg:hidden" />
-      <Button href={callCta.href} ariaLabel={callCta.ariaLabel} size="sm" class="max-sm:hidden">
-        <Icon name="phone" size={18} slot="icon" />
-        {callCta.label}
-      </Button>
 
       <details class="group relative lg:hidden" data-mobile-menu>
         <summary

@@ -33,7 +33,6 @@ const common: Dictionary["common"] = {
     switcherLabel: "Sprache ändern",
     current: "Aktuelle Sprache",
   },
-  brandBadge: `Offizieller ${stillBrand.name}-Händler`,
   cta: {
     call: { label: "Jetzt anrufen", ariaLabel: `Jetzt anrufen: ${primaryPhone.display}` },
     quote: {

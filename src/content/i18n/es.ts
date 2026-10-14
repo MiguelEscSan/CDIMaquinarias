@@ -41,7 +41,6 @@ const common = {
     switcherLabel: "Cambiar idioma",
     current: "Idioma actual",
   },
-  brandBadge: `Distribuidor oficial ${stillBrand.name}`,
   cta: {
     call: { label: "Llamar ahora", ariaLabel: `Llamar ahora al ${primaryPhone.display}` },
     quote: {
