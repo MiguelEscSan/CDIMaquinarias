@@ -122,7 +122,6 @@ const services: Dictionary["services"] = {
         "STILL range and industrial machinery",
         "The right machinery for every need",
       ],
-      link: { label: "Learn more", ariaLabel: "Learn more about STILL products" },
     },
     "alquiler-flota": {
       title: "Rental",
@@ -134,7 +133,6 @@ const services: Dictionary["services"] = {
         "Cover for peak workloads",
         "A versatile, flexible fleet",
       ],
-      link: { label: "Learn more", ariaLabel: "Learn more about equipment rental and leasing" },
     },
     "asesoramiento-especializado": {
       title: "Advice",
@@ -813,14 +811,7 @@ const seo: Dictionary["seo"] = {
       heading: "Repair and maintenance",
       intro: "Keep your machinery running safely with a local technical service.",
     },
-    "venta-maquinaria": {
-      title: "STILL forklift sales in Las Palmas | CDI",
-      description:
-        "Sales of STILL forklifts and industrial machinery in Gran Canaria. We advise you on the right equipment for your business.",
-      label: "Sales",
-      heading: "Machinery sales",
-      intro: "We help you choose the right equipment for your business, with personalised sales advice.",
-    },    "asesoramiento-especializado": {
+    "asesoramiento-especializado": {
       title: "Industrial machinery advice in Las Palmas | CDI",
       description:
         "Specialist advice to choose, manage and maintain industrial machinery in Gran Canaria, backed by technical expertise.",
@@ -854,20 +845,7 @@ const servicePages: Dictionary["servicePages"] = {
     ],
     ctaLabel: "Request an inspection",
   },
-  "venta-maquinaria": {
-    processTitle: "How we work",
-    process: [
-      { title: "Needs analysis", text: "We talk about your activity, your workspace and your load volume." },
-      { title: "Proposal", text: "We present the most suitable options and a detailed quotation." },
-      { title: "Delivery", text: "We prepare the equipment, hand it over and explain how to use it." },
-    ],
-    faqTitle: "Frequently asked questions",
-    faq: [
-      { question: "Do you sell second-hand machinery?", answer: "Ask us about current availability, as stock changes often." },
-      { question: "Can you advise me on financing?", answer: "We will tell you about the options available in each case." },
-    ],
-    ctaLabel: "Request a quote",
-  },  "asesoramiento-especializado": {
+  "asesoramiento-especializado": {
     processTitle: "How we work",
     process: [
       { title: "Initial consultation", text: "We understand your situation, your current fleet and your goals." },

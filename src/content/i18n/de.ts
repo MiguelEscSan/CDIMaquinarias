@@ -122,7 +122,6 @@ const services: Dictionary["services"] = {
         "STILL-Sortiment und Industriemaschinen",
         "Die richtige Maschine für jeden Bedarf",
       ],
-      link: { label: "Mehr erfahren", ariaLabel: "Mehr über STILL-Produkte erfahren" },
     },
     "alquiler-flota": {
       title: "Vermietung",
@@ -135,7 +134,6 @@ const services: Dictionary["services"] = {
         "Abdeckung von Auftragsspitzen",
         "Eine vielseitige, flexible Flotte",
       ],
-      link: { label: "Mehr erfahren", ariaLabel: "Mehr über Gerätevermietung und Leasing erfahren" },
     },
     "asesoramiento-especializado": {
       title: "Beratung",
@@ -816,14 +814,7 @@ const seo: Dictionary["seo"] = {
       heading: "Reparatur und Wartung",
       intro: "Halten Sie Ihre Maschinen mit einem Service vor Ort sicher im Einsatz.",
     },
-    "venta-maquinaria": {
-      title: "STILL-Staplerverkauf in Las Palmas | CDI",
-      description:
-        "Verkauf von STILL-Staplern und Industriemaschinen auf Gran Canaria. Wir beraten Sie zur passenden Ausstattung für Ihr Geschäft.",
-      label: "Verkauf",
-      heading: "Maschinenverkauf",
-      intro: "Wir helfen Ihnen, das passende Gerät für Ihr Geschäft zu wählen, mit persönlicher Verkaufsberatung.",
-    },    "asesoramiento-especializado": {
+    "asesoramiento-especializado": {
       title: "Beratung zu Industriemaschinen | CDI",
       description:
         "Fachberatung zur Auswahl, Verwaltung und Wartung von Industriemaschinen auf Gran Canaria, mit technischem Fachwissen.",
@@ -857,20 +848,7 @@ const servicePages: Dictionary["servicePages"] = {
     ],
     ctaLabel: "Prüfung anfragen",
   },
-  "venta-maquinaria": {
-    processTitle: "So arbeiten wir",
-    process: [
-      { title: "Bedarfsanalyse", text: "Wir sprechen über Ihre Tätigkeit, Ihren Arbeitsbereich und Ihr Lastvolumen." },
-      { title: "Vorschlag", text: "Wir stellen Ihnen die passendsten Optionen und ein detailliertes Angebot vor." },
-      { title: "Übergabe", text: "Wir bereiten das Gerät vor, übergeben es Ihnen und erklären die Bedienung." },
-    ],
-    faqTitle: "Häufig gestellte Fragen",
-    faq: [
-      { question: "Verkaufen Sie gebrauchte Maschinen?", answer: "Fragen Sie nach der aktuellen Verfügbarkeit, da sich der Bestand häufig ändert." },
-      { question: "Beraten Sie mich zur Finanzierung?", answer: "Wir informieren Sie über die Möglichkeiten, die in Ihrem Fall verfügbar sind." },
-    ],
-    ctaLabel: "Angebot anfragen",
-  },  "asesoramiento-especializado": {
+  "asesoramiento-especializado": {
     processTitle: "So arbeiten wir",
     process: [
       { title: "Erstgespräch", text: "Wir verstehen Ihre Situation, Ihre aktuelle Flotte und Ihre Ziele." },

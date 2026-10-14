@@ -142,7 +142,6 @@ const services: { items: Record<ServiceId, ServiceCopy> } = {
         "Gama STILL y maquinaria industrial",
         "Maquinaria adecuada a cada necesidad",
       ],
-      link: { label: "Saber más", ariaLabel: "Saber más sobre los productos STILL" },
     },
     "alquiler-flota": {
       title: "Alquiler",
@@ -155,7 +154,6 @@ const services: { items: Record<ServiceId, ServiceCopy> } = {
         "Cobertura de puntas de trabajo",
         "Flota versátil y flexible",
       ],
-      link: { label: "Saber más", ariaLabel: "Saber más sobre el alquiler y renting de equipos" },
     },
     "asesoramiento-especializado": {
       title: "Asesoramiento",
@@ -860,14 +858,7 @@ const seo: { pages: Record<PageId, PageCopy> } = {
       heading: "Reparación y mantenimiento",
       intro: "Mantenga su maquinaria operativa y segura con un servicio técnico cercano.",
     },
-    "venta-maquinaria": {
-      title: "Venta de carretillas STILL en Las Palmas | CDI",
-      description:
-        "Venta de carretillas STILL y maquinaria industrial en Gran Canaria. Le asesoramos para elegir el equipo adecuado a su actividad.",
-      label: "Ventas",
-      heading: "Venta de maquinaria",
-      intro: "Le ayudamos a elegir el equipo adecuado para su actividad, con asesoramiento comercial personalizado.",
-    },    "asesoramiento-especializado": {
+    "asesoramiento-especializado": {
       title: "Asesoramiento en maquinaria industrial | CDI",
       description:
         "Asesoramiento especializado para elegir, gestionar y mantener maquinaria industrial en Gran Canaria, con criterio técnico.",
@@ -901,20 +892,7 @@ const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
     ],
     ctaLabel: "Solicitar revisión",
   },
-  "venta-maquinaria": {
-    processTitle: "Cómo trabajamos",
-    process: [
-      { title: "Análisis de necesidades", text: "Hablamos de su actividad, su espacio de trabajo y su volumen de carga." },
-      { title: "Propuesta", text: "Le presentamos las opciones más adecuadas y un presupuesto detallado." },
-      { title: "Entrega", text: "Preparamos el equipo, se lo entregamos y le explicamos su uso." },
-    ],
-    faqTitle: "Preguntas frecuentes",
-    faq: [
-      { question: "¿Tienen maquinaria de segunda mano?", answer: "Consúltenos por la disponibilidad actual, porque el stock cambia con frecuencia." },
-      { question: "¿Pueden orientarme sobre financiación?", answer: "Le informamos de las opciones disponibles en cada caso." },
-    ],
-    ctaLabel: "Pedir presupuesto",
-  },  "asesoramiento-especializado": {
+  "asesoramiento-especializado": {
     processTitle: "Cómo trabajamos",
     process: [
       { title: "Consulta inicial", text: "Entendemos su situación, su flota actual y sus objetivos." },

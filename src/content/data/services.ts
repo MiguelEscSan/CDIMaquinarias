@@ -3,8 +3,8 @@ import { getDictionary, localizedPath, type Locale } from "../i18n";
 
 export const serviceDefinitions: ServiceDefinition[] = [
   { id: "reparacion-mantenimiento", slug: "reparacion-y-mantenimiento", icon: "wrench", detailPage: "reparacion-mantenimiento" },
-  { id: "venta-maquinaria", slug: "ventas", icon: "forklift", detailPage: "venta-maquinaria", linkTo: "products" },
-  { id: "alquiler-flota", slug: "alquiler", icon: "key", detailPage: "renting", linkTo: "renting" },
+  { id: "venta-maquinaria", slug: "ventas", icon: "forklift", detailPage: "products" },
+  { id: "alquiler-flota", slug: "alquiler", icon: "key", detailPage: "renting" },
   { id: "asesoramiento-especializado", slug: "asesoramiento", icon: "clipboard", detailPage: "asesoramiento-especializado" },
   { id: "climatizacion", slug: "climatizacion-y-aire-acondicionado", icon: "snowflake", detailPage: "climatizacion" },
 ];
@@ -20,15 +20,11 @@ export function isServiceId(id: PageId): id is ServiceDetailId {
 
 export function getServices(locale: Locale): Service[] {
   const { items } = getDictionary(locale).services;
-  return serviceDefinitions.map(({ id, slug, icon, detailPage, linkTo }) => {
-    const { link, ...copy } = items[id];
-    return {
-      id,
-      slug,
-      icon,
-      href: localizedPath(detailPage, locale),
-      ...copy,
-      ...(linkTo && link ? { link: { ...link, href: localizedPath(linkTo, locale) } } : {}),
-    };
-  });
+  return serviceDefinitions.map(({ id, slug, icon, detailPage }) => ({
+    id,
+    slug,
+    icon,
+    href: localizedPath(detailPage, locale),
+    ...items[id],
+  }));
 }

@@ -22,7 +22,7 @@ export type ServiceId =
   | "climatizacion";
 
 /** Services with their own detail page. Rental has none: it lives on the renting page. */
-export type ServiceDetailId = Exclude<ServiceId, "alquiler-flota">;
+export type ServiceDetailId = Exclude<ServiceId, "alquiler-flota" | "venta-maquinaria">;
 
 /** Language-neutral service data; copy comes from the dictionary. */
 export interface ServiceDefinition {
@@ -30,10 +30,8 @@ export interface ServiceDefinition {
   /** Anchor on the services page (shared by every locale). */
   slug: string;
   icon: IconName;
-  /** Page that the service card and link open: its own detail page, or another page. */
+  /** Page that the service card opens: its own detail page, or another page. */
   detailPage: PageId;
-  /** Page the "learn more" link points to. */
-  linkTo?: PageId;
 }
 
 /** Translatable copy of one service. */
@@ -44,7 +42,6 @@ export interface ServiceCopy {
   /** Long copy for the services page. */
   detail: string;
   features: string[];
-  link?: { label: string; ariaLabel: string };
 }
 
 export interface Service {
@@ -59,8 +56,6 @@ export interface Service {
   detail: string;
   icon: IconName;
   features: string[];
-  /** Optional deeper page for this service. */
-  link?: CtaLink;
 }
 
 export interface PhoneContact {
