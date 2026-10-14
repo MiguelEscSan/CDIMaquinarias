@@ -134,8 +134,22 @@ Todos los textos visibles (menús, botones, etiquetas `aria`, títulos y descrip
 - El correo que recibe el negocio siempre está en español e indica el idioma del visitante.
 - Los textos legales en inglés son una traducción de cortesía (prevalece el español) y deben revisarlos la asesora.
 
+## Imágenes
+
+Los archivos de `public/` se sirven tal cual en la raíz del sitio (`public/images/maquinaria.webp` → `/images/maquinaria.webp`).
+
+| Ruta | Uso |
+| --- | --- |
+| `public/brand/` | Logotipo (`logo-cdi.webp`) y su icono |
+| `public/favicon.png` | Icono de la pestaña del navegador (512×512) |
+| `public/og-image.jpg` | Imagen al compartir el enlace (1200×630, referenciada en `src/content/data/siteInfo.ts`) |
+| `public/images/` | Fotografías y otras imágenes de las páginas |
+
+Reglas al añadir imágenes:
+- Nombres en minúsculas, con guiones y sin espacios (`carretilla-electrica.webp`).
+- WebP siempre que sea posible; los rastreadores de redes no admiten SVG como imagen Open Graph.
+- El texto alternativo (`alt`) va en los diccionarios de `src/content/i18n/`, en los tres idiomas, no escrito en el componente.
+
 ## Recursos pendientes
 
-- `public/og-image.jpg` (1200×630, JPG/PNG): imagen para redes sociales. Está referenciada en `src/content/data/siteInfo.ts` pero aún no existe; los rastreadores no admiten SVG como imagen Open Graph.
-- Fotografías reales de maquinaria, instalaciones y equipo técnico.
-- Logotipo oficial de CDI Maquinarias (actualmente se usa un logotipo tipográfico).
+- Fotografías reales de maquinaria, instalaciones y equipo técnico en `public/images/`.
