@@ -20,6 +20,9 @@ export default defineConfig({
     "/servicios/alquiler/": "/renting/",
     "/en/services/rental/": "/en/rental/",
     "/de/dienstleistungen/vermietung/": "/de/vermietung/",
+    "/servicios/ventas/": "/productos/",
+    "/en/services/sales/": "/en/products/",
+    "/de/dienstleistungen/verkauf/": "/de/produkte/",
   },
   // Spanish is unprefixed (original URLs); other locales live under /<locale>/ with translated slugs.
   i18n: {

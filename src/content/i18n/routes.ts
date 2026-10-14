@@ -17,7 +17,6 @@ export const routes: Record<PageId, Record<Locale, string>> = {
     en: "/en/services/repair-and-maintenance/",
     de: "/de/dienstleistungen/reparatur-und-wartung/",
   },
-  "venta-maquinaria": { es: "/servicios/ventas/", en: "/en/services/sales/", de: "/de/dienstleistungen/verkauf/" },
   "asesoramiento-especializado": {
     es: "/servicios/asesoramiento/",
     en: "/en/services/advice/",
