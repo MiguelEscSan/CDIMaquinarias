@@ -190,9 +190,23 @@ const rental: Dictionary["rental"] = {
     "apiladoras-electricas": "Elektrische Stapler",
     "transpaleta-electrica": "Elektrische Transpaletten",
   },
-  imageAlt: "Bediener fährt einen STILL-Kommissionierer mit Käfigplattform auf einem Ladehof",
   moreInfoLabel: "Weitere Informationen",
   moreInfoAriaLabel: (name) => `Weitere Informationen zu ${name} anfordern`,
+  intro: {
+    title: "Mieten Sie die Maschinen, die Sie brauchen",
+    paragraphs: [
+      "Bei CDI Maquinarias verfügen wir über eine Flotte aus Staplern und Industriemaschinen zur Vermietung kurz-, mittel- und langfristig. Wir arbeiten hauptsächlich mit STILL-Geräten, abgestimmt auf die jeweilige Lagerart und Last.",
+      "Wählen Sie in der Liste die Geräteart, die Sie benötigen. Wir informieren Sie über Verfügbarkeit, Tarife und Bedingungen.",
+    ],
+  },
+  faqTitle: "Häufig gestellte Fragen",
+  faq: [
+    { question: "Welche Mietzeiträume bieten Sie an?", answer: "Wir vermieten kurz-, mittel- und langfristig, je nach Bedarf Ihres Projekts." },
+    { question: "Was benötige ich, um ein Gerät zu mieten?", answer: "Nennen Sie uns die Geräteart und den Zeitraum, wir bestätigen Verfügbarkeit und Bedingungen." },
+    { question: "Kann ich mieten, ohne mich zum Kauf zu verpflichten?", answer: "Ja, die Miete ist unabhängig vom Kauf. Fragen Sie nach den Bedingungen." },
+  ],
+  ctaTitle: "Sie möchten ein Gerät mieten?",
+  ctaLabel: "Für eine Miete kontaktieren",
 };
 
 const contact: Dictionary["contact"] = {
@@ -794,9 +808,98 @@ const seo: Dictionary["seo"] = {
       label: "Cookie-Richtlinie",
       heading: "Cookie-Richtlinie",
     },
+    "reparacion-mantenimiento": {
+      title: "Staplerreparatur in Las Palmas | CDI",
+      description:
+        "Reparatur und Wartung von Staplern und Industriemaschinen auf Gran Canaria, in unserer Werkstatt oder vor Ort, durch Fachtechniker.",
+      label: "Reparatur und Wartung",
+      heading: "Reparatur und Wartung",
+      intro: "Halten Sie Ihre Maschinen mit einem Service vor Ort sicher im Einsatz.",
+    },
+    "venta-maquinaria": {
+      title: "STILL-Staplerverkauf in Las Palmas | CDI",
+      description:
+        "Verkauf von STILL-Staplern und Industriemaschinen auf Gran Canaria. Wir beraten Sie zur passenden Ausstattung für Ihr Geschäft.",
+      label: "Verkauf",
+      heading: "Maschinenverkauf",
+      intro: "Wir helfen Ihnen, das passende Gerät für Ihr Geschäft zu wählen, mit persönlicher Verkaufsberatung.",
+    },    "asesoramiento-especializado": {
+      title: "Beratung zu Industriemaschinen | CDI",
+      description:
+        "Fachberatung zur Auswahl, Verwaltung und Wartung von Industriemaschinen auf Gran Canaria, mit technischem Fachwissen.",
+      label: "Beratung",
+      heading: "Fachberatung",
+      intro: "Technisches Fachwissen, damit Sie Entscheidungen über Ihre Maschinen mit klaren Informationen treffen.",
+    },
+    climatizacion: {
+      title: "Klimatisierung und Klimaanlagen | CDI",
+      description:
+        "Wartung, Reparatur und Verkauf von Klimaanlagen und Klimatisierungssystemen in Las Palmas de Gran Canaria.",
+      label: "Klimatisierung",
+      heading: "Klimatisierung und Klimaanlagen",
+      intro: "Angenehme Arbeitsumgebungen, damit Ihr Team seine volle Leistung erbringen kann.",
+    },
+  },
+};
+
+const servicePages: Dictionary["servicePages"] = {
+  "reparacion-mantenimiento": {
+    processTitle: "So arbeiten wir",
+    process: [
+      { title: "Diagnose", text: "Wir prüfen den Schaden bzw. den Zustand des Geräts, in unserer Werkstatt oder bei Ihnen vor Ort." },
+      { title: "Angebot", text: "Wir sagen Ihnen, was repariert werden muss und was es kostet, bevor wir beginnen." },
+      { title: "Reparatur", text: "Wir führen die Arbeiten aus und geben Ihnen das Gerät in optimalem Zustand zurück." },
+    ],
+    faqTitle: "Häufig gestellte Fragen",
+    faq: [
+      { question: "Reparieren Sie auch Maschinen anderer Marken?", answer: "Ja. Wir arbeiten mit Geräten aller Marken, zusätzlich zur STILL-Reihe." },
+      { question: "Kommen Sie auch zu mir in den Betrieb?", answer: "Ja, wir bieten Service vor Ort sowie Arbeiten in der Werkstatt an." },
+    ],
+    ctaLabel: "Prüfung anfragen",
+  },
+  "venta-maquinaria": {
+    processTitle: "So arbeiten wir",
+    process: [
+      { title: "Bedarfsanalyse", text: "Wir sprechen über Ihre Tätigkeit, Ihren Arbeitsbereich und Ihr Lastvolumen." },
+      { title: "Vorschlag", text: "Wir stellen Ihnen die passendsten Optionen und ein detailliertes Angebot vor." },
+      { title: "Übergabe", text: "Wir bereiten das Gerät vor, übergeben es Ihnen und erklären die Bedienung." },
+    ],
+    faqTitle: "Häufig gestellte Fragen",
+    faq: [
+      { question: "Verkaufen Sie gebrauchte Maschinen?", answer: "Fragen Sie nach der aktuellen Verfügbarkeit, da sich der Bestand häufig ändert." },
+      { question: "Beraten Sie mich zur Finanzierung?", answer: "Wir informieren Sie über die Möglichkeiten, die in Ihrem Fall verfügbar sind." },
+    ],
+    ctaLabel: "Angebot anfragen",
+  },  "asesoramiento-especializado": {
+    processTitle: "So arbeiten wir",
+    process: [
+      { title: "Erstgespräch", text: "Wir verstehen Ihre Situation, Ihre aktuelle Flotte und Ihre Ziele." },
+      { title: "Analyse", text: "Wir prüfen die technischen und wirtschaftlichen Optionen anhand konkreter Daten." },
+      { title: "Empfehlung", text: "Wir legen Ihnen einen klaren Vorschlag vor und begleiten die Umsetzung." },
+    ],
+    faqTitle: "Häufig gestellte Fragen",
+    faq: [
+      { question: "Ist diese Beratung kostenpflichtig?", answer: "Die Bedingungen erläutern wir Ihnen beim ersten Gespräch." },
+      { question: "Beraten Sie nur zu STILL-Geräten?", answer: "Wir beraten zu der Maschine, die am besten zu Ihrem Bedarf passt." },
+    ],
+    ctaLabel: "Beratung vereinbaren",
+  },
+  climatizacion: {
+    processTitle: "So arbeiten wir",
+    process: [
+      { title: "Prüfung", text: "Wir kontrollieren den Zustand der Anlage und finden das Problem." },
+      { title: "Angebot", text: "Wir erläutern die nötige Reparatur oder Wartung, bevor wir tätig werden." },
+      { title: "Inbetriebnahme", text: "Wir bringen die Anlage wieder in Betrieb und empfehlen die passende Wartung." },
+    ],
+    faqTitle: "Häufig gestellte Fragen",
+    faq: [
+      { question: "Bieten Sie vorbeugende Wartung an?", answer: "Ja, wir planen regelmäßige Kontrollen, um Ausfälle zu vermeiden." },
+      { question: "Verkaufen Sie auch neue Geräte?", answer: "Ja, wir beraten Sie zum Gerät, das zu Ihrem Raum passt." },
+    ],
+    ctaLabel: "Prüfung anfragen",
   },
 };
 
 export const de: Dictionary = {
-  common, home, about, services, products, rental, contact, legal, cookies: cookieCopy, seo,
+  common, home, about, services, servicePages, products, rental, contact, legal, cookies: cookieCopy, seo,
 };

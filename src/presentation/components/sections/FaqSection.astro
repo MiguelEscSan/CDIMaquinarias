@@ -1,0 +1,28 @@
+---
+import type { FaqItem } from "@shared/types";
+
+interface Props {
+  /** Unique within the page; prefixes the heading id. */
+  id: string;
+  title: string;
+  items: FaqItem[];
+}
+
+const { id, title, items } = Astro.props;
+---
+
+<section aria-labelledby={`${id}-titulo`} class="flex flex-col gap-6">
+  <h2 id={`${id}-titulo`} class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+    {title}
+  </h2>
+  <div class="flex flex-col gap-6">
+    {
+      items.map((item) => (
+        <div class="flex flex-col gap-2">
+          <h3 class="text-lg font-bold">{item.question}</h3>
+          <p class="leading-relaxed text-slate-700">{item.answer}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

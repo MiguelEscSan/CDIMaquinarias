@@ -13,22 +13,20 @@ const rentingCategories = getRentingCategories(locale);
 const rentingCopy = getDictionary(locale).rental;
 ---
 
-<div class="bg-slate-50 py-16 sm:py-20">
-  <div class="mx-auto grid max-w-7xl items-start gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
-    <img
-      src="/images/still-carretilla-renting.webp"
-      alt={rentingCopy.imageAlt}
-      width="634"
-      height="845"
-      loading="lazy"
-      decoding="async"
-      class="aspect-[4/3] w-full rounded-3xl object-cover lg:col-span-4 lg:aspect-[3/4]"
-    />
-  <ul class="grid gap-6 sm:grid-cols-2 lg:col-span-8">
+<div class="py-16 sm:py-20">
+  <ul class="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
     {rentingCategories.map((category) => (
       <Card as="li" interactive class="group gap-4">
-        <div class="flex size-12 items-center justify-center rounded-xl bg-orange-50 text-brand-hover ring-1 ring-orange-200 transition-colors duration-300 group-hover:bg-brand group-hover:text-white">
-          <Icon name="forklift" size={26} />
+        <div class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+          <img
+            src={`/images/renting/${category.slug}.png`}
+            alt=""
+            width="800"
+            height="800"
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          />
         </div>
         <h2 class="text-xl font-bold">{category.name}</h2>
         <a
@@ -42,5 +40,4 @@ const rentingCopy = getDictionary(locale).rental;
       </Card>
     ))}
   </ul>
-  </div>
 </div>

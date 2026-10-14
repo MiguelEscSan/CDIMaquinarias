@@ -5,8 +5,10 @@ import AboutPage from "@presentation/views/AboutPage.astro";
 import HomePage from "@presentation/views/HomePage.astro";
 import ProductsPage from "@presentation/views/ProductsPage.astro";
 import RentingPage from "@presentation/views/RentingPage.astro";
+import ServicePage from "@presentation/views/ServicePage.astro";
 import ServicesPage from "@presentation/views/ServicesPage.astro";
 import LegalLayout from "@presentation/layouts/LegalLayout.astro";
+import { isServiceId } from "@content/data/services";
 import { locales, routes, type Locale } from "@content/i18n";
 import type { PageId } from "@shared/types";
 
@@ -33,3 +35,4 @@ const { pageId, locale } = Astro.props;
 {pageId === "legalNotice" && <LegalLayout id="legalNotice" locale={locale} />}
 {pageId === "privacy" && <LegalLayout id="privacy" locale={locale} />}
 {pageId === "cookies" && <LegalLayout id="cookies" locale={locale} />}
+{isServiceId(pageId) && <ServicePage serviceId={pageId} locale={locale} />}

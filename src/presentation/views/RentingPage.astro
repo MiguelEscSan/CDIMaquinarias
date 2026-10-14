@@ -1,16 +1,44 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import RentingGrid from "../components/sections/RentingGrid.astro";
+import FaqSection from "../components/sections/FaqSection.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon.astro";
 import { getPage } from "@content/data/pages";
-import type { Locale } from "@content/i18n";
+import { getDictionary, localizedPath, type Locale } from "@content/i18n";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
+const copy = getDictionary(locale).rental;
+const contactHref = localizedPath("contact", locale);
 ---
 
 <PageLayout page={getPage("renting", locale)} locale={locale}>
+  <section class="bg-white py-16 sm:py-20">
+    <div class="mx-auto flex max-w-3xl flex-col gap-5 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{copy.intro.title}</h2>
+      {copy.intro.paragraphs.map((paragraph) => (
+        <p class="leading-relaxed text-slate-700">{paragraph}</p>
+      ))}
+    </div>
+  </section>
+
   <RentingGrid locale={locale} />
+
+  <section class="bg-white py-16 sm:py-20">
+    <div class="mx-auto flex max-w-3xl flex-col gap-12 px-4 sm:px-6 lg:px-8">
+      <FaqSection id="renting" title={copy.faqTitle} items={copy.faq} />
+
+      <div class="flex flex-col items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
+        <h2 class="text-xl font-bold">{copy.ctaTitle}</h2>
+        <Button href={contactHref} size="lg">
+          {copy.ctaLabel}
+          <Icon name="arrow" size={18} />
+        </Button>
+      </div>
+    </div>
+  </section>
 </PageLayout>

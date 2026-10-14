@@ -143,7 +143,7 @@ Los archivos de `public/` se sirven tal cual en la raíz del sitio (`public/imag
 | `public/brand/` | Logotipos: `logo-cdi.webp` y `logo-still.webp` (fondo blanco, va sobre placa clara) |
 | `public/favicon.png` | Icono de la pestaña del navegador (512×512) |
 | `public/og-image.jpg` | Imagen al compartir el enlace (1200×630, referenciada en `src/content/data/siteInfo.ts`) |
-| `public/images/` | Fotografías de las páginas (`fachada-cdi-still.webp` en la hero, `cdi-showroom.webp` en nosotros, `almacen-carretillas-still.webp` en productos, `still-carretilla-renting.webp` en renting) |
+| `public/images/` | Fotografías de las páginas (`fachada-cdi-still.webp` en la hero, `cdi-showroom.webp` en nosotros, `almacen-carretillas-still.webp` en productos, `renting/*.png` en las tarjetas de renting) |
 
 Reglas al añadir imágenes:
 - Nombres en minúsculas, con guiones y sin espacios (`carretilla-electrica.webp`).

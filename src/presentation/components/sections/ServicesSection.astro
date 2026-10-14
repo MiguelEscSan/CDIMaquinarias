@@ -40,7 +40,7 @@ const { eyebrow, title, subtitle, moreLabel, allServicesLabel } = getDictionary(
             ))}
           </ul>
           <a
-            href={`${servicesPath}#${service.slug}`}
+            href={service.href}
             class="mt-auto inline-flex min-h-11 items-center gap-2 self-start rounded-md pt-5 font-bold text-brand-hover underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
             aria-label={`${moreLabel}: ${service.title}`}
           >
