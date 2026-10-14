@@ -1,0 +1,70 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import FaqSection from "../components/sections/FaqSection.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon.astro";
+import { getPage } from "@content/data/pages";
+import { getServices } from "@content/data/services";
+import { getDictionary, localizedPath, type Locale } from "@content/i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = getPage("reparacion-mantenimiento", locale);
+// Shared with the page heading in i18n, so the banner and the <h1> never drift apart.
+const service = getServices(locale).find((item) => item.id === "reparacion-mantenimiento")!;
+const copy = getDictionary(locale).servicePages["reparacion-mantenimiento"];
+const contactHref = localizedPath("contact", locale);
+---
+
+<PageLayout page={page} locale={locale}>
+  <section class="bg-slate-900 py-16 text-white sm:py-20">
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:items-end lg:gap-14 lg:px-8">
+      <h2 class="text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">{page.heading}</h2>
+      <div class="flex flex-col gap-6">
+        <p class="leading-relaxed text-slate-300">{service.detail}</p>
+        <ul class="grid gap-3 text-sm text-slate-200 sm:grid-cols-2">
+          {service.features.map((feature) => (
+            <li class="flex items-start gap-2 border-l-2 border-brand pl-3">{feature}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-16 sm:py-20">
+    <div class="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">{copy.processTitle}</h2>
+      <ol class="grid gap-6 sm:grid-cols-3">
+        {copy.process.map((step, index) => (
+          <li class="flex flex-col gap-4 rounded-lg border-t-4 border-brand bg-slate-50 p-6 sm:p-8">
+            <span class="text-5xl font-extrabold leading-none text-orange-200">{String(index + 1).padStart(2, "0")}</span>
+            <h3 class="text-xl font-bold">{step.title}</h3>
+            <p class="leading-relaxed text-slate-700">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-slate-50 py-16 sm:py-20">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
+      <div class="rounded-lg border border-slate-200 bg-white p-6 sm:p-10">
+        <FaqSection id="reparacion-mantenimiento" title={copy.faqTitle} items={copy.faq} />
+      </div>
+
+      <div class="flex flex-col gap-6 rounded-lg bg-navy p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:p-10">
+        <div class="flex flex-col gap-3">
+          <h2 class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{copy.ctaTitle}</h2>
+          <p class="leading-relaxed text-slate-300">{copy.ctaText}</p>
+        </div>
+        <Button href={contactHref} size="lg">
+          {copy.ctaLabel}
+          <Icon name="arrow" size={18} />
+        </Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>

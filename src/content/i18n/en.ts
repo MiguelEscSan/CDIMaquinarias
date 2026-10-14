@@ -844,6 +844,8 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Can you come to my premises?", answer: "Yes, we offer on-site service as well as workshop work." },
     ],
     ctaLabel: "Request an inspection",
+    ctaTitle: "Does your equipment need attention?",
+    ctaText: "Tell us about the fault or the maintenance you need and we will get back to you as soon as possible.",
   },
   "asesoramiento-especializado": {
     processTitle: "How we work",

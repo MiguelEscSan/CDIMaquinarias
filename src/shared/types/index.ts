@@ -147,6 +147,9 @@ export interface ServicePageCopy {
   faqTitle: string;
   faq: FaqItem[];
   ctaLabel: string;
+  /** Optional closing banner heading and text, shown above the CTA button. */
+  ctaTitle?: string;
+  ctaText?: string;
 }
 
 /** Translatable copy of one page. */

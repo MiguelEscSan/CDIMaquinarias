@@ -5,6 +5,7 @@ import AboutPage from "@presentation/views/AboutPage.astro";
 import HomePage from "@presentation/views/HomePage.astro";
 import ProductsPage from "@presentation/views/ProductsPage.astro";
 import RentingPage from "@presentation/views/RentingPage.astro";
+import RepairPage from "@presentation/views/RepairPage.astro";
 import ServicePage from "@presentation/views/ServicePage.astro";
 import ServicesPage from "@presentation/views/ServicesPage.astro";
 import LegalLayout from "@presentation/layouts/LegalLayout.astro";
@@ -35,4 +36,5 @@ const { pageId, locale } = Astro.props;
 {pageId === "legalNotice" && <LegalLayout id="legalNotice" locale={locale} />}
 {pageId === "privacy" && <LegalLayout id="privacy" locale={locale} />}
 {pageId === "cookies" && <LegalLayout id="cookies" locale={locale} />}
-{isServiceId(pageId) && <ServicePage serviceId={pageId} locale={locale} />}
+{pageId === "reparacion-mantenimiento" && <RepairPage locale={locale} />}
+{isServiceId(pageId) && pageId !== "reparacion-mantenimiento" && <ServicePage serviceId={pageId} locale={locale} />}
