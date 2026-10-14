@@ -17,57 +17,53 @@ const headingId = "ubicacion-titulo";
 const { consent } = locationContent;
 ---
 
-<section id="ubicacion" aria-labelledby={headingId} class="border-t border-slate-200 bg-white py-16 sm:py-24">
-  <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
-    <div class="flex flex-col gap-6">
-      <SectionHeader
-        id={headingId}
-        eyebrow={locationContent.eyebrow}
-        title={locationContent.title}
-        subtitle={locationContent.subtitle}
-      />
-      <address class="flex gap-3 text-slate-700 not-italic">
-        <Icon name="map-pin" class="mt-0.5 text-brand-hover" />
-        {formatAddress(t.common.countryName)}
-      </address>
-      <div>
-        <Button
-          href={directionsUrl}
-          external
-          variant="secondary"
-          ariaLabel={locationContent.directionsAriaLabel}
-        >
-          {locationContent.directionsLabel}
-          <Icon name="arrow" size={20} />
-        </Button>
-      </div>
-    </div>
-
-    <div
-      class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm lg:col-span-2"
-      data-map-consent
-      data-map-src={mapEmbedUrl}
-      data-map-title={locationContent.mapTitle}
+<section id="ubicacion" aria-labelledby={headingId} class="flex flex-col gap-6">
+  <SectionHeader
+    id={headingId}
+    eyebrow={locationContent.eyebrow}
+    title={locationContent.title}
+    subtitle={locationContent.subtitle}
+  />
+  <address class="flex gap-3 text-slate-700 not-italic">
+    <Icon name="map-pin" class="mt-0.5 text-brand-hover" />
+    {formatAddress(t.common.countryName)}
+  </address>
+  <div>
+    <Button
+      href={directionsUrl}
+      external
+      variant="secondary"
+      ariaLabel={locationContent.directionsAriaLabel}
     >
-      <div
-        class="bg-grid flex aspect-[4/3] w-full flex-col items-center justify-center gap-4 p-6 text-center sm:aspect-video sm:p-10"
-        data-map-placeholder
-      >
-        <div class="flex size-14 items-center justify-center rounded-full bg-orange-50 text-brand-hover ring-1 ring-orange-200">
-          <Icon name="map-pin" size={28} />
-        </div>
-        <p class="text-lg font-bold text-slate-900">{consent.title}</p>
-        <p class="max-w-md text-sm text-slate-600">{consent.body}</p>
-        <Button type="button" size="sm" hidden data-map-load>
-          {consent.loadLabel}
-        </Button>
-        <a
-          href={localizedPath("cookies", locale)}
-          class="text-sm font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 hover:text-brand-hover"
-        >
-          {consent.cookiesLinkLabel}
-        </a>
+      {locationContent.directionsLabel}
+      <Icon name="arrow" size={20} />
+    </Button>
+  </div>
+
+  <div
+    class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
+    data-map-consent
+    data-map-src={mapEmbedUrl}
+    data-map-title={locationContent.mapTitle}
+  >
+    <div
+      class="bg-grid flex aspect-[4/3] w-full flex-col items-center justify-center gap-4 p-6 text-center sm:aspect-video sm:p-10"
+      data-map-placeholder
+    >
+      <div class="flex size-14 items-center justify-center rounded-full bg-orange-50 text-brand-hover ring-1 ring-orange-200">
+        <Icon name="map-pin" size={28} />
       </div>
+      <p class="text-lg font-bold text-slate-900">{consent.title}</p>
+      <p class="max-w-md text-sm text-slate-600">{consent.body}</p>
+      <Button type="button" size="sm" hidden data-map-load>
+        {consent.loadLabel}
+      </Button>
+      <a
+        href={localizedPath("cookies", locale)}
+        class="text-sm font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 hover:text-brand-hover"
+      >
+        {consent.cookiesLinkLabel}
+      </a>
     </div>
   </div>
 </section>
