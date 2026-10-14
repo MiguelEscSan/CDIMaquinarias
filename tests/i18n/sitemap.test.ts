@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sitemapLinks } from "../../src/i18n/sitemap";
+import { sitemapLinks } from "../../src/content/i18n/sitemap";
 
 const SITE = "https://www.cdimaquinarias.com";
 

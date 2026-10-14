@@ -1,14 +1,14 @@
 ---
-// Every static page in every locale, generated from the route map (src/i18n/routes.ts).
+// Every static page in every locale, generated from the route map (src/content/i18n/routes.ts).
 // Contact stays in its own files: its form is server-rendered.
-import AboutPage from "../views/AboutPage.astro";
-import HomePage from "../views/HomePage.astro";
-import ProductsPage from "../views/ProductsPage.astro";
-import RentingPage from "../views/RentingPage.astro";
-import ServicesPage from "../views/ServicesPage.astro";
-import LegalLayout from "../layouts/LegalLayout.astro";
-import { locales, routes, type Locale } from "../i18n";
-import type { PageId } from "../types";
+import AboutPage from "@presentation/views/AboutPage.astro";
+import HomePage from "@presentation/views/HomePage.astro";
+import ProductsPage from "@presentation/views/ProductsPage.astro";
+import RentingPage from "@presentation/views/RentingPage.astro";
+import ServicesPage from "@presentation/views/ServicesPage.astro";
+import LegalLayout from "@presentation/layouts/LegalLayout.astro";
+import { locales, routes, type Locale } from "@content/i18n";
+import type { PageId } from "@shared/types";
 
 export function getStaticPaths() {
   const pageIds = Object.keys(routes) as PageId[];

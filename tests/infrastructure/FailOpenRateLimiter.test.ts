@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import type { RateLimitDecision, RateLimiter } from "../../src/core/contact/RateLimiter";
-import { FailOpenRateLimiter } from "../../src/infrastructure/rateLimit/FailOpenRateLimiter";
+import type { RateLimitDecision, RateLimiter } from "../../src/server/core/contact/RateLimiter";
+import { FailOpenRateLimiter } from "../../src/server/infrastructure/rateLimit/FailOpenRateLimiter";
 
 function limiterReturning(decision: RateLimitDecision): RateLimiter & { consume: ReturnType<typeof vi.fn> } {
   return { consume: vi.fn(async () => decision) };

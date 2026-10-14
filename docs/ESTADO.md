@@ -34,8 +34,8 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | Bloque | Contenido |
 |--------|-----------|
 | Estructura | Inicio, Quiénes somos, Servicios, Productos, Renting, Contacto y 3 páginas legales, con las mismas URL que la web actual |
-| Idiomas | Español sin prefijo (URL de siempre) e inglés en `/en/` con URL traducidas (`/en/about-us/`, `/en/rental/`…). Selector de idioma en el menú que lleva a la misma página en el otro idioma, sin JavaScript. Todos los textos están en `src/i18n/` (ver [README](../README.md#idiomas-y-textos)) |
-| Arquitectura | Los datos del negocio solo viven en `src/data/`. Los componentes son reutilizables. El formulario sigue una arquitectura hexagonal: casos de uso en `src/core/` y adaptadores en `src/infrastructure/` |
+| Idiomas | Español sin prefijo (URL de siempre) e inglés en `/en/` con URL traducidas (`/en/about-us/`, `/en/rental/`…). Selector de idioma en el menú que lleva a la misma página en el otro idioma, sin JavaScript. Todos los textos están en `src/content/i18n/` (ver [README](../README.md#idiomas-y-textos)) |
+| Arquitectura | Los datos del negocio solo viven en `src/content/data/`. Los componentes son reutilizables. El formulario sigue una arquitectura hexagonal: casos de uso en `src/server/core/` y adaptadores en `src/server/infrastructure/` |
 | SEO | Un solo `<h1>` por página, títulos de menos de 60 caracteres y descripciones de menos de 155 (todos únicos en los dos idiomas), JSON-LD `LocalBusiness` + `BreadcrumbList` + `WebPage` traducido, `hreflang` es/en/x-default, sitemap con las 18 URL y sus alternativas, y `robots.txt` |
 | Formulario | Astro Action con validación Zod. Funciona sin JavaScript, tiene un campo trampa contra bots y conserva los datos escritos si hay un error |
 | Antiabuso | Máximo 3 envíos cada 10 min por visitante y 30 por hora en total. La IP solo se guarda como hash SHA-256. El límite se lleva en memoria o, si se configura, en Workers KV, y si KV falla se vuelve a la memoria |
@@ -77,7 +77,7 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | # | Problema | Propuesta |
 |---|----------|-----------|
 | F3 | Los límites de validación (nombre 2–100, mensaje 10–5000) están repetidos en el esquema, el HTML y los textos | Centralizarlos en una constante |
-| F4 | Algunas frases legales de `src/data/legal.ts` solo terminan bien porque el nombre legal acaba en "." | Poner la puntuación en la plantilla |
+| F4 | Algunas frases legales de `src/content/data/legal.ts` solo terminan bien porque el nombre legal acaba en "." | Poner la puntuación en la plantilla |
 | F5 | `contacto.astro` vuelve a leer el formulario dentro de un `catch` vacío (línea 41) | Registrar el error y extraer una función pura con test |
 | F8 | El módulo de consentimiento de cookies no tiene tests | Tests con Vitest simulando la librería |
 | F9 | Si guardar en KV tarda demasiado, un envío puede contarse dos veces | Documentarlo o descontarlo en la memoria |
@@ -107,7 +107,7 @@ La web actual tiene unas 17 imágenes: 1 en Inicio, 2 en Quiénes somos, 4 en Se
 | Derechos de uso | Las fotos de producto y los logotipos de STILL pueden tener restricciones de marca: confirmar con STILL qué material puede usar un distribuidor |
 | Optimizar | Usar `<Image>`/`<Picture>` de `astro:assets` con AVIF/WebP, `width`/`height` fijos y `loading="lazy"` fuera de la primera pantalla. Hay que cambiar `imageService: "passthrough"` a `"compile"` en `astro.config.mjs`, para optimizar en build sin el binding de Cloudflare Images |
 | Imagen para redes | Crear `public/og-image.jpg` (1200×630). Ya la usan Open Graph, Twitter y el JSON-LD |
-| Accesibilidad | Un texto `alt` descriptivo por imagen, guardado en `src/data/` junto al contenido |
+| Accesibilidad | Un texto `alt` descriptivo por imagen, guardado en `src/content/data/` junto al contenido |
 | Peso | Objetivo orientativo: menos de 200 KB por imagen grande |
 
 ### 2. Cambio de idioma ✅ hecho
@@ -141,7 +141,7 @@ Implementado como estaba previsto: español sin prefijo, inglés en `/en/` con U
 | A7 | Privacidad §4: hash de la IP para el límite de envíos. **Dice "anonimizado", pero según el RGPD es un dato seudonimizado** |
 | A8 | Cookies: tabla con `cc_cookie`, `__cf_bm` (si Cloudflare lo activa) y las cookies de Google Maps; se aclara que el formulario no usa cookies |
 
-La **traducción inglesa** de los tres textos (`src/i18n/en/legal.ts`) también debe revisarla la asesora (L2).
+La **traducción inglesa** de los tres textos (`src/content/i18n/en/legal.ts`) también debe revisarla la asesora (L2).
 
 También falta definir el **plazo de conservación** de los mensajes del formulario. Las guías para navegadores de la política de cookies son las de la web original y están anticuadas (mencionan Internet Explorer).
 

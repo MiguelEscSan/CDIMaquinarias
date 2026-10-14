@@ -1,0 +1,90 @@
+---
+// Consent banner + preferences modal (rendered client-side by vanilla-cookieconsent).
+import "vanilla-cookieconsent/dist/cookieconsent.css";
+---
+
+<script>
+  import { startCookieConsent } from "@shared/scripts/cookieConsent";
+
+  // Settings controls only work with JavaScript, so they start hidden.
+  document.querySelectorAll<HTMLElement>("[data-cc-settings]").forEach((el) => {
+    el.hidden = false;
+  });
+  void startCookieConsent();
+</script>
+
+<style is:global>
+  #cc-main {
+    --cc-font-family: var(--font-sans);
+    --cc-modal-border-radius: 1rem;
+    --cc-btn-border-radius: 0.5rem;
+    --cc-modal-margin: 1rem;
+    --cc-bg: #ffffff;
+    --cc-primary-color: var(--color-navy);
+    --cc-secondary-color: #475569;
+    --cc-link-color: var(--color-brand-hover);
+
+    --cc-btn-primary-bg: var(--color-brand-hover);
+    --cc-btn-primary-color: #ffffff;
+    --cc-btn-primary-border-color: var(--color-brand-hover);
+    --cc-btn-primary-hover-bg: #9a3412;
+    --cc-btn-primary-hover-color: #ffffff;
+    --cc-btn-primary-hover-border-color: #9a3412;
+
+    --cc-btn-secondary-bg: #f1f5f9;
+    --cc-btn-secondary-color: var(--color-navy);
+    --cc-btn-secondary-border-color: #cbd5e1;
+    --cc-btn-secondary-hover-bg: #e2e8f0;
+    --cc-btn-secondary-hover-color: var(--color-navy);
+    --cc-btn-secondary-hover-border-color: #94a3b8;
+
+    --cc-separator-border-color: #e2e8f0;
+    --cc-toggle-on-bg: var(--color-brand-hover);
+    --cc-toggle-off-bg: #64748b;
+    --cc-toggle-on-knob-bg: #ffffff;
+    --cc-toggle-off-knob-bg: #ffffff;
+    --cc-toggle-readonly-bg: #cbd5e1;
+    --cc-toggle-readonly-knob-bg: #ffffff;
+    --cc-toggle-readonly-knob-icon-color: #cbd5e1;
+    --cc-cookie-category-block-bg: #f8fafc;
+    --cc-cookie-category-block-border: #e2e8f0;
+    --cc-cookie-category-block-hover-bg: #f1f5f9;
+    --cc-cookie-category-block-hover-border: #cbd5e1;
+    --cc-cookie-category-expanded-block-bg: #ffffff;
+    --cc-cookie-category-expanded-block-hover-bg: #f8fafc;
+    --cc-overlay-bg: rgb(15 23 42 / 0.6);
+    --cc-footer-bg: #f8fafc;
+    --cc-footer-color: #475569;
+    --cc-footer-border-color: #e2e8f0;
+  }
+
+  #cc-main .cm__btn,
+  #cc-main .pm__btn {
+    min-height: 44px;
+    font-size: 0.9375rem;
+  }
+
+  #cc-main .cm__title,
+  #cc-main .pm__title {
+    font-weight: 800;
+  }
+
+  /* Site focus ring; the library's own focus rules are more specific. */
+  #cc-main :is(a, button, input):focus-visible {
+    outline: 2px solid var(--color-brand) !important;
+    outline-offset: 2px !important;
+  }
+
+  #cc-main a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #cc-main,
+    #cc-main * {
+      transition: none !important;
+    }
+  }
+</style>

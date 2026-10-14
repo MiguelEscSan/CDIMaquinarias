@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { KV_TIMEOUT_MS } from "../../src/config/contactLimits";
-import { DeadlineExceededError } from "../../src/core/shared/withDeadline";
+import { KV_TIMEOUT_MS } from "../../src/server/config/contactLimits";
+import { DeadlineExceededError } from "../../src/server/core/shared/withDeadline";
 import {
   KvRateLimiter,
   type KvNamespaceLike,
-} from "../../src/infrastructure/rateLimit/KvRateLimiter";
+} from "../../src/server/infrastructure/rateLimit/KvRateLimiter";
 
 interface PutCall {
   key: string;

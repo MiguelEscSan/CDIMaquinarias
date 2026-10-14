@@ -1,0 +1,68 @@
+---
+import Card from "../ui/Card.astro";
+import Icon from "../ui/Icon.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { contactInfo, emailHref, formatAddress, formatHours } from "@content/data/siteInfo";
+import { getDictionary, type Locale } from "@content/i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+
+const headingId = "contacto-datos-titulo";
+const { labels, ...header } = t.contact.details;
+const iconBox =
+  "flex size-11 items-center justify-center rounded-xl bg-orange-50 text-brand-hover ring-1 ring-orange-200";
+const linkClass =
+  "inline-flex min-h-11 items-center rounded-md font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 transition-colors duration-300 hover:text-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2";
+---
+
+<section aria-labelledby={headingId} class="bg-white py-16 sm:py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeader id={headingId} {...header} />
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <Card>
+        <div class={iconBox}><Icon name="phone" /></div>
+        <h3 class="mt-4 text-lg font-bold">{labels.phone}</h3>
+        <ul class="mt-2 flex flex-col">
+          {contactInfo.phones.map((phone) => (
+            <li>
+              <a href={phone.href} class={linkClass} aria-label={`${t.common.phoneLabels[phone.kind]}: ${phone.display}`}>
+                {phone.display}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Card>
+
+      <Card>
+        <div class={iconBox}><Icon name="mail" /></div>
+        <h3 class="mt-4 text-lg font-bold">{labels.email}</h3>
+        <a href={emailHref} class={`${linkClass} mt-2 break-all`}>{contactInfo.email}</a>
+      </Card>
+
+      <Card>
+        <div class={iconBox}><Icon name="map-pin" /></div>
+        <h3 class="mt-4 text-lg font-bold">{labels.address}</h3>
+        <address class="mt-2 text-slate-700 not-italic">{formatAddress(t.common.countryName)}</address>
+      </Card>
+
+      <Card>
+        <div class={iconBox}><Icon name="clock" /></div>
+        <h3 class="mt-4 text-lg font-bold">{labels.hours}</h3>
+        <dl class="mt-2 flex flex-col gap-2 text-slate-700">
+          {contactInfo.hours.map((entry) => (
+            <div>
+              <dt class="text-sm">{t.common.hours[entry.id]}</dt>
+              <dd class="font-semibold text-slate-900">{formatHours(entry, t.common.hours.closed)}</dd>
+            </div>
+          ))}
+        </dl>
+      </Card>
+    </div>
+  </div>
+</section>

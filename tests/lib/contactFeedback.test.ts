@@ -4,14 +4,14 @@ import {
   ContactDeliveryTimeoutError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
-} from "../../src/core/contact/errors";
+} from "../../src/server/core/contact/errors";
 import {
   contactErrorFeedback,
   contactFailureFor,
   localizeFieldErrors,
-} from "../../src/lib/contactFeedback";
-import { getDictionary } from "../../src/i18n";
-import { primaryPhone } from "../../src/data/siteInfo";
+} from "../../src/presentation/views/contactFeedback";
+import { getDictionary } from "../../src/content/i18n";
+import { primaryPhone } from "../../src/content/data/siteInfo";
 
 const es = getDictionary("es").contact.form;
 

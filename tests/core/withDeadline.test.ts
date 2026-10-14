@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { DeadlineExceededError, withDeadline } from "../../src/core/shared/withDeadline";
+import { DeadlineExceededError, withDeadline } from "../../src/server/core/shared/withDeadline";
 
 describe("withDeadline", () => {
   beforeEach(() => {

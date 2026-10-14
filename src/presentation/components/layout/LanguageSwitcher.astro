@@ -1,0 +1,80 @@
+---
+// Dropdown listing the same page in every language. Works without JS (<details>); a small script closes it on outside click or Escape.
+import Icon from "../ui/Icon.astro";
+import { alternatesFor, getDictionary, localeMeta, type Locale } from "@content/i18n";
+import type { PageId } from "@shared/types";
+
+interface Props {
+  locale: Locale;
+  pageId: PageId;
+  /** "compact" shows language codes (header); "full" shows language names (mobile menu). */
+  variant?: "compact" | "full";
+  /** Render as a navigation landmark (false when nested in another nav). */
+  landmark?: boolean;
+  class?: string;
+}
+
+const { locale, pageId, variant = "compact", landmark = true, class: className = "" } = Astro.props;
+const t = getDictionary(locale).common.language;
+const Tag = landmark ? "nav" : "div";
+const items = alternatesFor(pageId).map((alt) => ({
+  ...alt,
+  code: alt.locale.toUpperCase(),
+  name: localeMeta[alt.locale].label,
+  lang: localeMeta[alt.locale].htmlLang,
+  current: alt.locale === locale,
+}));
+const currentItem = items.find((item) => item.current);
+
+const compact = variant === "compact";
+const triggerClass = compact
+  ? "inline-flex min-h-11 items-center gap-2 rounded-md px-3 font-mono text-xs font-semibold tracking-wider"
+  : "flex min-h-12 w-full items-center justify-between gap-2 rounded-lg px-3 text-base font-semibold";
+const optionClass =
+  "flex min-h-11 items-center rounded-lg px-3 text-sm font-semibold text-slate-700 transition-colors duration-300 hover:bg-slate-50 hover:text-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500";
+---
+
+<Tag aria-label={t.switcherLabel} role={landmark ? undefined : "group"} class={className}>
+  <details class="group relative" data-lang-switcher>
+    <summary
+      class={`${triggerClass} cursor-pointer list-none border border-slate-300 text-slate-900 transition-colors duration-300 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden`}
+    >
+      <span aria-hidden="true">{compact ? currentItem?.code : currentItem?.name}</span>
+      <span class="sr-only">
+        {t.switcherLabel}: <span lang={currentItem?.lang}>{currentItem?.name}</span>
+      </span>
+      <Icon name="arrow" size={14} class="rotate-90 transition-transform duration-300 group-open:-rotate-90" />
+    </summary>
+    <ul
+      class={`absolute ${compact ? "right-0" : "left-0 right-0"} z-50 mt-2 min-w-40 rounded-xl border border-slate-200 bg-white p-1 shadow-xl`}
+    >
+      {
+        items.map((item) => (
+          <li>
+            {item.current ? (
+              <span class={`${optionClass} text-brand-hover`} aria-current="true">
+                <span lang={item.lang}>{item.name}</span>
+                <span class="sr-only">({t.current})</span>
+              </span>
+            ) : (
+              <a href={item.path} hreflang={item.hreflang} lang={item.lang} class={optionClass}>
+                <span lang={item.lang}>{item.name}</span>
+              </a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</Tag>
+
+<script>
+  document.querySelectorAll<HTMLDetailsElement>("[data-lang-switcher]").forEach((root) => {
+    document.addEventListener("click", (event) => {
+      if (root.open && !root.contains(event.target as Node)) root.open = false;
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") root.open = false;
+    });
+  });
+</script>

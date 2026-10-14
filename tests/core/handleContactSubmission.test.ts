@@ -1,17 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
-import type { ContactMessage } from "../../src/core/contact/ContactMessage";
-import type { MailSender, OutgoingEmail } from "../../src/core/contact/MailSender";
-import type { RateLimitDecision, RateLimiter } from "../../src/core/contact/RateLimiter";
+import type { ContactMessage } from "../../src/server/core/contact/ContactMessage";
+import type { MailSender, OutgoingEmail } from "../../src/server/core/contact/MailSender";
+import type { RateLimitDecision, RateLimiter } from "../../src/server/core/contact/RateLimiter";
 import {
   ContactDeliveryTimeoutError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
-} from "../../src/core/contact/errors";
+} from "../../src/server/core/contact/errors";
 import {
   GLOBAL_RATE_LIMIT_KEY,
   handleContactSubmission,
   type ContactSubmissionDeps,
-} from "../../src/core/contact/handleContactSubmission";
+} from "../../src/server/core/contact/handleContactSubmission";
 
 class FakeLimiter implements RateLimiter {
   keys: string[] = [];

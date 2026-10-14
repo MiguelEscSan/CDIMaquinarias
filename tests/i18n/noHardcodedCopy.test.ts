@@ -3,10 +3,10 @@ import { join, relative } from "node:path";
 import { parse } from "@astrojs/compiler-rs";
 import { describe, expect, it } from "vitest";
 
-// Guards the i18n rule: user-visible copy lives in src/i18n, never as literals in markup.
+// Guards the i18n rule: user-visible copy lives in src/content/i18n, never as literals in markup.
 // Checks text nodes and human-readable attributes of every .astro file under these folders.
 
-const ROOTS = ["src/components", "src/views", "src/layouts", "src/pages"];
+const ROOTS = ["src/presentation/components", "src/presentation/views", "src/presentation/layouts", "src/pages"];
 const READABLE_ATTRIBUTES = new Set(["aria-label", "aria-description", "title", "alt", "placeholder", "label"]);
 /** Words allowed as literals (brand names, symbols). */
 const ALLOWLIST = new Set(["STILL", "CDI"]);

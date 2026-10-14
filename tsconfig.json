@@ -1,5 +1,14 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@presentation/*": ["src/presentation/*"],
+      "@server/*": ["src/server/*"],
+      "@content/*": ["src/content/*"],
+      "@shared/*": ["src/shared/*"]
+    }
+  },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
 }

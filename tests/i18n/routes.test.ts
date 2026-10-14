@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { defaultLocale, isLocale, locales, resolveLocale } from "../../src/i18n/config";
-import { routes } from "../../src/i18n/routes";
+import { defaultLocale, isLocale, locales, resolveLocale } from "../../src/content/i18n/config";
+import { routes } from "../../src/content/i18n/routes";
 import {
   alternatesFor,
   getLocaleFromUrl,
   hreflangAlternates,
   localizedPath,
   pageIdFromPath,
-} from "../../src/i18n";
+} from "../../src/content/i18n";
 
 const pageIds = Object.keys(routes) as (keyof typeof routes)[];
 

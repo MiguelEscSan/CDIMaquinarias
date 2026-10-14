@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { getDictionary, locales } from "../../src/i18n";
-import { contactInfo, primaryPhone } from "../../src/data/siteInfo";
+import { getDictionary, locales } from "../../src/content/i18n";
+import { contactInfo, primaryPhone } from "../../src/content/data/siteInfo";
 
 type Tree = unknown;
 

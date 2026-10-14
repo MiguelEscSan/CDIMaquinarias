@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseInlineLinks } from "../../src/lib/inlineLinks";
+import { parseInlineLinks } from "../../src/shared/lib/inlineLinks";
 
 describe("parseInlineLinks", () => {
   it("returns plain text as a single segment", () => {
