@@ -1,5 +1,4 @@
 ---
-import Icon from "../ui/Icon.astro";
 import type { FaqItem } from "@shared/types";
 
 interface Props {
@@ -12,23 +11,25 @@ interface Props {
 const { id, title, items } = Astro.props;
 ---
 
-<section aria-labelledby={`${id}-titulo`} class="flex flex-col gap-6">
-  <h2 id={`${id}-titulo`} class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+<section aria-labelledby={`${id}-titulo`} class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-14">
+  <h2
+    id={`${id}-titulo`}
+    class="text-3xl leading-none font-extrabold tracking-tight text-slate-900 uppercase sm:text-4xl lg:text-5xl"
+  >
     {title}
   </h2>
-  <div class="flex flex-col divide-y divide-slate-200 border-y border-slate-200">
+  <div class="flex flex-col border-y border-slate-200">
     {
       items.map((item) => (
-        <details class="group py-5" data-faq>
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden">
-            <h3 class="text-lg font-bold">{item.question}</h3>
-            <Icon
-              name="arrow"
-              size={20}
-              class="shrink-0 text-brand-hover transition-transform duration-300 group-open:rotate-90 motion-reduce:transition-none"
-            />
+        <details class="group border-b border-slate-200 last:border-b-0" data-faq>
+          <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 rounded-md py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden">
+            <h3 class="text-lg font-bold text-slate-900 sm:text-xl">{item.question}</h3>
+            <span aria-hidden="true" class="relative size-5 shrink-0">
+              <span class="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-brand-hover"></span>
+              <span class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-brand-hover transition-transform duration-300 group-open:rotate-90 motion-reduce:transition-none"></span>
+            </span>
           </summary>
-          <p class="mt-3 leading-relaxed text-slate-700">{item.answer}</p>
+          <p class="max-w-prose pb-6 leading-relaxed text-slate-600">{item.answer}</p>
         </details>
       ))
     }

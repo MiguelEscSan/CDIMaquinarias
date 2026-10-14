@@ -17,7 +17,7 @@ const rentingCopy = getDictionary(locale).rental;
   <ul class="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-8">
     {rentingCategories.map((category) => (
       <Card as="li" interactive class="group gap-4">
-        <div class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl">
+        <div class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-slate-100">
           <img
             src={`/images/renting/${category.slug}.png`}
             alt=""
