@@ -81,11 +81,6 @@ const home = {
     categoriesTitle: "Maquinaria con la que trabajamos",
     productsCtaLabel: "Ver productos STILL",
   },
-  contactBand: {
-    eyebrow: "Contacto",
-    title: "Hable con nuestro equipo",
-    subtitle: "Llámenos o escríbanos y le atenderemos para preparar su presupuesto.",
-  },
 };
 
 const about: AboutContent = {

@@ -72,11 +72,6 @@ const home: Dictionary["home"] = {
     categoriesTitle: "Maschinen, mit denen wir arbeiten",
     productsCtaLabel: "STILL-Produkte ansehen",
   },
-  contactBand: {
-    eyebrow: "Kontakt",
-    title: "Sprechen Sie mit unserem Team",
-    subtitle: "Rufen Sie uns an oder schreiben Sie uns, und wir helfen Ihnen bei Ihrem Angebot.",
-  },
 };
 
 const about: Dictionary["about"] = {

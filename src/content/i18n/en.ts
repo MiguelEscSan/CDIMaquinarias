@@ -72,11 +72,6 @@ const home: Dictionary["home"] = {
     categoriesTitle: "Machinery we work with",
     productsCtaLabel: "See STILL products",
   },
-  contactBand: {
-    eyebrow: "Contact",
-    title: "Talk to our team",
-    subtitle: "Call or write to us and we will help you prepare your quote.",
-  },
 };
 
 const about: Dictionary["about"] = {
