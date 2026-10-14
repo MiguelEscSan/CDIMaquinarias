@@ -27,7 +27,7 @@ const FEATURED_COUNT = 2;
           class:list={[
             "flex flex-col gap-4 rounded-2xl border p-6 sm:p-8",
             featured
-              ? "bg-navy border-navy text-white md:col-span-3 sm:p-10"
+              ? "relative isolate overflow-hidden bg-navy border-navy text-white md:col-span-3 sm:p-10 before:absolute before:inset-0 before:-z-10 before:bg-grid before:opacity-50 before:content-['']"
               : "border-slate-200 bg-white shadow-sm md:col-span-2",
           ]}
         >
