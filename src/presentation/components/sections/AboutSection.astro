@@ -39,12 +39,17 @@ const sectionId = (index: number) => `nosotros-${index}-titulo`;
     </p>
 
     {airConditioning && (
-      <section aria-labelledby={sectionId(1)} class="flex flex-col gap-5">
-        <h2 id={sectionId(1)} class="flex items-center gap-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-          <Icon name="snowflake" size={32} class="text-brand-hover" />
-          {airConditioning.title}
-        </h2>
-        {airConditioning.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
+      <section aria-labelledby={sectionId(1)} class="grid items-center gap-10 lg:grid-cols-2">
+        <div class="order-1 flex flex-col gap-5 lg:order-2">
+          <h2 id={sectionId(1)} class="text-3xl font-extrabold tracking-tight sm:text-4xl">{airConditioning.title}</h2>
+          {airConditioning.paragraphs.map((p) => <p class="leading-relaxed text-slate-700 sm:text-lg">{p}</p>)}
+        </div>
+        <div
+          aria-hidden="true"
+          class="order-2 flex aspect-[4/3] w-full items-center justify-center rounded-3xl bg-slate-900 shadow-lg lg:order-1"
+        >
+          <Icon name="snowflake" size={120} class="text-brand-hover" />
+        </div>
       </section>
     )}
   </div>
