@@ -925,6 +925,15 @@ const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
       { question: "¿Venden equipos nuevos?", answer: "Sí, le asesoramos en la elección del equipo según el espacio disponible." },
     ],
     ctaLabel: "Solicitar revisión",
+    bandTitle: "Aire acondicionado y climatización",
+    pillars: [
+      { title: "Montaje", text: "Instalamos equipos adaptados al espacio disponible y a la carga térmica de cada local." },
+      { title: "Reparación", text: "Localizamos la avería y le indicamos el coste antes de intervenir, sin sorpresas." },
+      { title: "Mantenimiento", text: "Revisiones periódicas que mantienen el sistema eficiente y previenen paradas." },
+    ],
+    spaces: ["Oficinas", "Naves industriales", "Locales comerciales"],
+    ctaTitle: "¿Su sistema necesita atención?",
+    ctaText: "Cuéntenos qué equipo tiene y le damos una respuesta cuanto antes.",
   },
 };
 
