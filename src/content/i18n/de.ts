@@ -847,6 +847,7 @@ const servicePages: Dictionary["servicePages"] = {
       { question: "Kommen Sie auch zu mir in den Betrieb?", answer: "Ja, wir bieten Service vor Ort sowie Arbeiten in der Werkstatt an." },
     ],
     ctaLabel: "Prüfung anfragen",
+    bandTitle: "Ihr Gerät, immer einsatzbereit",
     ctaTitle: "Braucht Ihr Gerät Aufmerksamkeit?",
     ctaText: "Schildern Sie uns den Schaden oder die Wartung, die Sie benötigen, und wir melden uns so schnell wie möglich.",
   },

@@ -891,6 +891,7 @@ const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
       { question: "¿Pueden acudir a mis instalaciones?", answer: "Sí, ofrecemos servicio in situ además del trabajo en taller." },
     ],
     ctaLabel: "Solicitar revisión",
+    bandTitle: "Su equipo, siempre operativo",
     ctaTitle: "¿Su equipo necesita atención?",
     ctaText: "Cuéntenos la avería o el mantenimiento que necesita y le damos una respuesta cuanto antes.",
   },
