@@ -1,5 +1,6 @@
 ---
 import Icon from "../ui/Icon.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
 import { getServices } from "@content/data/services";
 import { getDictionary, type Locale } from "@content/i18n";
 
@@ -9,27 +10,65 @@ interface Props {
 
 const { locale } = Astro.props;
 const services = getServices(locale);
-const { moreLabel } = getDictionary(locale).home.services;
+const { eyebrow, title, subtitle, moreLabel } = getDictionary(locale).home.services;
+// The first two services are the featured ones (reparación and ventas).
+const FEATURED_COUNT = 2;
 ---
 
-<div class="bg-white py-16 sm:py-20">
-  <ul class="mx-auto grid max-w-5xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
-    {services.map((service) => (
-      <li class="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-        <div class="flex size-14 items-center justify-center rounded-xl bg-orange-50 text-brand-hover ring-1 ring-orange-200">
-          <Icon name={service.icon} size={28} />
-        </div>
-        <h2 class="text-2xl font-extrabold tracking-tight">{service.title}</h2>
-        <p class="leading-relaxed text-slate-700">{service.description}</p>
-        <a
-          href={service.href}
-          class="mt-auto inline-flex min-h-11 items-center gap-2 self-start rounded-md font-bold text-brand-hover underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
-          aria-label={`${moreLabel}: ${service.title}`}
+<div class="bg-slate-50 py-16 sm:py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
+  </div>
+  <ul class="mx-auto mt-12 grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-6 lg:px-8">
+    {services.map((service, index) => {
+      const featured = index < FEATURED_COUNT;
+      return (
+        <li
+          class:list={[
+            "flex flex-col gap-4 rounded-2xl border p-6 sm:p-8",
+            featured
+              ? "bg-navy border-navy text-white md:col-span-3 sm:p-10"
+              : "border-slate-200 bg-white shadow-sm md:col-span-2",
+          ]}
         >
-          {moreLabel}
-          <Icon name="arrow" size={18} />
-        </a>
-      </li>
-    ))}
+          <div
+            class:list={[
+              "flex size-14 items-center justify-center rounded-xl ring-1",
+              featured ? "bg-brand text-white ring-transparent" : "bg-orange-50 text-brand-hover ring-orange-200",
+            ]}
+          >
+            <Icon name={service.icon} size={28} />
+          </div>
+          <h2 class:list={["font-extrabold tracking-tight", featured ? "text-3xl text-white" : "text-2xl text-slate-900"]}>{service.title}</h2>
+          <p class:list={["leading-relaxed", featured ? "text-slate-300" : "text-slate-700"]}>{service.description}</p>
+          {service.features.length > 0 && (
+            <ul
+              class:list={[
+                "mt-2 flex flex-col gap-2 border-t pt-5 text-sm",
+                featured ? "border-slate-700 text-slate-200" : "border-slate-200 text-slate-700",
+              ]}
+            >
+              {service.features.map((feature) => (
+                <li class="flex items-start gap-2">
+                  <Icon name="check" size={18} strokeWidth={2.25} class={featured ? "mt-0.5 text-orange-300" : "mt-0.5 text-brand-hover"} />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          )}
+          <a
+            href={service.href}
+            class:list={[
+              "mt-auto inline-flex min-h-11 items-center gap-2 self-start rounded-md font-bold underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+              featured ? "text-orange-300 focus-visible:ring-offset-navy" : "text-brand-hover",
+            ]}
+            aria-label={`${moreLabel}: ${service.title}`}
+          >
+            {moreLabel}
+            <Icon name="arrow" size={18} />
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </div>
