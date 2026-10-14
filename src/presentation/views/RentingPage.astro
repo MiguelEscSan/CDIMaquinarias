@@ -17,23 +17,27 @@ const contactHref = localizedPath("contact", locale);
 ---
 
 <PageLayout page={getPage("renting", locale)} locale={locale}>
-  <section class="bg-white py-16 sm:py-20">
-    <div class="mx-auto flex max-w-3xl flex-col gap-5 px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{copy.intro.title}</h2>
-      {copy.intro.paragraphs.map((paragraph) => (
-        <p class="leading-relaxed text-slate-700">{paragraph}</p>
-      ))}
+  <section class="bg-slate-900 py-16 text-white sm:py-20">
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:items-end lg:gap-14 lg:px-8">
+      <h2 class="text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">{copy.intro.title}</h2>
+      <div class="flex flex-col gap-4">
+        {copy.intro.paragraphs.map((paragraph) => (
+          <p class="leading-relaxed text-slate-300">{paragraph}</p>
+        ))}
+      </div>
     </div>
   </section>
 
   <RentingGrid locale={locale} />
 
   <section class="bg-white py-16 sm:py-20">
-    <div class="mx-auto flex max-w-3xl flex-col gap-12 px-4 sm:px-6 lg:px-8">
-      <FaqSection id="renting" title={copy.faqTitle} items={copy.faq} />
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
+      <div class="rounded-lg border border-slate-200 bg-white p-6 sm:p-10">
+        <FaqSection id="renting" title={copy.faqTitle} items={copy.faq} />
+      </div>
 
-      <div class="flex flex-col items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
-        <h2 class="text-xl font-bold">{copy.ctaTitle}</h2>
+      <div class="flex flex-col gap-6 rounded-lg border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-10">
+        <h2 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{copy.ctaTitle}</h2>
         <Button href={contactHref} size="lg">
           {copy.ctaLabel}
           <Icon name="arrow" size={18} />
