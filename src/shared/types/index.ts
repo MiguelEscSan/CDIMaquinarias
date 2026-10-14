@@ -130,7 +130,17 @@ export type PageId =
   | "contact"
   | "legalNotice"
   | "privacy"
-  | "cookies";
+  | "cookies"
+  | ServiceId;
+
+/** Translatable copy of one service detail page (process and FAQ). */
+export interface ServicePageCopy {
+  processTitle: string;
+  process: { title: string; text: string }[];
+  faqTitle: string;
+  faq: { question: string; answer: string }[];
+  ctaLabel: string;
+}
 
 /** Translatable copy of one page. */
 export interface PageCopy {

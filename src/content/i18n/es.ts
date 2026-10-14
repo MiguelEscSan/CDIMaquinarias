@@ -5,7 +5,17 @@ import { address, contactInfo, googlePolicyUrl, legalInfo, primaryPhone, siteHos
 import { cookies as cookieCopy } from "./consent/es";
 import { routes } from "./routes";
 import type { RentingSlug } from "../data/renting";
-import type { AboutContent, LegalPageId, LegalSection, PageCopy, PageId, ProductsContent, ServiceCopy, ServiceId } from "@shared/types";
+import type {
+  AboutContent,
+  LegalPageId,
+  LegalSection,
+  PageCopy,
+  PageId,
+  ProductsContent,
+  ServiceCopy,
+  ServiceId,
+  ServicePageCopy,
+} from "@shared/types";
 
 const common = {
   skipToContent: "Saltar al contenido",
@@ -192,7 +202,6 @@ const products: ProductsContent = {
 
 const rental: {
   categories: Record<RentingSlug, string>;
-  imageAlt: string;
   moreInfoLabel: string;
   moreInfoAriaLabel: (name: string) => string;
 } = {
@@ -205,7 +214,6 @@ const rental: {
     "apiladoras-electricas": "Apiladoras eléctricas",
     "transpaleta-electrica": "Transpaleta eléctrica",
   },
-  imageAlt: "Operario conduciendo una carretilla STILL de plataforma con jaula en un patio de carga",
   moreInfoLabel: "Más información",
   moreInfoAriaLabel: (name) => `Solicitar más información sobre ${name}`,
 };
@@ -814,11 +822,124 @@ const seo: { pages: Record<PageId, PageCopy> } = {
       label: "Política de cookies",
       heading: "Política de cookies",
     },
+    "reparacion-mantenimiento": {
+      title: "Reparación de carretillas en Las Palmas | CDI",
+      description:
+        "Reparación y mantenimiento de carretillas y maquinaria industrial en Gran Canaria, en taller o in situ, con técnicos especializados.",
+      label: "Reparación y mantenimiento",
+      heading: "Reparación y mantenimiento",
+      intro: "Mantenga su maquinaria operativa y segura con un servicio técnico cercano.",
+    },
+    "venta-maquinaria": {
+      title: "Venta de carretillas STILL en Las Palmas | CDI",
+      description:
+        "Venta de carretillas STILL y maquinaria industrial en Gran Canaria. Le asesoramos para elegir el equipo adecuado a su actividad.",
+      label: "Ventas",
+      heading: "Venta de maquinaria",
+      intro: "Le ayudamos a elegir el equipo adecuado para su actividad, con asesoramiento comercial personalizado.",
+    },
+    "alquiler-flota": {
+      title: "Alquiler de carretillas en Gran Canaria | CDI",
+      description:
+        "Alquiler de carretillas y maquinaria industrial a corto, medio y largo plazo en Las Palmas, con flota flexible para picos de trabajo.",
+      label: "Alquiler",
+      heading: "Alquiler de maquinaria",
+      intro: "Flota flexible para proyectos puntuales, picos de trabajo o necesidades a largo plazo.",
+    },
+    "asesoramiento-especializado": {
+      title: "Asesoramiento en maquinaria industrial | CDI",
+      description:
+        "Asesoramiento especializado para elegir, gestionar y mantener maquinaria industrial en Gran Canaria, con criterio técnico.",
+      label: "Asesoramiento",
+      heading: "Asesoramiento especializado",
+      intro: "Criterio técnico para decidir sobre su maquinaria con información clara.",
+    },
+    climatizacion: {
+      title: "Aire acondicionado y climatización | CDI",
+      description:
+        "Mantenimiento, reparación y venta de sistemas de aire acondicionado y climatización en Las Palmas de Gran Canaria.",
+      label: "Climatización",
+      heading: "Climatización y aire acondicionado",
+      intro: "Entornos de trabajo cómodos para que su equipo rinda al máximo.",
+    },
+  },
+};
+
+const servicePages: Record<ServiceId, ServicePageCopy> = {
+  "reparacion-mantenimiento": {
+    processTitle: "Cómo trabajamos",
+    process: [
+      { title: "Diagnóstico", text: "Revisamos la avería o el estado del equipo, en taller o en sus instalaciones." },
+      { title: "Presupuesto", text: "Le indicamos qué hace falta reparar y cuánto costará, antes de empezar." },
+      { title: "Reparación", text: "Ejecutamos el trabajo y le devolvemos el equipo en condiciones óptimas." },
+    ],
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      { question: "¿Reparan maquinaria de otras marcas?", answer: "Sí. Trabajamos con equipos multimarca, además de la gama STILL." },
+      { question: "¿Pueden acudir a mis instalaciones?", answer: "Sí, ofrecemos servicio in situ además del trabajo en taller." },
+    ],
+    ctaLabel: "Solicitar revisión",
+  },
+  "venta-maquinaria": {
+    processTitle: "Cómo trabajamos",
+    process: [
+      { title: "Análisis de necesidades", text: "Hablamos de su actividad, su espacio de trabajo y su volumen de carga." },
+      { title: "Propuesta", text: "Le presentamos las opciones más adecuadas y un presupuesto detallado." },
+      { title: "Entrega", text: "Preparamos el equipo, se lo entregamos y le explicamos su uso." },
+    ],
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      { question: "¿Tienen maquinaria de segunda mano?", answer: "Consúltenos por la disponibilidad actual, porque el stock cambia con frecuencia." },
+      { question: "¿Pueden orientarme sobre financiación?", answer: "Le informamos de las opciones disponibles en cada caso." },
+    ],
+    ctaLabel: "Pedir presupuesto",
+  },
+  "alquiler-flota": {
+    processTitle: "Cómo trabajamos",
+    process: [
+      { title: "Elección del equipo", text: "Nos indica el tipo de máquina y el plazo que necesita." },
+      { title: "Condiciones", text: "Le confirmamos disponibilidad, tarifas y condiciones del alquiler." },
+      { title: "Entrega", text: "Llevamos el equipo a su centro de trabajo y le damos una formación básica." },
+    ],
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      { question: "¿Cuál es la duración mínima?", answer: "Depende del equipo y del proyecto. Alquilamos a corto, medio y largo plazo." },
+      { question: "¿Incluye mantenimiento?", answer: "Consúltenos las condiciones de cada contrato." },
+    ],
+    ctaLabel: "Consultar disponibilidad",
+  },
+  "asesoramiento-especializado": {
+    processTitle: "Cómo trabajamos",
+    process: [
+      { title: "Consulta inicial", text: "Entendemos su situación, su flota actual y sus objetivos." },
+      { title: "Análisis", text: "Revisamos las opciones técnicas y económicas con datos concretos." },
+      { title: "Recomendación", text: "Le entregamos una propuesta clara y le acompañamos en la puesta en marcha." },
+    ],
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      { question: "¿Es un servicio de pago?", answer: "Le informamos de las condiciones en la primera consulta." },
+      { question: "¿Solo asesoran sobre equipos STILL?", answer: "Asesoramos sobre la maquinaria que mejor se adapte a su necesidad." },
+    ],
+    ctaLabel: "Concertar una consulta",
+  },
+  climatizacion: {
+    processTitle: "Cómo trabajamos",
+    process: [
+      { title: "Revisión", text: "Comprobamos el estado del sistema y localizamos el problema." },
+      { title: "Presupuesto", text: "Le detallamos la reparación o el mantenimiento necesario antes de actuar." },
+      { title: "Puesta a punto", text: "Dejamos el sistema funcionando y le indicamos el mantenimiento recomendado." },
+    ],
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      { question: "¿Hacen mantenimiento preventivo?", answer: "Sí, planificamos revisiones periódicas para evitar averías." },
+      { question: "¿Venden equipos nuevos?", answer: "Sí, le asesoramos en la elección del equipo según el espacio disponible." },
+    ],
+    ctaLabel: "Solicitar revisión",
   },
 };
 
 export const es = {
-  common, home, about, services, products, rental, contact, legal, cookies: cookieCopy, seo,
+  common, home, about, services, servicePages, products, rental, contact, legal, cookies: cookieCopy, seo,
 };
 
 export type Dictionary = typeof es;

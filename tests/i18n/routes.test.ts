@@ -12,9 +12,24 @@ import {
 const pageIds = Object.keys(routes) as (keyof typeof routes)[];
 
 describe("route map", () => {
-  it("covers the nine site pages", () => {
+  it("covers the nine site pages and the five service pages", () => {
     expect(pageIds.sort()).toEqual(
-      ["about", "contact", "cookies", "home", "legalNotice", "privacy", "products", "renting", "services"].sort(),
+      [
+        "about",
+        "alquiler-flota",
+        "asesoramiento-especializado",
+        "climatizacion",
+        "contact",
+        "cookies",
+        "home",
+        "legalNotice",
+        "privacy",
+        "products",
+        "renting",
+        "reparacion-mantenimiento",
+        "services",
+        "venta-maquinaria",
+      ].sort(),
     );
   });
 
@@ -128,8 +143,10 @@ describe("pageIdFromPath", () => {
 describe("page files", () => {
   it("are served for every localized route", async () => {
     // Static pages come from the catch-all route; contact has its own files (server-rendered form).
+    // Service pages are rendered by the catch-all through the isServiceId guard.
     const { existsSync, readFileSync } = await import("node:fs");
     const catchAll = readFileSync("src/pages/[...slug].astro", "utf8");
+    const serviceIds = ["reparacion-mantenimiento", "venta-maquinaria", "alquiler-flota", "asesoramiento-especializado", "climatizacion"];
     for (const id of pageIds) {
       for (const locale of locales) {
         const path = routes[id][locale];
@@ -138,6 +155,8 @@ describe("page files", () => {
         } else if (id === "contact") {
           const file = `src/pages${path.replace(/\/$/, "")}.astro`;
           expect(existsSync(file), `${id}/${locale}: ${file}`).toBe(true);
+        } else if (serviceIds.includes(id)) {
+          expect(catchAll.includes("isServiceId(pageId)"), `${id}/${locale}`).toBe(true);
         } else {
           expect(catchAll.includes(`pageId === "${id}"`), `${id}/${locale}`).toBe(true);
         }

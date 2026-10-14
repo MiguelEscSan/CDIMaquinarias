@@ -1,4 +1,4 @@
-import type { Service, ServiceDefinition } from "@shared/types";
+import type { PageId, Service, ServiceDefinition, ServiceId } from "@shared/types";
 import { getDictionary, localizedPath, type Locale } from "../i18n";
 
 export const serviceDefinitions: ServiceDefinition[] = [
@@ -8,6 +8,13 @@ export const serviceDefinitions: ServiceDefinition[] = [
   { id: "asesoramiento-especializado", slug: "asesoramiento", icon: "clipboard" },
   { id: "climatizacion", slug: "climatizacion-y-aire-acondicionado", icon: "snowflake" },
 ];
+
+export const serviceIds: ServiceId[] = serviceDefinitions.map(({ id }) => id);
+
+/** True for the service detail pages, which share the service ids as page ids. */
+export function isServiceId(id: PageId): id is ServiceId {
+  return (serviceIds as PageId[]).includes(id);
+}
 
 export function getServices(locale: Locale): Service[] {
   const { items } = getDictionary(locale).services;

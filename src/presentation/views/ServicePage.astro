@@ -1,0 +1,80 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon.astro";
+import { getPage } from "@content/data/pages";
+import { getServices } from "@content/data/services";
+import { getDictionary, localizedPath, type Locale } from "@content/i18n";
+import type { ServiceId } from "@shared/types";
+
+interface Props {
+  serviceId: ServiceId;
+  locale: Locale;
+}
+
+const { serviceId, locale } = Astro.props;
+const page = getPage(serviceId, locale);
+const service = getServices(locale).find((item) => item.id === serviceId)!;
+const copy = getDictionary(locale).servicePages[serviceId];
+const contactHref = localizedPath("contact", locale);
+---
+
+<PageLayout page={page} locale={locale}>
+  <div class="bg-white py-16 sm:py-20">
+    <div class="mx-auto flex max-w-3xl flex-col gap-14 px-4 sm:px-6 lg:px-8">
+      <section class="flex flex-col gap-6">
+        <p class="leading-relaxed text-slate-700">{service.detail}</p>
+        <ul class="grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+          {service.features.map((feature) => (
+            <li class="flex items-start gap-2">
+              <Icon name="check" size={18} strokeWidth={2.25} class="mt-0.5 text-brand-hover" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby={`${serviceId}-proceso`} class="flex flex-col gap-6">
+        <h2 id={`${serviceId}-proceso`} class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+          {copy.processTitle}
+        </h2>
+        <ol class="grid gap-6 sm:grid-cols-3">
+          {copy.process.map((step, index) => (
+            <li class="flex flex-col gap-2 rounded-2xl border border-slate-200 p-6">
+              <span class="text-sm font-bold text-brand-hover">{index + 1}</span>
+              <h3 class="text-lg font-bold">{step.title}</h3>
+              <p class="text-sm leading-relaxed text-slate-700">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section aria-labelledby={`${serviceId}-faq`} class="flex flex-col gap-6">
+        <h2 id={`${serviceId}-faq`} class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+          {copy.faqTitle}
+        </h2>
+        <div class="flex flex-col gap-6">
+          {copy.faq.map((item) => (
+            <div class="flex flex-col gap-2">
+              <h3 class="text-lg font-bold">{item.question}</h3>
+              <p class="leading-relaxed text-slate-700">{item.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="flex flex-wrap gap-4">
+        <Button href={contactHref} size="lg">
+          {copy.ctaLabel}
+          <Icon name="arrow" size={18} />
+        </Button>
+        {service.link && (
+          <Button href={service.link.href} ariaLabel={service.link.ariaLabel} variant="secondary" size="lg">
+            {service.link.label}
+            <Icon name="arrow" size={18} />
+          </Button>
+        )}
+      </div>
+    </div>
+  </div>
+</PageLayout>

@@ -188,7 +188,6 @@ const rental: Dictionary["rental"] = {
     "apiladoras-electricas": "Electric stackers",
     "transpaleta-electrica": "Electric pallet truck",
   },
-  imageAlt: "Operator driving a STILL order picker with a cage platform in a loading yard",
   moreInfoLabel: "More information",
   moreInfoAriaLabel: (name) => `Request more information about ${name}`,
 };
@@ -791,9 +790,122 @@ const seo: Dictionary["seo"] = {
       label: "Cookie policy",
       heading: "Cookie policy",
     },
+    "reparacion-mantenimiento": {
+      title: "Forklift repair in Las Palmas | CDI",
+      description:
+        "Repair and maintenance of forklifts and industrial machinery in Gran Canaria, in our workshop or on site, by specialist technicians.",
+      label: "Repair and maintenance",
+      heading: "Repair and maintenance",
+      intro: "Keep your machinery running safely with a local technical service.",
+    },
+    "venta-maquinaria": {
+      title: "STILL forklift sales in Las Palmas | CDI",
+      description:
+        "Sales of STILL forklifts and industrial machinery in Gran Canaria. We advise you on the right equipment for your business.",
+      label: "Sales",
+      heading: "Machinery sales",
+      intro: "We help you choose the right equipment for your business, with personalised sales advice.",
+    },
+    "alquiler-flota": {
+      title: "Forklift rental in Gran Canaria | CDI",
+      description:
+        "Short, medium and long-term rental of forklifts and industrial machinery in Las Palmas, with a flexible fleet for peak workloads.",
+      label: "Rental",
+      heading: "Machinery rental",
+      intro: "A flexible fleet for one-off projects, peak workloads or long-term needs.",
+    },
+    "asesoramiento-especializado": {
+      title: "Industrial machinery advice in Las Palmas | CDI",
+      description:
+        "Specialist advice to choose, manage and maintain industrial machinery in Gran Canaria, backed by technical expertise.",
+      label: "Advice",
+      heading: "Specialist advice",
+      intro: "Technical expertise to help you decide on your machinery with clear information.",
+    },
+    climatizacion: {
+      title: "Air conditioning and climate control | CDI",
+      description:
+        "Maintenance, repair and sales of air conditioning and climate control systems in Las Palmas de Gran Canaria.",
+      label: "Air conditioning",
+      heading: "Air conditioning and climate control",
+      intro: "Comfortable working environments so your team can perform at its best.",
+    },
+  },
+};
+
+const servicePages: Dictionary["servicePages"] = {
+  "reparacion-mantenimiento": {
+    processTitle: "How we work",
+    process: [
+      { title: "Diagnosis", text: "We check the fault or the condition of the equipment, in our workshop or at your premises." },
+      { title: "Quotation", text: "We tell you what needs repairing and what it will cost, before we start." },
+      { title: "Repair", text: "We carry out the work and return the equipment in optimal condition." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { question: "Do you repair machines from other brands?", answer: "Yes. We work with multi-brand equipment as well as the STILL range." },
+      { question: "Can you come to my premises?", answer: "Yes, we offer on-site service as well as workshop work." },
+    ],
+    ctaLabel: "Request an inspection",
+  },
+  "venta-maquinaria": {
+    processTitle: "How we work",
+    process: [
+      { title: "Needs analysis", text: "We talk about your activity, your workspace and your load volume." },
+      { title: "Proposal", text: "We present the most suitable options and a detailed quotation." },
+      { title: "Delivery", text: "We prepare the equipment, hand it over and explain how to use it." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { question: "Do you sell second-hand machinery?", answer: "Ask us about current availability, as stock changes often." },
+      { question: "Can you advise me on financing?", answer: "We will tell you about the options available in each case." },
+    ],
+    ctaLabel: "Request a quote",
+  },
+  "alquiler-flota": {
+    processTitle: "How we work",
+    process: [
+      { title: "Choosing the equipment", text: "You tell us the type of machine and the period you need." },
+      { title: "Terms", text: "We confirm availability, rates and the rental conditions." },
+      { title: "Delivery", text: "We take the equipment to your workplace and give you basic training." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { question: "What is the minimum rental period?", answer: "It depends on the equipment and the project. We rent short, medium and long term." },
+      { question: "Does it include maintenance?", answer: "Ask us about the terms of each contract." },
+    ],
+    ctaLabel: "Check availability",
+  },
+  "asesoramiento-especializado": {
+    processTitle: "How we work",
+    process: [
+      { title: "Initial consultation", text: "We understand your situation, your current fleet and your goals." },
+      { title: "Analysis", text: "We review the technical and financial options with concrete data." },
+      { title: "Recommendation", text: "We give you a clear proposal and support you through implementation." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { question: "Is this a paid service?", answer: "We explain the terms at the first consultation." },
+      { question: "Do you only advise on STILL equipment?", answer: "We advise on the machinery that best fits your needs." },
+    ],
+    ctaLabel: "Book a consultation",
+  },
+  climatizacion: {
+    processTitle: "How we work",
+    process: [
+      { title: "Inspection", text: "We check the condition of the system and locate the problem." },
+      { title: "Quotation", text: "We detail the repair or maintenance needed before we act." },
+      { title: "Commissioning", text: "We get the system running again and recommend the upkeep it needs." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { question: "Do you offer preventive maintenance?", answer: "Yes, we schedule regular checks to prevent breakdowns." },
+      { question: "Do you sell new units?", answer: "Yes, we advise you on the unit that suits your space." },
+    ],
+    ctaLabel: "Request an inspection",
   },
 };
 
 export const en: Dictionary = {
-  common, home, about, services, products, rental, contact, legal, cookies: cookieCopy, seo,
+  common, home, about, services, servicePages, products, rental, contact, legal, cookies: cookieCopy, seo,
 };
