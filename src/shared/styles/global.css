@@ -1,7 +1,11 @@
 @import "tailwindcss";
+@import "@fontsource/barlow-semi-condensed/600.css";
+@import "@fontsource/barlow-semi-condensed/700.css";
+@import "@fontsource/barlow-semi-condensed/800.css";
 
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-heading: "Barlow Semi Condensed", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --color-brand: #ea580c;
@@ -31,7 +35,7 @@
   h2,
   h3,
   h4 {
-    @apply text-slate-900;
+    @apply font-heading text-slate-900;
     text-wrap: balance;
   }
 
