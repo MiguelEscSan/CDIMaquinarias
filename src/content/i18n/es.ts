@@ -264,7 +264,7 @@ const contact = {
   form: {
     title: "Envíenos un mensaje",
     intro: "Le responderemos lo antes posible.",
-    requiredNote: "Los campos marcados con * son obligatorios.",
+    requiredNote: "* Indica los campos obligatorios.",
     fields: {
       name: "Nombre",
       email: "Correo electrónico",

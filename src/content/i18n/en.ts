@@ -223,7 +223,7 @@ const contact: Dictionary["contact"] = {
   form: {
     title: "Send us a message",
     intro: "We will reply as soon as possible.",
-    requiredNote: "Fields marked with * are required.",
+    requiredNote: "* Indicates required fields.",
     fields: {
       name: "Name",
       email: "Email",
