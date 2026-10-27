@@ -2,7 +2,7 @@
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { directionsUrl, formatAddress, mapEmbedUrl } from "@content/data/siteInfo";
+import { contactInfo, directionsUrl, emailHref, formatAddress, mapEmbedUrl } from "@content/data/siteInfo";
 import { getDictionary, localizedPath, type Locale } from "@content/i18n";
 
 interface Props {
@@ -27,6 +27,29 @@ const { consent } = locationContent;
     <Icon name="map-pin" class="mt-0.5 text-brand-hover" />
     {formatAddress(t.common.countryName)}
   </address>
+  <ul class="flex flex-col gap-3 text-slate-700">
+    <li class="flex gap-3">
+      <Icon name="phone" class="mt-0.5 text-brand-hover" />
+      <p class="flex flex-wrap">
+        {
+          contactInfo.phones.map((phone) => (
+            <a
+              href={phone.href}
+              class="font-semibold text-slate-900 hover:text-brand-hover after:mx-2 after:content-['/'] last:after:content-none"
+            >
+              {phone.display}
+            </a>
+          ))
+        }
+      </p>
+    </li>
+    <li class="flex gap-3">
+      <Icon name="mail" class="mt-0.5 text-brand-hover" />
+      <a href={emailHref} class="font-semibold break-all text-slate-900 hover:text-brand-hover">
+        {contactInfo.email}
+      </a>
+    </li>
+  </ul>
   <div>
     <Button
       href={directionsUrl}

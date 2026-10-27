@@ -12,7 +12,7 @@ const common: Dictionary["common"] = {
   business: {
     positioning: `${stillBrand.name} dealers in Las Palmas de Gran Canaria.`,
     valueProposition:
-      "Complete solutions for businesses, including the sale, rental and repair of forklift trucks, reach trucks, stackers, pallet trucks and heavy machinery. We also specialise in installing and maintaining industrial and commercial air conditioning and climate control systems.",
+      "Complete solutions for businesses, including the sale, rental and repair of forklift trucks, reach trucks, stackers, pallet trucks and heavy machinery. We also specialise in installing and maintaining climate control systems for industrial machinery.",
     areaServed: "Gran Canaria, Canary Islands",
     catalogName: "Services",
   },
@@ -45,6 +45,7 @@ const common: Dictionary["common"] = {
   },
   footer: {
     contactHeading: "Contact",
+    socialHeading: "Social media",
     hoursHeading: "Opening hours",
     copyright: (year: number, legalName: string) => `© ${year} ${legalName}. All rights reserved.`,
   },
@@ -53,14 +54,14 @@ const common: Dictionary["common"] = {
 const home: Dictionary["home"] = {
   hero: {
     tagline: "Professionals in the sector",
-    trustChips: [`Official ${stillBrand.name} dealer`, "Multi-brand service", "Gran Canaria"],
+    trustChips: [`Official ${stillBrand.name} dealer`, "Multi-brand repairs", "Gran Canaria"],
     keyPointsLabel: "Key points",
   },
   services: {
     eyebrow: "Our services",
     title: "Excellence in machinery services",
     subtitle:
-      "We are committed to providing quality products, personal attention and excellent after-sales service.",
+      "The job does not end at the sale: our after-sales service, with specialist technicians, keeps your machine running for its whole working life.",
     moreLabel: "Learn more",
     allServicesLabel: "See all services",
   },
@@ -82,14 +83,14 @@ const about: Dictionary["about"] = {
       title: "Over a decade of experience",
       paragraphs: [
         "We are CDI Maquinarias, and we are proud to offer a wide range of specialist services to meet all your industrial machinery needs. With more than a decade of experience in the market, we have established ourselves as leaders in the repair, rental and sale of machinery, providing our customers with reliable and efficient solutions.",
-        "Our team of experts is highly trained in repairing a wide variety of machines, including equipment from well-known brands such as STILL. Whether you need a fast, accurate repair or are looking to rent or buy a new machine, we are here to help.",
+        "Our team of experts is highly trained in repairing a wide variety of machines, of any brand, STILL included. Whether you need a fast, accurate repair or are looking to rent or buy a new machine, we are here to help.",
       ],
     },
     {
-      title: "Air conditioning experts",
+      title: "Industrial climate control experts",
       paragraphs: [
-        "In addition to our solid experience in industrial machinery repair, CDI Maquinarias stands out for its expertise in the maintenance, repair and sale of air conditioning systems. We know how important a comfortable working environment is for productivity, so we make sure your climate control systems perform at their best at all times.",
-        "Trust CDI Maquinarias with all your industrial machinery needs. Our team of professionals is here to serve you with dedication, professionalism and excellence at every step of the process. We are ready to be your trusted partner in maintaining your machinery and air conditioning systems!",
+        "In addition to our solid experience in industrial machinery repair, CDI Maquinarias stands out for its expertise in the installation, repair and maintenance of climate control systems for industrial machinery. We make sure your equipment's climate control performs at its best at all times.",
+        "Trust CDI Maquinarias with all your industrial machinery needs. Our team of professionals is here to serve you with dedication, professionalism and excellence at every step of the process. We are ready to be your trusted partner in maintaining your machinery and climate control systems!",
       ],
     },
   ],
@@ -116,7 +117,7 @@ const services: Dictionary["services"] = {
       description:
         "Specialists in sales advice to supply the right machinery for each customer's needs (STILL range and industrial machinery).",
       detail:
-        "Our sales division specialises in offering a wide range of high-quality machines from well-known brands such as STILL. Our commitment is to provide efficient, tailored solutions for our customers' needs. From materials handling equipment to construction machinery, we work to ensure the satisfaction and success of those who trust us with their projects and operations.",
+        "Our sales division specialises in offering a wide range of high-quality machines from the STILL brand. Our commitment is to provide efficient, tailored solutions for our customers' needs. From materials handling equipment to construction machinery, we work to ensure the satisfaction and success of those who trust us with their projects and operations.",
       features: [
         "Specialist sales advice",
         "STILL range and industrial machinery",
@@ -127,7 +128,7 @@ const services: Dictionary["services"] = {
       title: "Rental",
       description: "A versatile, flexible fleet for short, medium or long-term projects and peak workloads.",
       detail:
-        "Our rental and leasing option offers a flexible, cost-effective solution for anyone who needs first-class equipment without committing to a long-term purchase. With a variety of STILL models available, we tailor our plans to each customer's specific needs. Whether short or long term, our rental service guarantees hassle-free operation.",
+        "Our rental option, and renting or leasing through STILL, offers a flexible, cost-effective solution for anyone who needs first-class equipment without committing to a long-term purchase. With a variety of STILL models available, we tailor our plans to each customer's specific needs. Whether short or long term, our rental service guarantees hassle-free operation.",
       features: [
         "Short, medium or long-term projects",
         "Cover for peak workloads",
@@ -142,15 +143,11 @@ const services: Dictionary["services"] = {
       features: ["Ongoing technical consultancy", "Warehouse sizing", "Intralogistics optimisation"],
     },
     climatizacion: {
-      title: "Climate control and air conditioning",
-      description:
-        "Installation, repair and maintenance of climate control equipment for offices, industrial buildings and commercial premises.",
+      title: "Industrial climate control",
+      description: "Installation, repair and maintenance of climate control for industrial machinery.",
       detail:
-        "Installation, repair and maintenance of climate control equipment for offices, industrial buildings and commercial premises. We know how important a comfortable working environment is for productivity, so we make sure your climate control systems perform at their best at all times.",
-      features: [
-        "Installation, repair and maintenance",
-        "Offices, industrial buildings and commercial premises",
-      ],
+        "Installation, repair and maintenance of climate control for industrial machinery. We make sure the climate control of your equipment performs at its best at all times.",
+      features: ["Installation, repair and maintenance", "Industrial machinery only"],
     },
   },
 };
@@ -191,7 +188,7 @@ const rental: Dictionary["rental"] = {
   intro: {
     title: "Rent the machinery you need",
     paragraphs: [
-      "At CDI Maquinarias we have a fleet of forklifts and industrial machinery for short, medium and long-term rental. We mainly work with STILL equipment, matched to each type of warehouse and load.",
+      "At CDI Maquinarias we have a fleet of forklifts and industrial machinery for short, medium and long-term rental. We work exclusively with STILL equipment, matched to each type of warehouse and load. Renting and leasing are arranged through STILL.",
       "Choose the type of equipment you need from the list and we will tell you about availability, rates and terms.",
     ],
   },
@@ -221,7 +218,7 @@ const contact: Dictionary["contact"] = {
     },
   },
   form: {
-    title: "Send us a message",
+    title: "Contact us",
     intro: "We will reply as soon as possible.",
     requiredNote: "* Indicates required fields.",
     fields: {
@@ -239,6 +236,7 @@ const contact: Dictionary["contact"] = {
     failure: "There was an error sending your message. Please try again or call us.",
     deliveryUnconfirmed: `We could not confirm that your message was sent. It may have arrived; if you do not hear from us within 24 hours, please call us on ${primaryPhone.display}.`,
     rateLimited: `You have sent several messages in a short time. Please try again in a few minutes or call us on ${primaryPhone.display}.`,
+    humanCheckFailed: "We could not verify that you are a person. Please try again.",
     equipmentPrefill: (name: string) => `I would like more information about: ${name}.`,
     errors: {
       nameRequired: "Please enter your name.",
@@ -748,7 +746,7 @@ const seo: Dictionary["seo"] = {
     about: {
       title: "About us | CDI Maquinarias in Gran Canaria",
       description:
-        "Over a decade of experience repairing, renting and selling industrial machinery and air conditioning in Las Palmas de Gran Canaria.",
+        "Over a decade of experience repairing, renting and selling industrial machinery and climate control in Las Palmas de Gran Canaria.",
       label: "About us",
       heading: "About us",
     },
@@ -820,12 +818,12 @@ const seo: Dictionary["seo"] = {
       intro: "Technical expertise to help you decide on your machinery with clear information.",
     },
     climatizacion: {
-      title: "Air conditioning and climate control | CDI",
+      title: "Industrial climate control | CDI",
       description:
-        "Maintenance, repair and sales of air conditioning and climate control systems in Las Palmas de Gran Canaria.",
-      label: "Air conditioning",
-      heading: "Air conditioning and climate control",
-      intro: "Comfortable working environments so your team can perform at its best.",
+        "Installation, maintenance and repair of climate control for industrial machinery in Las Palmas de Gran Canaria.",
+      label: "Climate control",
+      heading: "Industrial climate control",
+      intro: "Climate control so your industrial machinery works in the best conditions.",
     },
   },
 };
@@ -858,7 +856,7 @@ const servicePages: Dictionary["servicePages"] = {
     faqTitle: "Frequently asked questions",
     faq: [
       { question: "Is this a paid service?", answer: "We explain the terms at the first consultation." },
-      { question: "Do you only advise on STILL equipment?", answer: "We advise on the machinery that best fits your needs." },
+      { question: "Do you only advise on STILL equipment?", answer: "Yes, we are STILL dealers and we advise on the range that best fits your needs." },
     ],
     bandTitle: "Technical judgement to decide",
     ctaTitle: "Need an informed decision?",
@@ -875,16 +873,16 @@ const servicePages: Dictionary["servicePages"] = {
     faqTitle: "Frequently asked questions",
     faq: [
       { question: "Do you offer preventive maintenance?", answer: "Yes, we schedule regular checks to prevent breakdowns." },
-      { question: "Do you sell new units?", answer: "Yes, we advise you on the unit that suits your space." },
+      { question: "What equipment is this service for?", answer: "Only industrial machinery." },
     ],
     ctaLabel: "Request an inspection",
-    bandTitle: "Air conditioning and climate control",
+    bandTitle: "Industrial climate control",
     pillars: [
-      { title: "Installation", text: "We install units matched to the space available and the heat load of each premises." },
+      { title: "Installation", text: "We install units matched to the heat load of each machine and its working area." },
       { title: "Repair", text: "We locate the fault and give you the cost before we intervene, with no surprises." },
       { title: "Maintenance", text: "Regular checks that keep the system efficient and prevent downtime." },
     ],
-    spaces: ["Offices", "Industrial units", "Commercial premises"],
+    spaces: ["Industrial machinery"],
     ctaTitle: "Does your system need attention?",
     ctaText: "Tell us which unit you have and we will get back to you as soon as possible.",
   },

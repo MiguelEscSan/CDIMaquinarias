@@ -57,6 +57,12 @@ export const contactInfo: ContactInfo = {
   hours,
 };
 
+/** Social profiles shown in the footer. The section stays hidden while this list is empty. */
+export const socialLinks: { label: string; href: string }[] = [
+  { label: "Instagram", href: "https://www.instagram.com/cdi_maquinarias/" },
+  { label: "Facebook", href: "https://www.facebook.com/cdimaquinarias/" },
+];
+
 /** Company identification as stated in the original legal notice and privacy policy. */
 export const legalInfo: LegalInfo = {
   legalName: "CDI MAQUINARIAS S.L.",

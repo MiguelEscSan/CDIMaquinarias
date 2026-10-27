@@ -23,7 +23,7 @@ const common = {
   business: {
     positioning: `Distribuidores de ${stillBrand.name} en Las Palmas de Gran Canaria.`,
     valueProposition:
-      "Soluciones integrales para empresas que incluyen venta, alquiler y reparación de carretillas elevadoras, retráctiles, apiladores, transpaletas y maquinaria pesada. Además, especialistas en instalación y mantenimiento de sistemas de aire acondicionado y climatización industrial/comercial.",
+      "Soluciones integrales para empresas que incluyen venta, alquiler y reparación de carretillas elevadoras, retráctiles, apiladores, transpaletas y maquinaria pesada. Además, especialistas en instalación y mantenimiento de climatización para maquinaria industrial.",
     areaServed: "Gran Canaria, Islas Canarias",
     /** Name of the service catalogue in the LocalBusiness JSON-LD. */
     catalogName: "Servicios",
@@ -64,6 +64,7 @@ const common = {
   },
   footer: {
     contactHeading: "Contacto",
+    socialHeading: "Redes sociales",
     hoursHeading: "Horario",
     copyright: (year: number, legalName: string) =>
       `© ${year} ${legalName}. Todos los derechos reservados.`,
@@ -73,14 +74,14 @@ const common = {
 const home = {
   hero: {
     tagline: "Profesionales en el sector",
-    trustChips: [`Distribuidor oficial ${stillBrand.name}`, "Servicio multimarca", "Gran Canaria"],
+    trustChips: [`Distribuidor oficial ${stillBrand.name}`, "Reparación multimarca", "Gran Canaria"],
     keyPointsLabel: "Puntos clave",
   },
   services: {
     eyebrow: "Nuestros servicios",
     title: "La excelencia en servicios de maquinaria",
     subtitle:
-      "Nuestro compromiso es brindarle productos de calidad, atención personalizada y un excelente servicio de postventa.",
+      "Su máquina no termina en la venta: nuestro servicio postventa, con técnicos especializados, la mantiene operativa durante toda su vida útil.",
     moreLabel: "Saber más",
     allServicesLabel: "Ver todos los servicios",
   },
@@ -102,14 +103,14 @@ const about: AboutContent = {
       title: "Más de una década de experiencia",
       paragraphs: [
         "Somos CDI Maquinarias y nos enorgullece ofrecer una amplia gama de servicios especializados para satisfacer todas sus necesidades relacionadas con maquinaria industrial. Con más de una década de experiencia en el mercado, hemos consolidado nuestra posición como líderes en la reparación, alquiler y venta de máquinas, brindando soluciones confiables y eficientes a nuestros clientes.",
-        "Nuestro equipo de expertos está altamente capacitado en la reparación de una amplia variedad de máquinas, incluidos equipos de marcas reconocidas como STILL. Si necesita una reparación rápida y precisa o busca alquilar o adquirir una nueva máquina, estamos aquí para ayudarle.",
+        "Nuestro equipo de expertos está altamente capacitado en la reparación de una amplia variedad de máquinas, de cualquier marca, incluida STILL. Si necesita una reparación rápida y precisa o busca alquilar o adquirir una nueva máquina, estamos aquí para ayudarle.",
       ],
     },
     {
-      title: "Expertos en aire acondicionado",
+      title: "Expertos en climatización industrial",
       paragraphs: [
-        "Además de nuestra sólida experiencia en reparaciones de maquinaria industrial, en CDI Maquinarias nos destacamos por ser expertos en el mantenimiento, reparación y venta de sistemas de aire acondicionado. Sabemos lo importante que es un entorno de trabajo cómodo para maximizar la productividad, por lo que nos aseguramos de que sus sistemas de climatización funcionen de manera óptima en todo momento.",
-        "Confíe en CDI Maquinarias para todas sus necesidades de maquinaria industrial. Nuestro equipo de profesionales está aquí para servirle con dedicación, profesionalidad y excelencia en cada paso del proceso. ¡Estamos listos para ser su aliado de confianza en el mantenimiento de su maquinaria y sistemas de aire acondicionado!",
+        "Además de nuestra sólida experiencia en reparaciones de maquinaria industrial, en CDI Maquinarias nos destacamos por ser expertos en el montaje, reparación y mantenimiento de sistemas de climatización para maquinaria industrial. Nos aseguramos de que la climatización de sus equipos funcione de manera óptima en todo momento.",
+        "Confíe en CDI Maquinarias para todas sus necesidades de maquinaria industrial. Nuestro equipo de profesionales está aquí para servirle con dedicación, profesionalidad y excelencia en cada paso del proceso. ¡Estamos listos para ser su aliado de confianza en el mantenimiento de su maquinaria y sistemas de climatización!",
       ],
     },
   ],
@@ -136,7 +137,7 @@ const services: { items: Record<ServiceId, ServiceCopy> } = {
       description:
         "Especialistas en asesoramiento comercial para suministrar la maquinaria adecuada a las necesidades del cliente (gama STILL y maquinaria industrial).",
       detail:
-        "La división de ventas de nuestra empresa se especializa en ofrecer una amplia gama de máquinas de alta calidad de marcas reconocidas como STILL. Nuestro compromiso radica en proporcionar soluciones eficientes y personalizadas para las necesidades de nuestros clientes. Desde equipos de manipulación de materiales hasta maquinaria de construcción, trabajamos para garantizar la satisfacción y el éxito de quienes confían en nosotros para sus proyectos y operaciones.",
+        "La división de ventas de nuestra empresa se especializa en ofrecer una amplia gama de máquinas de alta calidad de la marca STILL. Nuestro compromiso radica en proporcionar soluciones eficientes y personalizadas para las necesidades de nuestros clientes. Desde equipos de manipulación de materiales hasta maquinaria de construcción, trabajamos para garantizar la satisfacción y el éxito de quienes confían en nosotros para sus proyectos y operaciones.",
       features: [
         "Asesoramiento comercial especializado",
         "Gama STILL y maquinaria industrial",
@@ -148,7 +149,7 @@ const services: { items: Record<ServiceId, ServiceCopy> } = {
       description:
         "Flota versátil y flexible para proyectos a corto, medio o largo plazo y puntas de trabajo.",
       detail:
-        "Nuestra opción de alquiler y renting ofrece una solución flexible y rentable para quienes buscan acceso a equipos de primera clase sin comprometerse con una compra a largo plazo. Con una variedad de modelos de STILL disponibles, adaptamos nuestros planes a las necesidades específicas de cada cliente. Ya sea a corto o largo plazo, nuestro servicio de alquiler garantiza una operación sin complicaciones.",
+        "Ofrecemos alquiler, y renting o leasing a través de STILL: una solución flexible y rentable para quienes buscan acceso a equipos de primera clase sin comprometerse con una compra a largo plazo. Con una variedad de modelos de STILL disponibles, adaptamos nuestros planes a las necesidades específicas de cada cliente. Ya sea a corto o largo plazo, nuestro servicio de alquiler garantiza una operación sin complicaciones.",
       features: [
         "Proyectos a corto, medio o largo plazo",
         "Cobertura de puntas de trabajo",
@@ -168,12 +169,11 @@ const services: { items: Record<ServiceId, ServiceCopy> } = {
       ],
     },
     climatizacion: {
-      title: "Climatización y aire acondicionado",
-      description:
-        "Montaje, reparación y mantenimiento de equipos de climatización para oficinas, naves y locales comerciales.",
+      title: "Climatización industrial",
+      description: "Montaje, reparación y mantenimiento de climatización para maquinaria industrial.",
       detail:
-        "Montaje, reparación y mantenimiento de equipos de climatización para oficinas, naves y locales comerciales. Sabemos lo importante que es un entorno de trabajo cómodo para maximizar la productividad, por lo que nos aseguramos de que sus sistemas de climatización funcionen de manera óptima en todo momento.",
-      features: ["Montaje, reparación y mantenimiento", "Oficinas, naves y locales comerciales"],
+        "Montaje, reparación y mantenimiento de climatización para maquinaria industrial. Nos aseguramos de que los sistemas de climatización de sus equipos funcionen de manera óptima en todo momento.",
+      features: ["Montaje, reparación y mantenimiento", "Solo maquinaria industrial"],
     },
   },
 };
@@ -212,7 +212,7 @@ const rental: {
   intro: {
     title: "Alquile la maquinaria que necesita",
     paragraphs: [
-      "En CDI Maquinarias disponemos de una flota de carretillas y maquinaria industrial para alquiler a corto, medio y largo plazo. Trabajamos principalmente con equipos STILL, adaptados a cada tipo de almacén y de carga.",
+      "En CDI Maquinarias disponemos de una flota de carretillas y maquinaria industrial para alquiler a corto, medio y largo plazo. Trabajamos exclusivamente con equipos STILL, adaptados a cada tipo de almacén y de carga. El renting y el leasing se gestionan a través de STILL.",
       "Elija el tipo de equipo que necesita en el listado y le informaremos de disponibilidad, tarifas y condiciones.",
     ],
   },
@@ -262,7 +262,7 @@ const contact = {
     },
   },
   form: {
-    title: "Envíenos un mensaje",
+    title: "Contacta con nosotros",
     intro: "Le responderemos lo antes posible.",
     requiredNote: "* Indica los campos obligatorios.",
     fields: {
@@ -280,6 +280,7 @@ const contact = {
     failure: "Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo o llámenos.",
     deliveryUnconfirmed: `No hemos podido confirmar el envío. Es posible que su mensaje haya llegado; si no recibe respuesta en 24 horas, llámenos al ${primaryPhone.display}.`,
     rateLimited: `Ha enviado varios mensajes en poco tiempo. Inténtelo de nuevo en unos minutos o llámenos al ${primaryPhone.display}.`,
+    humanCheckFailed: "No hemos podido verificar que es una persona. Inténtelo de nuevo.",
     equipmentPrefill: (name: string) => `Me interesa recibir más información sobre: ${name}.`,
     /** Field validation messages, keyed by the codes the action schema emits. */
     errors: {
@@ -795,7 +796,7 @@ const seo: { pages: Record<PageId, PageCopy> } = {
     about: {
       title: "Quiénes somos | CDI Maquinarias en Gran Canaria",
       description:
-        "Más de una década de experiencia en reparación, alquiler y venta de maquinaria industrial y aire acondicionado en Las Palmas de Gran Canaria.",
+        "Más de una década de experiencia en reparación, alquiler y venta de maquinaria industrial y climatización en Las Palmas de Gran Canaria.",
       label: "Quiénes somos",
       heading: "Quiénes somos",
     },
@@ -867,12 +868,12 @@ const seo: { pages: Record<PageId, PageCopy> } = {
       intro: "Criterio técnico para decidir sobre su maquinaria con información clara.",
     },
     climatizacion: {
-      title: "Aire acondicionado y climatización | CDI",
+      title: "Climatización industrial | CDI",
       description:
-        "Mantenimiento, reparación y venta de sistemas de aire acondicionado y climatización en Las Palmas de Gran Canaria.",
+        "Montaje, mantenimiento y reparación de climatización para maquinaria industrial en Las Palmas de Gran Canaria.",
       label: "Climatización",
-      heading: "Climatización y aire acondicionado",
-      intro: "Entornos de trabajo cómodos para que su equipo rinda al máximo.",
+      heading: "Climatización industrial",
+      intro: "Climatización para que su maquinaria industrial trabaje en las mejores condiciones.",
     },
   },
 };
@@ -905,7 +906,7 @@ const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
     faqTitle: "Preguntas frecuentes",
     faq: [
       { question: "¿Es un servicio de pago?", answer: "Le informamos de las condiciones en la primera consulta." },
-      { question: "¿Solo asesoran sobre equipos STILL?", answer: "Asesoramos sobre la maquinaria que mejor se adapte a su necesidad." },
+      { question: "¿Solo asesoran sobre equipos STILL?", answer: "Sí, somos distribuidores de STILL y asesoramos sobre la gama que mejor se adapte a su necesidad." },
     ],
     ctaLabel: "Concertar una consulta",
     bandTitle: "Criterio técnico para decidir",
@@ -922,16 +923,16 @@ const servicePages: Record<ServiceDetailId, ServicePageCopy> = {
     faqTitle: "Preguntas frecuentes",
     faq: [
       { question: "¿Hacen mantenimiento preventivo?", answer: "Sí, planificamos revisiones periódicas para evitar averías." },
-      { question: "¿Venden equipos nuevos?", answer: "Sí, le asesoramos en la elección del equipo según el espacio disponible." },
+      { question: "¿Para qué equipos es este servicio?", answer: "Solo para maquinaria industrial." },
     ],
     ctaLabel: "Solicitar revisión",
-    bandTitle: "Aire acondicionado y climatización",
+    bandTitle: "Climatización industrial",
     pillars: [
-      { title: "Montaje", text: "Instalamos equipos adaptados al espacio disponible y a la carga térmica de cada local." },
+      { title: "Montaje", text: "Instalamos equipos adaptados a la carga térmica de cada máquina y a su espacio de trabajo." },
       { title: "Reparación", text: "Localizamos la avería y le indicamos el coste antes de intervenir, sin sorpresas." },
       { title: "Mantenimiento", text: "Revisiones periódicas que mantienen el sistema eficiente y previenen paradas." },
     ],
-    spaces: ["Oficinas", "Naves industriales", "Locales comerciales"],
+    spaces: ["Maquinaria industrial"],
     ctaTitle: "¿Su sistema necesita atención?",
     ctaText: "Cuéntenos qué equipo tiene y le damos una respuesta cuanto antes.",
   },

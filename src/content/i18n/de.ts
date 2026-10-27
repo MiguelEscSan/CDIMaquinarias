@@ -12,7 +12,7 @@ const common: Dictionary["common"] = {
   business: {
     positioning: `${stillBrand.name}-Händler in Las Palmas de Gran Canaria.`,
     valueProposition:
-      "Komplettlösungen für Unternehmen: Verkauf, Vermietung und Reparatur von Gabelstaplern, Schubmaststaplern, Staplern, Hubwagen und Schwerlastmaschinen. Außerdem sind wir Spezialisten für Installation und Wartung von industriellen und gewerblichen Klimaanlagen und Klimatisierungssystemen.",
+      "Komplettlösungen für Unternehmen: Verkauf, Vermietung und Reparatur von Gabelstaplern, Schubmaststaplern, Staplern, Hubwagen und Schwerlastmaschinen. Außerdem sind wir Spezialisten für Installation und Wartung von Klimatisierungssystemen für Industriemaschinen.",
     areaServed: "Gran Canaria, Kanarische Inseln",
     catalogName: "Dienstleistungen",
   },
@@ -45,6 +45,7 @@ const common: Dictionary["common"] = {
   },
   footer: {
     contactHeading: "Kontakt",
+    socialHeading: "Soziale Netzwerke",
     hoursHeading: "Öffnungszeiten",
     copyright: (year: number, legalName: string) => `© ${year} ${legalName}. Alle Rechte vorbehalten.`,
   },
@@ -53,14 +54,14 @@ const common: Dictionary["common"] = {
 const home: Dictionary["home"] = {
   hero: {
     tagline: "Fachleute der Branche",
-    trustChips: [`Offizieller ${stillBrand.name}-Händler`, "Markenübergreifender Service", "Gran Canaria"],
+    trustChips: [`Offizieller ${stillBrand.name}-Händler`, "Markenübergreifende Reparaturen", "Gran Canaria"],
     keyPointsLabel: "Wichtigste Punkte",
   },
   services: {
     eyebrow: "Unsere Dienstleistungen",
     title: "Exzellenz im Maschinenservice",
     subtitle:
-      "Wir verpflichten uns zu hochwertigen Produkten, persönlicher Betreuung und exzellentem Kundendienst.",
+      "Der Verkauf ist nicht das Ende: Unser Kundendienst mit spezialisierten Technikern hält Ihre Maschine während ihrer gesamten Nutzungsdauer einsatzbereit.",
     moreLabel: "Mehr erfahren",
     allServicesLabel: "Alle Dienstleistungen ansehen",
   },
@@ -82,14 +83,14 @@ const about: Dictionary["about"] = {
       title: "Mehr als zehn Jahre Erfahrung",
       paragraphs: [
         "Wir sind CDI Maquinarias und bieten mit Stolz ein breites Spektrum an Spezialdienstleistungen für all Ihre Anforderungen an Industriemaschinen. Mit mehr als zehn Jahren Erfahrung am Markt haben wir uns als führend in Reparatur, Vermietung und Verkauf von Maschinen etabliert und bieten unseren Kunden zuverlässige und effiziente Lösungen.",
-        "Unser Expertenteam ist bestens geschult in der Reparatur einer großen Vielfalt von Maschinen, auch von Geräten bekannter Marken wie STILL. Ob Sie eine schnelle, präzise Reparatur benötigen oder eine neue Maschine mieten oder kaufen möchten: Wir helfen Ihnen gern.",
+        "Unser Expertenteam ist bestens geschult in der Reparatur einer großen Vielfalt von Maschinen, von Geräten aller Marken, STILL eingeschlossen. Ob Sie eine schnelle, präzise Reparatur benötigen oder eine neue Maschine mieten oder kaufen möchten: Wir helfen Ihnen gern.",
       ],
     },
     {
-      title: "Experten für Klimaanlagen",
+      title: "Experten für Industrieklimatisierung",
       paragraphs: [
-        "Neben unserer soliden Erfahrung in der Reparatur von Industriemaschinen zeichnet sich CDI Maquinarias durch Fachwissen in Wartung, Reparatur und Verkauf von Klimaanlagen aus. Wir wissen, wie wichtig ein angenehmes Arbeitsumfeld für die Produktivität ist, und sorgen dafür, dass Ihre Klimasysteme jederzeit optimal arbeiten.",
-        "Vertrauen Sie CDI Maquinarias bei all Ihren Anforderungen an Industriemaschinen. Unser Team aus Fachleuten steht Ihnen mit Engagement, Professionalität und Exzellenz in jedem Schritt des Prozesses zur Seite. Wir sind bereit, Ihr verlässlicher Partner bei der Wartung Ihrer Maschinen und Klimaanlagen zu sein!",
+        "Neben unserer soliden Erfahrung in der Reparatur von Industriemaschinen zeichnet sich CDI Maquinarias durch Fachwissen in Montage, Wartung und Reparatur von Klimatisierungssystemen für Industriemaschinen aus. Wir sorgen dafür, dass die Klimatisierung Ihrer Geräte jederzeit optimal arbeitet.",
+        "Vertrauen Sie CDI Maquinarias bei all Ihren Anforderungen an Industriemaschinen. Unser Team aus Fachleuten steht Ihnen mit Engagement, Professionalität und Exzellenz in jedem Schritt des Prozesses zur Seite. Wir sind bereit, Ihr verlässlicher Partner bei der Wartung Ihrer Maschinen und Klimatisierung zu sein!",
       ],
     },
   ],
@@ -116,7 +117,7 @@ const services: Dictionary["services"] = {
       description:
         "Spezialisten für Verkaufsberatung, die für jeden Kundenbedarf die passende Maschine bereitstellen (STILL-Sortiment und Industriemaschinen).",
       detail:
-        "Unsere Verkaufsabteilung bietet eine breite Auswahl hochwertiger Maschinen bekannter Marken wie STILL. Unser Anspruch ist es, effiziente, maßgeschneiderte Lösungen für die Bedürfnisse unserer Kunden zu liefern. Von Flurfördertechnik bis zu Baumaschinen arbeiten wir daran, dass alle, die uns ihre Projekte und Abläufe anvertrauen, zufrieden sind und Erfolg haben.",
+        "Unsere Verkaufsabteilung bietet eine breite Auswahl hochwertiger Maschinen der Marke STILL. Unser Anspruch ist es, effiziente, maßgeschneiderte Lösungen für die Bedürfnisse unserer Kunden zu liefern. Von Flurfördertechnik bis zu Baumaschinen arbeiten wir daran, dass alle, die uns ihre Projekte und Abläufe anvertrauen, zufrieden sind und Erfolg haben.",
       features: [
         "Fachkundige Verkaufsberatung",
         "STILL-Sortiment und Industriemaschinen",
@@ -128,7 +129,7 @@ const services: Dictionary["services"] = {
       description:
         "Eine vielseitige, flexible Flotte für kurz-, mittel- oder langfristige Projekte und Auftragsspitzen.",
       detail:
-        "Unsere Miet- und Leasingoption bietet eine flexible, wirtschaftliche Lösung für alle, die erstklassige Geräte benötigen, ohne sich langfristig zu einem Kauf zu verpflichten. Mit einer Vielzahl verfügbarer STILL-Modelle passen wir unsere Angebote an die spezifischen Bedürfnisse jedes Kunden an. Ob kurz- oder langfristig: Unser Mietservice garantiert einen unkomplizierten Betrieb.",
+        "Vermietung sowie Renting oder Leasing über STILL bieten eine flexible, wirtschaftliche Lösung für alle, die erstklassige Geräte benötigen, ohne sich langfristig zu einem Kauf zu verpflichten. Mit einer Vielzahl verfügbarer STILL-Modelle passen wir unsere Angebote an die spezifischen Bedürfnisse jedes Kunden an. Ob kurz- oder langfristig: Unser Mietservice garantiert einen unkomplizierten Betrieb.",
       features: [
         "Kurz-, mittel- oder langfristige Projekte",
         "Abdeckung von Auftragsspitzen",
@@ -144,15 +145,11 @@ const services: Dictionary["services"] = {
       features: ["Laufende technische Beratung", "Dimensionierung von Lagern", "Optimierung der Intralogistik"],
     },
     climatizacion: {
-      title: "Klimatisierung und Klimaanlagen",
-      description:
-        "Installation, Reparatur und Wartung von Klimatisierungsanlagen für Büros, Industriegebäude und Gewerbeflächen.",
+      title: "Klimatisierung für Industriemaschinen",
+      description: "Installation, Reparatur und Wartung der Klimatisierung für Industriemaschinen.",
       detail:
-        "Installation, Reparatur und Wartung von Klimatisierungsanlagen für Büros, Industriegebäude und Gewerbeflächen. Wir wissen, wie wichtig ein angenehmes Arbeitsumfeld für die Produktivität ist, und sorgen dafür, dass Ihre Klimasysteme jederzeit optimal arbeiten.",
-      features: [
-        "Installation, Reparatur und Wartung",
-        "Büros, Industriegebäude und Gewerbeflächen",
-      ],
+        "Installation, Reparatur und Wartung der Klimatisierung für Industriemaschinen. Wir sorgen dafür, dass die Klimatisierung Ihrer Geräte jederzeit optimal arbeitet.",
+      features: ["Installation, Reparatur und Wartung", "Nur für Industriemaschinen"],
     },
   },
 };
@@ -193,7 +190,7 @@ const rental: Dictionary["rental"] = {
   intro: {
     title: "Mieten Sie die Maschinen, die Sie brauchen",
     paragraphs: [
-      "Bei CDI Maquinarias verfügen wir über eine Flotte aus Staplern und Industriemaschinen zur Vermietung kurz-, mittel- und langfristig. Wir arbeiten hauptsächlich mit STILL-Geräten, abgestimmt auf die jeweilige Lagerart und Last.",
+      "Bei CDI Maquinarias verfügen wir über eine Flotte aus Staplern und Industriemaschinen zur Vermietung kurz-, mittel- und langfristig. Wir arbeiten ausschließlich mit STILL-Geräten, abgestimmt auf die jeweilige Lagerart und Last. Renting und Leasing laufen über STILL.",
       "Wählen Sie in der Liste die Geräteart, die Sie benötigen. Wir informieren Sie über Verfügbarkeit, Tarife und Bedingungen.",
     ],
   },
@@ -223,7 +220,7 @@ const contact: Dictionary["contact"] = {
     },
   },
   form: {
-    title: "Schreiben Sie uns",
+    title: "Kontaktieren Sie uns",
     intro: "Wir antworten so schnell wie möglich.",
     requiredNote: "* Pflichtfelder angeben",
     fields: {
@@ -242,6 +239,7 @@ const contact: Dictionary["contact"] = {
       "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an.",
     deliveryUnconfirmed: `Wir konnten den Versand nicht bestätigen. Ihre Nachricht ist möglicherweise angekommen. Falls Sie innerhalb von 24 Stunden keine Antwort erhalten, rufen Sie uns bitte unter ${primaryPhone.display} an.`,
     rateLimited: `Sie haben in kurzer Zeit mehrere Nachrichten gesendet. Bitte versuchen Sie es in einigen Minuten erneut oder rufen Sie uns unter ${primaryPhone.display} an.`,
+    humanCheckFailed: "Wir konnten nicht bestätigen, dass Sie ein Mensch sind. Bitte versuchen Sie es erneut.",
     equipmentPrefill: (name: string) => `Ich möchte mehr Informationen zu: ${name}.`,
     errors: {
       nameRequired: "Bitte geben Sie Ihren Namen ein.",
@@ -751,7 +749,7 @@ const seo: Dictionary["seo"] = {
     about: {
       title: "Über uns | CDI Maquinarias auf Gran Canaria",
       description:
-        "Mehr als zehn Jahre Erfahrung in Reparatur, Vermietung und Verkauf von Industriemaschinen und Klimaanlagen in Las Palmas de Gran Canaria.",
+        "Mehr als zehn Jahre Erfahrung in Reparatur, Vermietung und Verkauf von Industriemaschinen und Klimatisierung in Las Palmas de Gran Canaria.",
       label: "Über uns",
       heading: "Über uns",
     },
@@ -823,12 +821,12 @@ const seo: Dictionary["seo"] = {
       intro: "Technisches Fachwissen, damit Sie Entscheidungen über Ihre Maschinen mit klaren Informationen treffen.",
     },
     climatizacion: {
-      title: "Klimatisierung und Klimaanlagen | CDI",
+      title: "Klimatisierung für Industriemaschinen | CDI",
       description:
-        "Wartung, Reparatur und Verkauf von Klimaanlagen und Klimatisierungssystemen in Las Palmas de Gran Canaria.",
+        "Montage, Wartung und Reparatur der Klimatisierung für Industriemaschinen in Las Palmas de Gran Canaria.",
       label: "Klimatisierung",
-      heading: "Klimatisierung und Klimaanlagen",
-      intro: "Angenehme Arbeitsumgebungen, damit Ihr Team seine volle Leistung erbringen kann.",
+      heading: "Klimatisierung für Industriemaschinen",
+      intro: "Klimatisierung, damit Ihre Industriemaschinen unter besten Bedingungen arbeiten.",
     },
   },
 };
@@ -861,7 +859,7 @@ const servicePages: Dictionary["servicePages"] = {
     faqTitle: "Häufig gestellte Fragen",
     faq: [
       { question: "Ist diese Beratung kostenpflichtig?", answer: "Die Bedingungen erläutern wir Ihnen beim ersten Gespräch." },
-      { question: "Beraten Sie nur zu STILL-Geräten?", answer: "Wir beraten zu der Maschine, die am besten zu Ihrem Bedarf passt." },
+      { question: "Beraten Sie nur zu STILL-Geräten?", answer: "Ja, wir sind STILL-Händler und beraten zur Reihe, die am besten zu Ihrem Bedarf passt." },
     ],
     ctaLabel: "Beratung vereinbaren",
     bandTitle: "Technisches Urteil für Ihre Entscheidung",
@@ -878,16 +876,16 @@ const servicePages: Dictionary["servicePages"] = {
     faqTitle: "Häufig gestellte Fragen",
     faq: [
       { question: "Bieten Sie vorbeugende Wartung an?", answer: "Ja, wir planen regelmäßige Kontrollen, um Ausfälle zu vermeiden." },
-      { question: "Verkaufen Sie auch neue Geräte?", answer: "Ja, wir beraten Sie zum Gerät, das zu Ihrem Raum passt." },
+      { question: "Für welche Geräte ist dieser Service?", answer: "Nur für Industriemaschinen." },
     ],
     ctaLabel: "Prüfung anfragen",
-    bandTitle: "Klimatisierung und Klimaanlagen",
+    bandTitle: "Klimatisierung für Industriemaschinen",
     pillars: [
-      { title: "Montage", text: "Wir installieren Geräte, die zum verfügbaren Raum und der Wärmelast jedes Standorts passen." },
+      { title: "Montage", text: "Wir installieren Geräte, die zur Wärmelast jeder Maschine und zu ihrem Arbeitsbereich passen." },
       { title: "Reparatur", text: "Wir finden den Fehler und nennen Ihnen die Kosten, bevor wir eingreifen." },
       { title: "Wartung", text: "Regelmäßige Kontrollen, die die Anlage effizient halten und Ausfälle verhindern." },
     ],
-    spaces: ["Büros", "Industriehallen", "Gewerbeflächen"],
+    spaces: ["Industriemaschinen"],
     ctaTitle: "Braucht Ihre Anlage Aufmerksamkeit?",
     ctaText: "Nennen Sie uns Ihr Gerät, und wir melden uns so schnell wie möglich.",
   },
