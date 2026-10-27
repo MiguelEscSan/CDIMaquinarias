@@ -11,13 +11,8 @@
     "binding": "ASSETS",
     "directory": "./dist/client"
   },
-  // Optional: shared contact-form rate limiter in Workers KV. Without it the site
-  // uses a per-instance in-memory limiter and deploys fine. To enable it:
-  //   1. npx wrangler kv namespace create CONTACT_RATE_LIMIT
-  //   2. paste the returned id below and uncomment the block.
-  // "kv_namespaces": [
-  //   { "binding": "CONTACT_RATE_LIMIT", "id": "<namespace id>" }
-  // ],
+  // Shared contact-form rate limiter (created with `npx wrangler kv namespace create CONTACT_RATE_LIMIT`).
+  "kv_namespaces": [{ "binding": "CONTACT_RATE_LIMIT", "id": "14d3ada303b44ff7a5a882ba0694aedf" }],
   "observability": {
     "enabled": true,
     "logs": { "enabled": true }

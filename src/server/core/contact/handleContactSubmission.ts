@@ -1,7 +1,13 @@
 import type { ContactMessage } from "./ContactMessage";
+import type { HumanVerifier } from "./HumanVerifier";
 import type { MailSender } from "./MailSender";
 import type { RateLimiter } from "./RateLimiter";
-import { ContactMailNotConfiguredError, ContactRateLimitedError } from "./errors";
+import {
+  ContactHumanCheckFailedError,
+  ContactHumanCheckNotConfiguredError,
+  ContactMailNotConfiguredError,
+  ContactRateLimitedError,
+} from "./errors";
 import { isHoneypotFilled, sendContactMessage, type SendContactResult } from "./sendContactMessage";
 
 /** Key shared by every submission for the site-wide cap. */
@@ -12,6 +18,8 @@ export interface ContactSubmissionDeps {
   clientKey: string;
   clientLimiter: RateLimiter;
   globalLimiter: RateLimiter;
+  /** Returns undefined when the human check is not configured. */
+  createHumanVerifier: () => HumanVerifier | undefined;
   /** Returns undefined when mail delivery is not configured. */
   createSender: () => MailSender | undefined;
   /** Inbox that receives the inquiries. */
@@ -21,14 +29,18 @@ export interface ContactSubmissionDeps {
 }
 
 /**
- * Use case: honeypot → per-client limit → global limit → mail config → send.
- * Bots never consume quota; limited visitors never reach SMTP.
+ * Use case: honeypot → human check → per-client limit → global limit → mail config → send.
+ * Bots never consume quota; unverified and limited visitors never reach SMTP.
  */
 export async function handleContactSubmission(
   input: ContactMessage,
   deps: ContactSubmissionDeps,
 ): Promise<SendContactResult> {
   if (isHoneypotFilled(input)) return { status: "discarded" };
+
+  const verifier = deps.createHumanVerifier();
+  if (!verifier) throw new ContactHumanCheckNotConfiguredError();
+  if (!(await verifier.verify(input.humanToken))) throw new ContactHumanCheckFailedError();
 
   const client = await deps.clientLimiter.consume(deps.clientKey);
   if (!client.allowed) throw new ContactRateLimitedError(client.retryAfterSeconds);

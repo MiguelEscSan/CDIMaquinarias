@@ -32,3 +32,19 @@ export class ContactMailNotConfiguredError extends Error {
     this.name = "ContactMailNotConfiguredError";
   }
 }
+
+/** The human check token is missing, invalid, or could not be verified; nothing was sent. */
+export class ContactHumanCheckFailedError extends Error {
+  constructor() {
+    super("Contact human check failed");
+    this.name = "ContactHumanCheckFailedError";
+  }
+}
+
+/** No human check secret is configured for this deployment. */
+export class ContactHumanCheckNotConfiguredError extends Error {
+  constructor() {
+    super("Contact human check is not configured");
+    this.name = "ContactHumanCheckNotConfiguredError";
+  }
+}

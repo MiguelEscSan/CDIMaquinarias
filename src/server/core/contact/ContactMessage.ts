@@ -9,4 +9,6 @@ export interface ContactMessage {
   visitorLanguage?: string;
   /** Anti-spam field that humans leave empty. */
   honeypot?: string;
+  /** Turnstile response token from the visitor's browser. */
+  humanToken?: string;
 }

@@ -29,19 +29,21 @@ Requisitos: Node.js >= 22.12.
 
 ## Desarrollo local
 
-Copie `.dev.vars.example` a `.dev.vars` (no se versiona) y complete los valores SMTP; `npm run dev` y `npm run preview` los leen desde ahí. Sin `SMTP_HOST`, `SMTP_USER` y `SMTP_PASS` el formulario muestra un error genérico y el servidor registra "[contact] SMTP is not configured". Mientras el enlace KV esté comentado en `wrangler.jsonc`, el limitador usa memoria; si lo activa, Wrangler simula el espacio KV en local.
+Copie `.dev.vars.example` a `.dev.vars` (no se versiona) y complete los valores SMTP; `npm run dev` y `npm run preview` los leen desde ahí. Sin `SMTP_HOST`, `SMTP_USER` y `SMTP_PASS` el formulario muestra un error genérico y el servidor registra "[contact] SMTP is not configured". El límite de envíos usa Workers KV (`CONTACT_RATE_LIMIT`); en local, Wrangler simula ese espacio. Sin ese enlace, el límite queda en memoria por instancia. `.dev.vars.example` trae las claves de prueba de Turnstile de Cloudflare, que siempre pasan en local.
 
 ## Despliegue en Cloudflare
 
 Requiere una cuenta de Cloudflare (el plan gratuito basta) e iniciar sesión una vez con `npx wrangler login`.
 
-1. Opcional (recomendado): límite de envíos compartido en Workers KV. El despliegue funciona sin este paso; sin el enlace se usa un límite en memoria por instancia. Para activarlo, cree el espacio KV, pegue el `id` devuelto en el bloque comentado `kv_namespaces` de `wrangler.jsonc` y descoméntelo:
+1. Cree un widget de Turnstile en el panel de Cloudflare (el dominio debe ser `cdimaquinarias.com`). Defina la clave secreta como secreto de Worker y la clave pública como variable de build (no es secreta):
 
    ```sh
-   npx wrangler kv namespace create CONTACT_RATE_LIMIT
+   npx wrangler secret put TURNSTILE_SECRET_KEY
    ```
 
-2. Defina los secretos (cada comando pide el valor):
+   `TURNSTILE_SITE_KEY` se lee al compilar, así que debe estar en el entorno de build. Sin `TURNSTILE_SECRET_KEY` el formulario no envía mensajes.
+
+2. Defina los secretos SMTP (cada comando pide el valor):
 
    ```sh
    npx wrangler secret put SMTP_HOST    # IONOS: smtp.ionos.es

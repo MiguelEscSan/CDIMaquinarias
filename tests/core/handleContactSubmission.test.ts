@@ -2,8 +2,11 @@ import { describe, expect, it, vi } from "vitest";
 import type { ContactMessage } from "../../src/server/core/contact/ContactMessage";
 import type { MailSender, OutgoingEmail } from "../../src/server/core/contact/MailSender";
 import type { RateLimitDecision, RateLimiter } from "../../src/server/core/contact/RateLimiter";
+import type { HumanVerifier } from "../../src/server/core/contact/HumanVerifier";
 import {
   ContactDeliveryTimeoutError,
+  ContactHumanCheckFailedError,
+  ContactHumanCheckNotConfiguredError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
 } from "../../src/server/core/contact/errors";
@@ -19,6 +22,15 @@ class FakeLimiter implements RateLimiter {
   async consume(key: string) {
     this.keys.push(key);
     return this.decision;
+  }
+}
+
+class FakeHumanVerifier implements HumanVerifier {
+  tokens: (string | undefined)[] = [];
+  constructor(private readonly passes = true) {}
+  async verify(token: string | undefined) {
+    this.tokens.push(token);
+    return this.passes;
   }
 }
 
@@ -39,11 +51,13 @@ function setup(overrides: Partial<ContactSubmissionDeps> = {}) {
   const sender = new FakeMailSender();
   const clientLimiter = new FakeLimiter();
   const globalLimiter = new FakeLimiter();
+  const humanVerifier = new FakeHumanVerifier();
   let senderRequests = 0;
   const deps: ContactSubmissionDeps = {
     clientKey: "contact:client-hash",
     clientLimiter,
     globalLimiter,
+    createHumanVerifier: () => humanVerifier,
     createSender: () => {
       senderRequests++;
       return sender;
@@ -52,7 +66,7 @@ function setup(overrides: Partial<ContactSubmissionDeps> = {}) {
     deadlineMs: 8000,
     ...overrides,
   };
-  return { deps, sender, clientLimiter, globalLimiter, senderRequests: () => senderRequests };
+  return { deps, sender, clientLimiter, globalLimiter, humanVerifier, senderRequests: () => senderRequests };
 }
 
 describe("handleContactSubmission", () => {
@@ -77,6 +91,40 @@ describe("handleContactSubmission", () => {
     expect(globalLimiter.keys).toHaveLength(0);
     expect(senderRequests()).toBe(0);
     expect(sender.sent).toHaveLength(0);
+  });
+
+  it("checks the human token before consuming any quota", async () => {
+    const { deps, humanVerifier, clientLimiter, globalLimiter, sender } = setup();
+
+    await handleContactSubmission({ ...message, humanToken: "token-123" }, deps);
+
+    expect(humanVerifier.tokens).toEqual(["token-123"]);
+    expect(clientLimiter.keys).toHaveLength(1);
+    expect(globalLimiter.keys).toHaveLength(1);
+    expect(sender.sent).toHaveLength(1);
+  });
+
+  it("rejects unverified visitors without consuming quota or touching SMTP", async () => {
+    const humanVerifier = new FakeHumanVerifier(false);
+    const { deps, sender, clientLimiter, globalLimiter, senderRequests } = setup({
+      createHumanVerifier: () => humanVerifier,
+    });
+
+    await expect(handleContactSubmission(message, deps)).rejects.toBeInstanceOf(ContactHumanCheckFailedError);
+    expect(clientLimiter.keys).toHaveLength(0);
+    expect(globalLimiter.keys).toHaveLength(0);
+    expect(senderRequests()).toBe(0);
+    expect(sender.sent).toHaveLength(0);
+  });
+
+  it("fails with a typed error when the human check is not configured", async () => {
+    const { deps, clientLimiter, senderRequests } = setup({ createHumanVerifier: () => undefined });
+
+    await expect(handleContactSubmission(message, deps)).rejects.toBeInstanceOf(
+      ContactHumanCheckNotConfiguredError,
+    );
+    expect(clientLimiter.keys).toHaveLength(0);
+    expect(senderRequests()).toBe(0);
   });
 
   it("rejects with a typed error and sends nothing when the client limit is reached", async () => {

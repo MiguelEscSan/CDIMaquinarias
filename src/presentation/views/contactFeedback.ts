@@ -1,7 +1,15 @@
-import { ContactDeliveryTimeoutError, ContactRateLimitedError } from "@server/core/contact/errors";
+import {
+  ContactDeliveryTimeoutError,
+  ContactHumanCheckFailedError,
+  ContactRateLimitedError,
+} from "@server/core/contact/errors";
 import { getDictionary, type Dictionary, type Locale } from "@content/i18n";
 
-export type ContactFailureCode = "TOO_MANY_REQUESTS" | "GATEWAY_TIMEOUT" | "INTERNAL_SERVER_ERROR";
+export type ContactFailureCode =
+  | "FORBIDDEN"
+  | "TOO_MANY_REQUESTS"
+  | "GATEWAY_TIMEOUT"
+  | "INTERNAL_SERVER_ERROR";
 
 /** Validation codes the action schema emits; each has a message in every dictionary. */
 export type ContactErrorKey = keyof Dictionary["contact"]["form"]["errors"];
@@ -14,6 +22,9 @@ export function contactFailureFor(
   locale: Locale,
 ): { code: ContactFailureCode; message: string } {
   const copy = formCopy(locale);
+  if (error instanceof ContactHumanCheckFailedError) {
+    return { code: "FORBIDDEN", message: copy.humanCheckFailed };
+  }
   if (error instanceof ContactRateLimitedError) {
     return { code: "TOO_MANY_REQUESTS", message: copy.rateLimited };
   }
@@ -29,6 +40,7 @@ export function contactErrorFeedback(
   locale: Locale,
 ): { status: number; message: string } {
   const copy = formCopy(locale);
+  if (code === "FORBIDDEN") return { status: 403, message: copy.humanCheckFailed };
   if (code === "TOO_MANY_REQUESTS") return { status: 429, message: copy.rateLimited };
   if (code === "GATEWAY_TIMEOUT") return { status: 504, message: copy.deliveryUnconfirmed };
   return { status: 500, message: copy.failure };

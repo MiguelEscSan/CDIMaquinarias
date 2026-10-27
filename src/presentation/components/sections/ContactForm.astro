@@ -1,5 +1,6 @@
 ---
 import { actions } from "astro:actions";
+import { TURNSTILE_SITE_KEY } from "astro:env/client";
 import Button from "../ui/Button.astro";
 import Icon from "../ui/Icon.astro";
 import { getDictionary, localizedPath, type Locale } from "@content/i18n";
@@ -146,6 +147,8 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
             )}
           </div>
 
+          {TURNSTILE_SITE_KEY && <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY}></div>}
+
           <div>
             <Button type="submit" size="lg">
               <Icon name="mail" slot="icon" />
@@ -153,6 +156,11 @@ const errorClass = "mt-1.5 text-sm font-medium text-red-700";
             </Button>
           </div>
         </form>
+        {
+          TURNSTILE_SITE_KEY && (
+            <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+          )
+        }
       </>
     )
   }

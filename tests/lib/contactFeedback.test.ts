@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   ContactDeliveryError,
   ContactDeliveryTimeoutError,
+  ContactHumanCheckFailedError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
 } from "../../src/server/core/contact/errors";
@@ -20,6 +21,13 @@ describe("contactFailureFor", () => {
     expect(contactFailureFor(new ContactRateLimitedError(60), "es")).toEqual({
       code: "TOO_MANY_REQUESTS",
       message: es.rateLimited,
+    });
+  });
+
+  it("maps a failed human check to FORBIDDEN with the human-check copy", () => {
+    expect(contactFailureFor(new ContactHumanCheckFailedError(), "es")).toEqual({
+      code: "FORBIDDEN",
+      message: es.humanCheckFailed,
     });
   });
 
@@ -43,6 +51,13 @@ describe("contactErrorFeedback", () => {
     expect(contactErrorFeedback("TOO_MANY_REQUESTS", "es")).toEqual({
       status: 429,
       message: es.rateLimited,
+    });
+  });
+
+  it("returns HTTP 403 and the human-check message for FORBIDDEN", () => {
+    expect(contactErrorFeedback("FORBIDDEN", "es")).toEqual({
+      status: 403,
+      message: es.humanCheckFailed,
     });
   });
 

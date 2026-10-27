@@ -1,6 +1,6 @@
 # Estado del proyecto — Web CDI Maquinarias
 
-> Actualizado el 13 de octubre de 2026 · Rama `feat/cdi-website-rebuild` (29 commits, sin repositorio remoto)
+> Actualizado el 27 de octubre de 2026 · Rama `feat/cdi-website-rebuild` (29 commits, sin repositorio remoto)
 
 La nueva web está **funcionalmente completa en local**: tiene 9 páginas con las mismas URL que la web original, las mismas 9 páginas en inglés bajo `/en/`, formulario de contacto con envío por SMTP, límite de envíos, aviso de cookies y despliegue preparado para Cloudflare Workers. **Todavía no puede publicarse**: faltan la revisión legal (también de la traducción inglesa), la configuración de Cloudflare, una prueba real de envío de correo y las imágenes.
 
@@ -10,10 +10,10 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 |------|--------|
 | Páginas y contenido | ✅ Listo |
 | SEO técnico y local | ✅ Listo (falta la imagen para redes sociales) |
-| Formulario de contacto | ✅ Listo en local · ⚠️ falta probarlo con el SMTP real de IONOS |
-| Límite de envíos y tiempo máximo | ✅ Listo |
+| Formulario de contacto | ✅ Listo en local · ✅ Turnstile implementado · ⚠️ faltan el widget de producción y la prueba con el SMTP real de IONOS |
+| Límite de envíos y tiempo máximo | ✅ Listo · KV activo (`CONTACT_RATE_LIMIT`) |
 | Aviso de cookies | ✅ Listo · ⚠️ 1 fallo menor abierto (F7) |
-| Despliegue en Cloudflare | ✅ Configurado · ⏳ falta la cuenta, los secretos y el DNS |
+| Despliegue en Cloudflare | ✅ Cuenta y KV listos · ⏳ faltan los secretos (SMTP y Turnstile), las claves de Turnstile y el DNS |
 | Textos legales | ⚠️ Adaptados; **pendientes de revisión por la asesora** |
 | Imágenes, logo y foto para redes | ❌ No existen todavía (ver [Próximas mejoras](#próximas-mejoras)) |
 | Cambio de idioma | ✅ Español e inglés (`/en/`) · ⚠️ falta revisar la traducción inglesa (textos legales por la asesora y el resto por un nativo) |
@@ -23,11 +23,11 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 
 1. **Revisión legal.** La asesora revisa las adaptaciones A1 a A8 de los textos legales y su traducción al inglés (ver [Textos legales](#textos-legales-pendientes-de-revisión)).
 2. **Imágenes.** Hay que aportar el logo, las fotos y `public/og-image.jpg` (1200×630), que es la imagen que se muestra al compartir la web en redes y buscadores. El plan está en [Próximas mejoras](#próximas-mejoras).
-3. **Cuenta de Cloudflare.** Hay que iniciar sesión con `npx wrangler login`. Crear el namespace de KV es opcional, pero recomendable.
-4. **Secretos.** Con `npx wrangler secret put <NOMBRE>` se cargan `SMTP_HOST` (`smtp.ionos.es`), `SMTP_PORT` (`465`), `SMTP_SECURE` (`true`), `SMTP_USER`, `SMTP_PASS` y, si hace falta, `CONTACT_TO`.
+3. **Cuenta de Cloudflare y KV.** Hecho: sesión iniciada con `npx wrangler login` y namespace `CONTACT_RATE_LIMIT` creado (ya está en `wrangler.jsonc`).
+4. **Secretos y Turnstile.** Con `npx wrangler secret put <NOMBRE>` se cargan `SMTP_HOST` (`smtp.ionos.es`), `SMTP_PORT` (`465`), `SMTP_SECURE` (`true`), `SMTP_USER`, `SMTP_PASS`, `TURNSTILE_SECRET_KEY` y, si hace falta, `CONTACT_TO`. La clave pública `TURNSTILE_SITE_KEY` va en `.env`. Los pasos completos, con el widget de Cloudflare, están en [docs/turnstile-setup.md](turnstile-setup.md).
 5. **Desplegar.** Ejecutar `npm run deploy`.
 6. **DNS.** Hay que mover el DNS de `cdimaquinarias.com` de IONOS a Cloudflare, **conservando los registros MX del correo de IONOS**. Después, conectar `www` como dominio del Worker y redirigir el dominio sin `www` hacia `www`.
-7. **Prueba real.** Enviar un mensaje desde `/contacto/` y comprobar que llega a `cdi@cdimaquinarias.com`.
+7. **Prueba real.** Enviar un mensaje desde `/contacto/` (con el widget de Turnstile visible) y comprobar que llega a `cdi@cdimaquinarias.com`.
 
 ## Qué está hecho
 
@@ -37,8 +37,8 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | Idiomas | Español sin prefijo (URL de siempre) e inglés en `/en/` con URL traducidas (`/en/about-us/`, `/en/rental/`…). Selector de idioma en el menú que lleva a la misma página en el otro idioma, sin JavaScript. Todos los textos están en `src/content/i18n/` (ver [README](../README.md#idiomas-y-textos)) |
 | Arquitectura | Los datos del negocio solo viven en `src/content/data/`. Los componentes son reutilizables. El formulario sigue una arquitectura hexagonal: casos de uso en `src/server/core/` y adaptadores en `src/server/infrastructure/` |
 | SEO | Un solo `<h1>` por página, títulos de menos de 60 caracteres y descripciones de menos de 155 (todos únicos en los dos idiomas), JSON-LD `LocalBusiness` + `BreadcrumbList` + `WebPage` traducido, `hreflang` es/en/x-default, sitemap con las 18 URL y sus alternativas, y `robots.txt` |
-| Formulario | Astro Action con validación Zod. Funciona sin JavaScript, tiene un campo trampa contra bots y conserva los datos escritos si hay un error |
-| Antiabuso | Máximo 3 envíos cada 10 min por visitante y 30 por hora en total. La IP solo se guarda como hash SHA-256. El límite se lleva en memoria o, si se configura, en Workers KV, y si KV falla se vuelve a la memoria |
+| Formulario | Astro Action con validación Zod. Funciona sin JavaScript, tiene un campo trampa contra bots y conserva los datos escritos si hay un error. El widget de Turnstile solo aparece si hay `TURNSTILE_SITE_KEY` |
+| Antiabuso | Turnstile se valida en el servidor antes de consumir cuota (sin token válido no se envía nada). Máximo 3 envíos cada 10 min por visitante y 30 por hora en total. La IP solo se guarda como hash SHA-256. El límite se comparte en Workers KV (`CONTACT_RATE_LIMIT`, activo); si KV falla se vuelve a la memoria, y sin binding se usa solo memoria |
 | Tiempo máximo | El envío SMTP se corta a los 8 s y se muestra un mensaje que no invita a reenviar, para evitar duplicados |
 | Cookies | `vanilla-cookieconsent` con dos categorías: necesarias y Google Maps. Los botones Aceptar y Rechazar tienen el mismo peso, como exige la guía de la AEPD de 2023. El mapa solo se carga con consentimiento |
 | Calidad | 149 tests (Vitest), incluido uno que impide textos fijos en los componentes, `astro check` sin errores ni avisos, y sin scroll horizontal a 375 px en ninguna página |
@@ -71,6 +71,8 @@ La nueva web está **funcionalmente completa en local**: tiene 9 páginas con la
 | L2 | Los textos legales en inglés son una traducción propia, no revisada | Que la traducción diga algo distinto del original | Revisión por la asesora; mientras tanto, el aviso de cortesía indica que prevalece el español |
 | T1 | Toda la web en inglés es una traducción propia (inglés británico) | Errores de tono o de terminología técnica | Revisión por un hablante nativo, idealmente con conocimientos del sector |
 | S1 | El envío por SMTP con TLS en el puerto 465 no se ha probado | Que el formulario falle en producción | Envío real después del despliegue |
+| TS1 | Turnstile no se ha probado con un widget real (solo tests unitarios y build) | Que el formulario bloquee a todos los visitantes si la configuración falla | Crear el widget y seguir [docs/turnstile-setup.md](turnstile-setup.md) |
+| TS2 | Quien tiene JavaScript desactivado no puede enviar el formulario porque el widget no carga | Un contacto perdido en esos casos | Aceptado por ahora. Decidir si se muestra un teléfono junto al formulario |
 
 ### Pueden esperar
 
@@ -148,6 +150,7 @@ También falta definir el **plazo de conservación** de los mensajes del formula
 ## Qué no se ha verificado
 
 - El envío real por SMTP con IONOS (puerto 465).
+- Turnstile de extremo a extremo con un widget real, y la lectura de `TURNSTILE_SITE_KEY` desde `.env` en un build (solo se comprobó con tests y `npm run build`).
 - Lighthouse (rendimiento y accesibilidad) y la vista de escritorio del aviso de cookies.
 - La animación de cierre del aviso de cookies.
 - La traducción inglesa por un hablante nativo y por la asesora (textos legales).

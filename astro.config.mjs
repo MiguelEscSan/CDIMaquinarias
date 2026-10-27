@@ -51,6 +51,8 @@ export default defineConfig({
         access: "secret",
         default: "cdi@cdimaquinarias.com",
       }),
+      TURNSTILE_SITE_KEY: envField.string({ context: "client", access: "public", optional: true }),
+      TURNSTILE_SECRET_KEY: envField.string({ context: "server", access: "secret", optional: true }),
     },
   },
   vite: {

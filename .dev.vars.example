@@ -7,3 +7,7 @@ SMTP_USER=buzon@cdimaquinarias.com
 SMTP_PASS=change-me
 # Optional; defaults to cdi@cdimaquinarias.com
 # CONTACT_TO=cdi@cdimaquinarias.com
+# Turnstile (contact form). The values below are Cloudflare's dummy keys: they always pass locally.
+# Use real keys from the Turnstile dashboard in production; never ship the dummy secret.
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA

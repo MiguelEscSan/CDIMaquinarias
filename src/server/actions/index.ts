@@ -8,15 +8,20 @@ import {
   SMTP_PORT,
   SMTP_SECURE,
   SMTP_USER,
+  TURNSTILE_SECRET_KEY,
 } from "astro:env/server";
 import { handleContactSubmission } from "../core/contact/handleContactSubmission";
+import type { HumanVerifier } from "../core/contact/HumanVerifier";
 import type { MailSender } from "../core/contact/MailSender";
 import {
   ContactDeliveryTimeoutError,
+  ContactHumanCheckFailedError,
+  ContactHumanCheckNotConfiguredError,
   ContactMailNotConfiguredError,
   ContactRateLimitedError,
 } from "../core/contact/errors";
 import { NodemailerMailSender } from "../infrastructure/mail/NodemailerMailSender";
+import { TurnstileHumanVerifier } from "../infrastructure/turnstile/TurnstileHumanVerifier";
 import { createRateLimiter } from "../infrastructure/rateLimit/createRateLimiter";
 import { CONTACT_RATE_LIMITS, SEND_DEADLINE_MS } from "../config/contactLimits";
 import { clientRateLimitKey, resolveClientIp } from "@shared/lib/clientKey";
@@ -53,11 +58,18 @@ const contactInput = z.object({
   privacy: z.literal("on", { error: errors.privacyRequired }),
   website: z.string().max(500).optional(),
   equipo: z.string().max(100).optional(),
+  // Missing when the widget did not run (no JS); the human check then rejects the submission.
+  "cf-turnstile-response": z.string().max(2048).optional(),
 });
 
 // Module scope so in-memory counters survive across requests served by the same instance.
 const clientLimiter = createRateLimiter(env, { policy: CONTACT_RATE_LIMITS.perClient });
 const globalLimiter = createRateLimiter(env, { policy: CONTACT_RATE_LIMITS.global });
+
+function createHumanVerifier(): HumanVerifier | undefined {
+  if (!TURNSTILE_SECRET_KEY) return undefined;
+  return new TurnstileHumanVerifier(TURNSTILE_SECRET_KEY);
+}
 
 function createMailSender(): MailSender | undefined {
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return undefined;
@@ -74,6 +86,10 @@ function logFailure(error: unknown): void {
   // Server-side only; visitors get a generic message.
   if (error instanceof ContactRateLimitedError) {
     console.warn(`[contact] rate limited (retry after ${error.retryAfterSeconds}s).`);
+  } else if (error instanceof ContactHumanCheckFailedError) {
+    console.warn("[contact] human check failed (missing or rejected Turnstile token).");
+  } else if (error instanceof ContactHumanCheckNotConfiguredError) {
+    console.error("[contact] Turnstile is not configured (TURNSTILE_SECRET_KEY).");
   } else if (error instanceof ContactDeliveryTimeoutError) {
     console.error(`[contact] delivery not confirmed within ${error.deadlineMs}ms; it may still arrive.`);
   } else if (error instanceof ContactMailNotConfiguredError) {
@@ -101,12 +117,14 @@ export const server = {
             // The inbox is Spanish-speaking: equipment names are always sent in Spanish.
             equipment: findRentingCategory(input.equipo, defaultLocale)?.name,
             honeypot: input.website,
+            humanToken: input["cf-turnstile-response"],
             visitorLanguage: localeMeta[locale].label,
           },
           {
             clientKey: await clientRateLimitKey(ip),
             clientLimiter,
             globalLimiter,
+            createHumanVerifier,
             createSender: createMailSender,
             to: CONTACT_TO,
             deadlineMs: SEND_DEADLINE_MS,
