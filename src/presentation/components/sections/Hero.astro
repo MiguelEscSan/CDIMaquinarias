@@ -20,68 +20,61 @@ const headingId = "inicio-titulo";
 
 <section
   aria-labelledby={headingId}
-  class="relative overflow-hidden bg-navy text-slate-300"
+  class="relative isolate overflow-hidden bg-navy text-slate-300"
 >
-  <div class="bg-grid absolute inset-0 opacity-60" aria-hidden="true"></div>
+  <img
+    src="/images/fachada-cdi-hero.jpg"
+    alt=""
+    width="2000"
+    height="487"
+    fetchpriority="high"
+    class="absolute inset-0 -z-10 size-full object-cover"
+    aria-hidden="true"
+  />
   <div
-    class="absolute -top-32 -right-32 size-[28rem] rounded-full bg-brand/20 blur-3xl"
+    class="absolute inset-0 -z-10 bg-linear-to-r from-navy via-navy/85 to-navy/40"
     aria-hidden="true"
   ></div>
+  <div class="hazard-stripes absolute inset-x-0 bottom-0 -z-10 h-1.5" aria-hidden="true"></div>
 
-  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-12 lg:px-8 lg:py-28">
-    <div class="flex flex-col gap-6 lg:col-span-7">
-      <p class="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
-        <span class="h-0.5 w-6 bg-current" aria-hidden="true"></span>
-        {t.common.business.positioning.replace(/[.]$/, "")}
-      </p>
-      <h1 id={headingId} class="text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-        {t.seo.pages.home.heading}
-      </h1>
-      <p class="text-xl font-semibold text-brand-accent">{hero.tagline}</p>
-      <p class="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-        {t.common.business.valueProposition}
-      </p>
+  <div class="relative mx-auto flex min-h-[78dvh] max-w-7xl flex-col justify-center gap-6 px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
+    <p class="inline-flex w-fit items-center gap-2 rounded-full border border-brand-accent/40 bg-navy/60 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent backdrop-blur">
+      <span class="size-2 rounded-full bg-brand-accent" aria-hidden="true"></span>
+      {t.common.business.positioning.replace(/[.]$/, "")}
+    </p>
+    <h1 id={headingId} class="max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+      {t.seo.pages.home.heading}
+    </h1>
+    <p class="text-xl font-semibold text-brand-accent">{hero.tagline}</p>
+    <p class="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
+      {t.common.business.valueProposition}
+    </p>
 
-      <div class="flex flex-col gap-3 sm:flex-row">
-        <Button href={quoteCta.href} ariaLabel={quoteCta.ariaLabel} size="lg">
-          <Icon name="mail" slot="icon" />
-          {quoteCta.label}
-        </Button>
-        <Button
-          href={callCta.href}
-          ariaLabel={callCta.ariaLabel}
-          size="lg"
-          variant="inverse"
-        >
-          <Icon name="phone" slot="icon" />
-          {callCta.label}
-        </Button>
-      </div>
-
-      <ul class="flex flex-wrap gap-2 pt-2" aria-label={hero.keyPointsLabel}>
-        {hero.trustChips.map((chip) => (
-          <li>
-            <Badge tone="light" size="md">
-              <Icon name="check" size={14} strokeWidth={2.5} class="text-brand-accent" />
-              {chip}
-            </Badge>
-          </li>
-        ))}
-      </ul>
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <Button href={quoteCta.href} ariaLabel={quoteCta.ariaLabel} size="lg">
+        <Icon name="mail" slot="icon" />
+        {quoteCta.label}
+      </Button>
+      <Button
+        href={callCta.href}
+        ariaLabel={callCta.ariaLabel}
+        size="lg"
+        variant="inverse"
+      >
+        <Icon name="phone" slot="icon" />
+        {callCta.label}
+      </Button>
     </div>
 
-    <div class="relative hidden lg:col-span-5 lg:block" aria-hidden="true">
-      <div class="relative aspect-square overflow-hidden rounded-3xl border border-slate-700 shadow-2xl">
-        <img
-          src="/images/fachada-cdi-still.webp"
-          alt=""
-          width="960"
-          height="960"
-          class="size-full object-cover"
-        />
-        <div class="absolute inset-0 bg-linear-to-t from-navy/70 via-navy/10 to-transparent"></div>
-      </div>
-      <div class="hazard-stripes absolute -bottom-4 left-8 h-3 w-40 rounded-full"></div>
-    </div>
+    <ul class="flex flex-wrap gap-2 pt-2" aria-label={hero.keyPointsLabel}>
+      {hero.trustChips.map((chip) => (
+        <li>
+          <Badge tone="light" size="md">
+            <Icon name="check" size={14} strokeWidth={2.5} class="text-brand-accent" />
+            {chip}
+          </Badge>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
