@@ -94,8 +94,27 @@ const about: Dictionary["about"] = {
       ],
     },
   ],
-  highlight:
-    "Bei CDI Maquinarias wissen wir, wie wichtig es ist, unseren Kunden einen vollständigen Service zu bieten. Deshalb erstellen wir auch detaillierte, transparente Angebote, damit Sie fundierte Entscheidungen treffen und Ihr Projekt mit Vertrauen planen können.",
+  process: {
+    lead: "Bei CDI Maquinarias wissen wir, wie wichtig es ist, unseren Kunden einen vollständigen Service zu bieten.",
+    steps: [
+      {
+        title: "Zuerst schildern Sie uns Ihr Problem",
+        body: "Sie erklären, was Ihre Maschine oder Ihr Projekt braucht, und wir hören zu, bevor wir etwas vorschlagen.",
+      },
+      {
+        title: "Detaillierte Angebote",
+        body: "Ein klares, transparentes Angebot, bei dem jede Position erklärt wird, bevor wir beginnen.",
+      },
+      {
+        title: "Fundierte Entscheidungen",
+        body: "Sie entscheiden anhand der Fakten: reparieren, mieten oder kaufen, je nachdem, was für Sie am besten passt.",
+      },
+      {
+        title: "Geplantes Projekt",
+        body: "Wir planen Ihr Projekt mit Vertrauen, mit einem festen Ansprechpartner von Anfang bis Ende.",
+      },
+    ],
+  },
 };
 
 const services: Dictionary["services"] = {

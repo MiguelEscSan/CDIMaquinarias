@@ -189,7 +189,11 @@ export interface ContentSection {
 
 export interface AboutContent {
   sections: ContentSection[];
-  highlight: string;
+  /** Lead sentence and the steps of a job, shown as one horizontal sequence. */
+  process: {
+    lead: string;
+    steps: { title: string; body: string }[];
+  };
   /** Alt text of the showroom photo. */
   imageAlt: string;
 }

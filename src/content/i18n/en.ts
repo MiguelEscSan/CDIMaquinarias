@@ -94,8 +94,27 @@ const about: Dictionary["about"] = {
       ],
     },
   ],
-  highlight:
-    "At CDI Maquinarias we understand the importance of offering our customers a complete service. That is why we also provide detailed, transparent quotes, so that you can make informed decisions and plan your project with confidence.",
+  process: {
+    lead: "At CDI Maquinarias we understand the importance of offering our customers a complete service.",
+    steps: [
+      {
+        title: "First, you tell us your problem",
+        body: "You explain what your machine or project needs, and we listen before we propose anything.",
+      },
+      {
+        title: "Detailed quotes",
+        body: "A clear, transparent quote, with every item explained before we start.",
+      },
+      {
+        title: "Informed decisions",
+        body: "You decide with the facts in front of you: repair, rent or buy, whichever suits you best.",
+      },
+      {
+        title: "Planned project",
+        body: "We plan your project with confidence, with a single point of contact from start to finish.",
+      },
+    ],
+  },
 };
 
 const services: Dictionary["services"] = {

@@ -114,8 +114,27 @@ const about: AboutContent = {
       ],
     },
   ],
-  highlight:
-    "En CDI Maquinarias entendemos la importancia de ofrecer un servicio integral a nuestros clientes. Por eso también proporcionamos presupuestos detallados y transparentes, para que pueda tomar decisiones informadas y planificar su proyecto con confianza.",
+  process: {
+    lead: "En CDI Maquinarias entendemos la importancia de ofrecer un servicio integral a nuestros clientes.",
+    steps: [
+      {
+        title: "Primero nos cuenta su problema",
+        body: "Nos explica qué necesita su máquina o su proyecto, y nosotros escuchamos antes de proponer nada.",
+      },
+      {
+        title: "Presupuestos detallados",
+        body: "Un presupuesto claro y transparente, con cada concepto explicado antes de empezar.",
+      },
+      {
+        title: "Decisiones informadas",
+        body: "Usted decide con los datos delante: reparar, alquilar o comprar, según le convenga.",
+      },
+      {
+        title: "Proyecto planificado",
+        body: "Planificamos su proyecto con confianza, con un único interlocutor de principio a fin.",
+      },
+    ],
+  },
 };
 
 const services: { items: Record<ServiceId, ServiceCopy> } = {
